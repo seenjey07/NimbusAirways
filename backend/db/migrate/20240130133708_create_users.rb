@@ -7,7 +7,6 @@ class CreateUsers < ActiveRecord::Migration[7.1]
       t.date :birth_date
       t.string :phone_number
       t.string :gender
-      t.string :email
       t.string :role
       t.decimal :travel_fund, precision: 10, scale: 2
 
