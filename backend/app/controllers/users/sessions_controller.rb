@@ -2,6 +2,9 @@ class Users::SessionsController < Devise::SessionsController
   respond_to :json
   private
 
+  def login_params
+    params.require(:user).permit( :email, :password)
+  end
   def respond_with(resource, _opts = {})
     render json: {
       status: {code: 200, message: 'Logged in sucessfully.'},
