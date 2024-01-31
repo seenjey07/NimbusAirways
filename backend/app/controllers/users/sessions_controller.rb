@@ -3,12 +3,12 @@ class Users::SessionsController < Devise::SessionsController
   private
 
   def login_params
-    params.require(:user).permit( :email, :password)
+    params.require(:user).permit(:email, :password)
   end
   def respond_with(resource, _opts = {})
     render json: {
       status: {code: 200, message: 'Logged in sucessfully.'},
-      data: UserSerializer.new(resource).serializable_hash[:data][:attributes]
+      data: UserSerializer.new(resource).serializable_hash[:data][:id]
     }, status: :ok
   end
 
