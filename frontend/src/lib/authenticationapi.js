@@ -1,5 +1,5 @@
+const backendBaseUrl = import.meta.env.VITE_BACKEND_BASE_URL;
 import axios from "axios";
-
 
 export const signUpApi = async (event) => {
     event.preventDefault();
@@ -31,7 +31,7 @@ export const signUpApi = async (event) => {
       },
     };
     try {
-      const res = await axios.post("http://localhost:3000/signup", newUser);
+      const res = await axios.post(`${backendBaseUrl}/signup`, newUser);
       return res;
     } catch (error) {
         console.error('Error in signUpApi:', error);
