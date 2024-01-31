@@ -51,7 +51,7 @@ Booking.create!(
 User.create!(
   first_name: "Super",
   last_name: "Admin",
-  email: "superadmin@example.com",
+  email: "admin@nimbusairways.com",
   password: "password123",
   role: "superadmin",
   birth_date: Date.new(1980, 1, 1),
