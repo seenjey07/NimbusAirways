@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 const Login = () => {
+  const backendBaseUrl = import.meta.env.VITE_BACKEND_BASE_URL;
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ const Login = () => {
     };
 
     try {
-      const res = await axios.post("http://localhost:3000/login", user, axiosConfig);
+      const res = await axios.post(`${backendBaseUrl}/login`, user, axiosConfig);
       return res;
     } catch (error) {
       return error;

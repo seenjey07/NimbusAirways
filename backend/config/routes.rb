@@ -13,5 +13,8 @@ Rails.application.routes.draw do
   resources :bookings, only: [:create, :show, :update, :destroy]
   get '/api/flights', to: 'flights#search'
 
+  ## ADMIN ROUTES ##
+  get '/admin/users', to: 'admins#index_users'
+
   get "up" => "rails/health#show", as: :rails_health_check
 end
