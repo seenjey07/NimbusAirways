@@ -76,6 +76,39 @@ const Login = () => {
               <div className="divider">OR</div>
 
               <button className="btn btn-outline btn-primary">
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Email</span>
+                </label>
+                <input
+                  type="email"
+                  placeholder="Email"
+                  className="input input-bordered"
+                  required
+                />
+              </div>
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Password</span>
+                </label>
+                <input
+                  type="password"
+                  placeholder="Password"
+                  className="input input-bordered"
+                  required
+                />
+                <label className="label">
+                  <a href="#" className="label-text-alt link link-hover">
+                    Forgot password?
+                  </a>
+                </label>
+              </div>
+              <div className="form-control mt-6">
+                <button className="btn btn-primary">Login</button>
+              </div>
+              <div className="divider">OR</div>
+
+              <button className="btn btn-accent">
                 <img
                   className="w-6 h-6"
                   src="https://www.svgrepo.com/show/475656/google-color.svg"

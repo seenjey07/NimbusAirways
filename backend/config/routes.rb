@@ -9,5 +9,9 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
 
+
+  resources :bookings, only: [:create, :show, :update, :destroy]
+  get '/api/flights', to: 'flights#search'
+
   get "up" => "rails/health#show", as: :rails_health_check
 end
