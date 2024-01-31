@@ -1,38 +1,47 @@
-// Import necessary modules
+const backendBaseUrl = "http://localhost:3000";
+import useNavigate from "react-router-dom";
 import axios from "axios";
 
 // --- Declarations (Unused for now) ---
 
 export const createBooking = async (data) => {
+  const { navigate } = useNavigate();
+
   try {
-    const response = await axios.post("/api/bookings", data);
+    const response = await axios.post("$(backendBaseUrl)/api/bookings", data);
     console.log("New Booking:", response.data);
+    navigate("$(backendBaseUrl)/api/bookings/${booking_reference}");
   } catch (error) {
     console.error("Error creating booking:", error);
   }
 };
 
-export const getBookingDetails = async (bookingId) => {
+export const getBookingDetails = async (booking_reference) => {
   try {
-    const response = await axios.get(`/api/bookings/${bookingId}`);
+    const response = await axios.get(
+      `$(backendBaseUrl)/api/bookings/${booking_reference}`
+    );
     console.log("Booking Details:", response.data);
   } catch (error) {
     console.error("Error fetching booking details:", error);
   }
 };
 
-export const updateBooking = async (bookingId, data) => {
+export const updateBooking = async (booking_reference, data) => {
   try {
-    const response = await axios.put(`/api/bookings/${bookingId}`, data);
+    const response = await axios.put(
+      `$(backendBaseUrl)/api/bookings/${booking_reference}`,
+      data
+    );
     console.log("Updated Booking:", response.data);
   } catch (error) {
     console.error("Error updating booking:", error);
   }
 };
 
-export const cancelBooking = async (bookingId) => {
+export const cancelBooking = async (booking_reference) => {
   try {
-    await axios.delete(`/api/bookings/${bookingId}`);
+    await axios.delete(`$(backendBaseUrl)/api/bookings/${booking_reference}`);
     console.log("Booking Cancelled Successfully");
   } catch (error) {
     console.error("Error cancelling booking:", error);

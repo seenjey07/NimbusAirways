@@ -1,5 +1,4 @@
 const Registration = () => {
-  
   return (
     <>
       <div className="card lg:card-side bg-base-100 shadow-xl">
@@ -89,7 +88,9 @@ const Registration = () => {
                 <span className="label-text">Gender</span>
               </div>
               <select className="select select-bordered" required>
-                <option disabled selected>Pick one</option>
+                <option disabled selected>
+                  Pick one
+                </option>
                 <option>Male</option>
                 <option>Female</option>
               </select>
@@ -124,14 +125,15 @@ const Registration = () => {
 
           <div className="flex justify-center">
             <label className="label">
-            <input type="checkbox" className="checkbox checkbox-xs mr-2" />
-              <div className="label-text">I agree with the 
-              <span className="ml-1 label-text-alt link link-hover">Terms and Conditions</span>
-              </div> 
+              <input type="checkbox" className="checkbox checkbox-xs mr-2" />
+              <div className="label-text">
+                I agree with the
+                <span className="ml-1 label-text-alt link link-hover">
+                  Terms and Conditions
+                </span>
+              </div>
             </label>
           </div>
-
-          
 
           <div className="card-actions justify-center mt-12">
             <button className="btn btn-primary">Submit</button>

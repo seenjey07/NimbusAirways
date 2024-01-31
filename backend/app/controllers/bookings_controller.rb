@@ -1,6 +1,11 @@
 class BookingsController < ApplicationController
   before_action :set_booking, only: [:show, :update, :destroy]
 
+  def index
+    @bookings = Booking.all
+    render json: @bookings
+  end
+
   def create
     @booking = Booking.new(booking_params)
 
@@ -35,6 +40,6 @@ class BookingsController < ApplicationController
   end
 
   def booking_params
-    params.require(:booking).permit(/* Your permitted parameters */)
+    params.require(:booking).permit(:user_id, :booking_reference, :is_confirmed, :confirmation_date, :flight_id)
   end
 end
