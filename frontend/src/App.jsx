@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import DashboardLayout from "./layouts/dashboardlayout";
 import Registration from "./pages/Registration";
 import AdminDashboardRoutes from "./layouts/router/AdminDashboardRoutes";
+import FlightsSearchComponent from "./pages/FlightsSearch";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<Registration />} />
           <Route path="/" element={<Home />} />
+          <Route path="flight_search" element={<FlightsSearchComponent />} />
         </Routes>
       </BrowserRouter>
     </>

@@ -1,6 +1,7 @@
 import { signUpApi } from "../lib/authenticationapi";
 import { useNavigate } from "react-router-dom";
 const Registration = () => {
+
   const navigate = useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -111,8 +112,10 @@ const Registration = () => {
               <div className="label">
                 <span className="label-text">Gender</span>
               </div>
+
               <select className="select select-bordered" name="gender" required>
                 <option disabled>Select</option>
+
                 <option>Male</option>
                 <option>Female</option>
               </select>
@@ -149,14 +152,15 @@ const Registration = () => {
 
           <div className="flex justify-center">
             <label className="label">
-            <input type="checkbox" className="checkbox checkbox-xs mr-2" />
-              <div className="label-text">I agree with the 
-              <span className="ml-1 label-text-alt link link-hover">Terms and Conditions</span>
-              </div> 
+              <input type="checkbox" className="checkbox checkbox-xs mr-2" />
+              <div className="label-text">
+                I agree with the
+                <span className="ml-1 label-text-alt link link-hover">
+                  Terms and Conditions
+                </span>
+              </div>
             </label>
           </div>
-
-          
 
           <div className="card-actions justify-center mt-12">
             <button className="btn btn-primary" type="submit">Submit</button>
