@@ -12,7 +12,7 @@ class User < ApplicationRecord
 
   validates :first_name, presence: true
   validates :last_name, presence: true
-  validates :birthdate, presence: true
+  validates :birth_date, presence: true
   validates :phone_number, presence: true, uniqueness: true
   validates :gender, presence: true
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
@@ -23,7 +23,7 @@ class User < ApplicationRecord
   private
 
   def assign_default_role
-    update(role: 'user') if role.blank?
+    update(role: 'Traveler') if role.blank?
   end
 
   def set_travel_fund

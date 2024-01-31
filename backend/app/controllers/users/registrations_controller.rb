@@ -2,8 +2,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
   respond_to :json
   private
 
-  def login_params
-    params.require(:user).permit( :email, :password)
+  def sign_up_params
+    params.require(:user).permit(:first_name, :middle_name, :last_name, :phone_number, :birth_date, :gender, :email, :password)
   end
 
   def respond_with(resource, _opts = {})
