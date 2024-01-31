@@ -1,4 +1,21 @@
+import { signUpApi } from "../lib/authenticationapi";
+import { useNavigate } from "react-router-dom";
 const Registration = () => {
+  const navigate = useNavigate();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const result = await signUpApi(event);
+    
+
+    if (result.response && result.response.data && result.response.data.status.code === 200) {
+      console.error(result.response.data.status.message);
+    } else if (result.data) {
+      console.log('Registration successful', result.data);
+      navigate('/login')
+    } else {
+      console.error('Registration failed');
+    }
+  };
   
   return (
     <>
@@ -6,7 +23,7 @@ const Registration = () => {
         <figure>
           <img src="" alt="Lologo" />
         </figure>
-        <div className="card-body">
+        <form className="card-body" onSubmit={handleSubmit}>
           <h2 className="card-title justify-center">Register Now</h2>
           <div className="flex justify-center gap-5">
             <label className="form-control w-full max-w-xs">
@@ -17,6 +34,7 @@ const Registration = () => {
                 type="text"
                 placeholder="Type here"
                 className="input input-bordered w-full max-w-xs"
+                name="first_name"
                 required
               />
             </label>
@@ -29,6 +47,7 @@ const Registration = () => {
                 type="text"
                 placeholder="Type here"
                 className="input input-bordered w-full max-w-xs"
+                name="middle_name"
               />
             </label>
 
@@ -40,6 +59,7 @@ const Registration = () => {
                 type="text"
                 placeholder="Type here"
                 className="input input-bordered w-full max-w-xs"
+                name="last_name"
                 required
               />
             </label>
@@ -54,6 +74,7 @@ const Registration = () => {
                 type="date"
                 placeholder="Type here"
                 className="input input-bordered w-full max-w-xs text-center"
+                name="birth_date"
                 required
               />
             </label>
@@ -66,6 +87,7 @@ const Registration = () => {
                 type="number"
                 placeholder="Type here"
                 className="input input-bordered w-full max-w-xs"
+                name="phone_number"
                 required
               />
             </label>
@@ -80,6 +102,7 @@ const Registration = () => {
                 type="email"
                 placeholder="Type here"
                 className="input input-bordered w-full max-w-xs"
+                name="email"
                 required
               />
             </label>
@@ -88,8 +111,8 @@ const Registration = () => {
               <div className="label">
                 <span className="label-text">Gender</span>
               </div>
-              <select className="select select-bordered" required>
-                <option disabled selected>Pick one</option>
+              <select className="select select-bordered" name="gender" required>
+                <option disabled>Select</option>
                 <option>Male</option>
                 <option>Female</option>
               </select>
@@ -105,6 +128,7 @@ const Registration = () => {
                 type="password"
                 placeholder="Type here"
                 className="input input-bordered w-full max-w-xs"
+                name="password"
                 required
               />
             </label>
@@ -117,6 +141,7 @@ const Registration = () => {
                 type="password"
                 placeholder="Type here"
                 className="input input-bordered w-full max-w-xs"
+                name="confirmPassword"
                 required
               />
             </label>
@@ -134,9 +159,23 @@ const Registration = () => {
           
 
           <div className="card-actions justify-center mt-12">
-            <button className="btn btn-primary">Submit</button>
+            <button className="btn btn-primary" type="submit">Submit</button>
           </div>
-        </div>
+
+          <div className="flex justify-center mb-3">
+              <label className="label">
+                <span className="label-text-alt mr-1">
+                  Already have an account?
+                </span>
+                <button
+                  className="label-text-alt link link-hover"
+                  onClick={() => navigate('/login')}
+                >
+                  Login here
+                </button>
+              </label>
+            </div>
+        </form>
       </div>
     </>
   );

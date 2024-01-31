@@ -1,23 +1,32 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 const Login = () => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
-    // try {
-    //   const res = await revertStockBalance(
-    //   );
-    //   if (res?.status == 200) {
-    //   }
-    //   else {
-    //   }
-    //   xxx
-    // } catch (error) {
-    //   console.error("Error transferring from stock to wallet:", error);
-    // }
-    console.log("Handle login");
+  const handleLogin = async (event) => {
+    event.preventDefault();
+    const user = {
+      user: {
+        email: email,
+        password: password
+      },
+    };
+
+    const axiosConfig = {
+      headers: {
+        Authorization: '',
+      },
+    };
+
+    try {
+      const res = await axios.post("http://localhost:3000/login", user, axiosConfig);
+      return res;
+    } catch (error) {
+      return error;
+    }
   };
 
   const handleSignUp = () => {
