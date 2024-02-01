@@ -1,7 +1,6 @@
-const backendBaseUrl = "http://localhost:3000";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { flightsApi } from "../lib/flightsapi";
 
 const FlightsSearchComponent = () => {
   const [origin_location, setOrigin_location] = useState("");
@@ -9,25 +8,17 @@ const FlightsSearchComponent = () => {
   const [departure_date, setDeparture_date] = useState("");
   const [flights, setFlights] = useState([]);
   const [error, setError] = useState(null);
-
   const navigate = useNavigate();
   const handleSearch = async (event) => {
     event.preventDefault();
 
     try {
-      const response = await axios.post(`${backendBaseUrl}/api/flights`, {
-        origin_location,
-        destination_location,
-        departure_date,
-      });
-
-      setFlights(response.data.flights);
-      console.log("Response from backend:", response.data);
-
+      const res = await flightsApi();
+      setFlights(res.data.flights);
       setError(null);
       navigate("/search_results");
     } catch (error) {
-      console.error("Error searching for flights:", error);
+      console.error("Error retrieving flight information:", error);
       setError("Error searching for flights. Please try again.");
     }
   };
