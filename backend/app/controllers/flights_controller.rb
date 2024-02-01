@@ -8,7 +8,7 @@ class FlightsController < ApplicationController
   def flight_search
     origin_location = params[:origin_location]
     destination_location = params[:destination_location]
-    departure_date = params[:search_date]
+    departure_date = params[:departure_date]
 
     if origin_location.blank? || destination_location.blank? || departure_date.blank?
       render json: { error: "Please provide valid values for the following fields." }, status: :unprocessable_entity
@@ -20,7 +20,9 @@ class FlightsController < ApplicationController
     flights = Flight.joins(:route).where(routes: { origin_location: origin_location, destination_location: destination_location })
                       .where('DATE(departure_date) = ?', search_date)
 
-    render json: { flights: flights }
+    routes = Route.where(origin_location: origin_location, destination_location: destination_location)
+
+    render json: { flights: flights, routes: routes }
   end
 
 end

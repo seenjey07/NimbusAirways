@@ -9,9 +9,9 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
 
-  get '/api/flights', to: 'flights#index'
   get '/api/routes', to: 'routes#index'
 
+  get '/api/flights', to: 'flights#index'
   post '/api/flights', to: 'flights#flight_search'
 
   resources :bookings
