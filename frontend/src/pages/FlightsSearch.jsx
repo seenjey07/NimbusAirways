@@ -13,16 +13,17 @@ const FlightsSearchComponent = () => {
   const navigate = useNavigate();
   const handleSearch = async (event) => {
     event.preventDefault();
+
     try {
-      const response = await axios.post("$(backendBaseUrl)/api/flights", {
-        params: {
-          origin_location,
-          destination_location,
-          departure_date,
-        },
+      const response = await axios.post(`${backendBaseUrl}/api/flights`, {
+        origin_location,
+        destination_location,
+        departure_date,
       });
 
       setFlights(response.data.flights);
+      console.log("Response from backend:", response.data);
+
       setError(null);
       navigate("/search_results");
     } catch (error) {
@@ -80,9 +81,9 @@ const FlightsSearchComponent = () => {
           </div>
 
           {flights.map((flight) => (
-            <div key={flight.id}>
-              Flight from {flight.origin_location} to{" "}
-              {flight.destination_location} on {flight.departure_date}
+            <div key={flight.flight_number}>
+              Flight from {flight.route.origin_location} to{" "}
+              {flight.route.destination_location} on {flight.departure_date}
             </div>
           ))}
 
@@ -90,14 +91,14 @@ const FlightsSearchComponent = () => {
             <div role="alert" class="alert alert-error">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="stroke-current shrink-0 h-6 w-6"
+                class="strokeCurrent shrink-0 h-4 w-4"
                 fill="none"
                 viewBox="0 0 24 24"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
                 />
               </svg>
