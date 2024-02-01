@@ -8,7 +8,7 @@ class FlightsController < ApplicationController
   def flight_search
     origin_location = params[:origin_location]
     destination_location = params[:destination_location]
-    departure_date = params[:departure_date]
+    departure_date = params[:search_date]
 
     if origin_location.blank? || destination_location.blank? || departure_date.blank?
       render json: { error: "Please provide valid values for the following fields." }, status: :unprocessable_entity
