@@ -14,10 +14,12 @@ class FlightsController < ApplicationController
       return
     end
     
-    flights = Flight.joins(:route).where(routes: { origin_location: origin_location, destination_location: destination_location })
-                      .where(departure_date: departure_date)
+    flights = Flight.joins(:route)
+                    .where(routes: { origin_location: origin_location, destination_location: destination_location })
+                    .where(departure_date: departure_date)
+    routes = Route.where(origin_location: origin_location, destination_location: destination_location)
 
-    render json: { flights: flights }
+    render json: { flights: flights, routes: routes }
   end
 
 end
