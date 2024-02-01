@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+
 const Login = () => {
   const backendBaseUrl = import.meta.env.VITE_BACKEND_BASE_URL;
   const [email, setEmail] = useState();
@@ -12,18 +13,22 @@ const Login = () => {
     const user = {
       user: {
         email: email,
-        password: password
+        password: password,
       },
     };
 
     const axiosConfig = {
       headers: {
-        Authorization: '',
+        Authorization: "",
       },
     };
 
     try {
-      const res = await axios.post(`${backendBaseUrl}/login`, user, axiosConfig);
+      const res = await axios.post(
+        `${backendBaseUrl}/login`,
+        user,
+        axiosConfig
+      );
       return res;
     } catch (error) {
       return error;
@@ -39,7 +44,9 @@ const Login = () => {
       <div className="hero min-h-screen bg-base-200">
         <div className="hero-content flex-col lg:flex-row-reverse gap-16">
           <div className="text-center lg:text-left">
-            <h1 className="text-5xl font-bold">Nimbus Airways</h1>
+            <div className="flex">
+              <h1 className="text-5xl font-bold">Nimbus Airways</h1>
+            </div>
             <p className="py-6 italic">
               Discover the Skies with Nimbus Airways: Elevating Your Journey
               Beyond Boundaries
@@ -47,37 +54,37 @@ const Login = () => {
           </div>
           <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
             <div className="card-body">
-                <div className="form-control">
-                    <label className="label">
-                    <span className="label-text">Email</span>
-                    </label>
-                    <input
-                    type="email"
-                    placeholder="Email"
-                    className="input input-bordered"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    />
-                </div>
-                <div className="form-control">
-                    <label className="label">
-                    <span className="label-text">Password</span>
-                    </label>
-                    <input
-                    type="password"
-                    placeholder="Password"
-                    className="input input-bordered"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                    />
-                    <label className="label">
-                    <button className="label-text-alt link link-hover">
-                        Forgot password?
-                    </button>
-                    </label>
-                </div>
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Email</span>
+                </label>
+                <input
+                  type="email"
+                  placeholder="Email"
+                  className="input input-bordered"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Password</span>
+                </label>
+                <input
+                  type="password"
+                  placeholder="Password"
+                  className="input input-bordered"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+                <label className="label">
+                  <button className="label-text-alt link link-hover">
+                    Forgot password?
+                  </button>
+                </label>
+              </div>
               <div className="form-control mt-6">
                 <button className="btn btn-primary" onClick={handleLogin}>
                   Login
