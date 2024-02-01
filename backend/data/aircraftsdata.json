@@ -1,0 +1,12 @@
+[
+  {
+    "model": "ATR 72-600",
+    "family": "Firefly",
+    "seat_capacity": 72
+  },
+  {
+    "model": "A320-200",
+    "family": "Airbus",
+    "seat_capacity": 180
+  }
+]

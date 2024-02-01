@@ -1,11 +1,6 @@
-import React from "react";
-
+import Photo from "../assets/Logo.png";
 const Logo = () => {
-  return (
-    <div>
-      <img src="logo.png" alt="logo" />
-    </div>
-  );
+  return <img src={Photo} alt="logo" />;
 };
 
 export default Logo;

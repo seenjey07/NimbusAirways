@@ -10,8 +10,10 @@ Rails.application.routes.draw do
   }
 
   get '/api/flights', to: 'flights#index'
+  get '/api/routes', to: 'routes#index'
+
   post '/api/flights', to: 'flights#flight_search'
-  
+
   resources :bookings
 
   ## ADMIN ROUTES ##
