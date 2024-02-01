@@ -9,3 +9,12 @@ export const adminIndexUsersApi = async () => {
     return error;
   }
 };
+
+export const adminIndexFlightsApi = async () => {
+  try {
+    const response = await axios.get(`${backendBaseUrl}/admin/flights`, {});
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
