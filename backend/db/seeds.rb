@@ -9,15 +9,6 @@
 #   end
 # Seed data for bookings table
 
-
-
-require 'json'
-json_data = File.read(Rails.root.join('data/flightsdata_february.json'))
-flightsdata = JSON.parse(json_data)
-flightsdata.each do |flight|
-  Flight.create(flight)
-end
-
 require 'json'
 json_data = File.read(Rails.root.join('data/routesdata.json'))
 routesdata = JSON.parse(json_data)
@@ -30,6 +21,25 @@ json_data = File.read(Rails.root.join('data/aircraftsdata.json'))
 aircraftsdata = JSON.parse(json_data)
 aircraftsdata.each do |aircraft|
   Aircraft.create(aircraft)
+end
+
+require 'json'
+json_data = File.read(Rails.root.join('data/flightsdata_february.json'))
+flightsdata = JSON.parse(json_data)
+flightsdata.each do |flight|
+  begin
+    Flight.create!(flight)
+  rescue ActiveRecord::RecordInvalid => e
+    puts "Error creating flight: #{e.message}"
+  end
+end
+
+flightsdata.each do |flight|
+  begin
+    Flight.create!(flight)
+  rescue ActiveRecord::RecordInvalid => e
+    puts "Error creating flight: #{e.message}"
+  end
 end
 
 require 'json'
