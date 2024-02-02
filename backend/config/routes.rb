@@ -9,12 +9,11 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
 
-  get '/api/routes', to: 'routes#index'
+    get 'api/routes', to: 'routes#index'
+    get 'api/flights', to: 'flights#index'
+    post 'api/flights', to: 'flights#flight_search'
 
-  get '/api/flights', to: 'flights#index'
-  post '/api/flights', to: 'flights#flight_search'
-
-  resources :bookings
+    resources :bookings, only: [:index, :show, :create, :update, :destroy], path: 'api/bookings'
 
   ## ADMIN ROUTES ##
   get '/admin/users', to: 'admins#index_users'
