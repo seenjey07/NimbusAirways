@@ -7,9 +7,15 @@ class AdminsController < ApplicationController
     @users = User.all
     render json: @users
   end
-
-
   ## END OF USERS ##
+
+## FLIGHTS ##
+  def index_flights
+    @flights = Flight.includes(:route, :aircraft).all
+    render json: @flights, include: [:route, :aircraft]
+  end
+## END OF FLIGHTS ##
+
 
 
   private
