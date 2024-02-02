@@ -1,0 +1,67 @@
+const backendBaseUrl = import.meta.env.VITE_BACKEND_BASE_URL;
+import axios from "axios";
+
+export const indexBookingsApi = async () => {
+  try {
+    const response = await axios.get(`${backendBaseUrl}/api/bookings/index`);
+    console.log("indexBookingsApi response:", response);
+    return response;
+  } catch (error) {
+    console.log("indexBookingsApi error:", error);
+    throw error;
+  }
+};
+
+export const createBookingApi = async () => {
+  try {
+    const response = await axios.post(
+      `${backendBaseUrl}/api/bookings/create`,
+      bookingData
+    );
+    console.log("createBookingApi response:", response);
+    return response;
+  } catch (error) {
+    console.log("createBookingApi error:", error);
+    throw error;
+  }
+};
+
+export const showBookingApi = async (booking_reference) => {
+  try {
+    const response = await axios.get(
+      `${backendBaseUrl}/api/bookings/${booking_reference}`
+    );
+    console.log("showBookingApi response:", response);
+    return response;
+  } catch (error) {
+    console.log("showBookingApi error:", error);
+    throw error;
+  }
+};
+
+export const updateBookingApi = async (booking_reference, bookingData) => {
+  try {
+    const response = await axios.put(
+      `${backendBaseUrl}/api/bookings/${booking_reference}`,
+      bookingData
+    );
+    console.log("updateBookingApi response:", response);
+    return response;
+  } catch (error) {
+    console.log("updateBookingApi error:", error);
+    throw error;
+  }
+};
+
+export const destroyBookingApi = async (booking_reference) => {
+  try {
+    const response = await axios.delete(
+      `${backendBaseUrl}/api/bookings/${booking_reference}`
+    );
+    console.log("destroyBookingApi response:", response);
+    return response;
+  } catch (error) {
+    console.log("destroyBookingApi error:", error);
+    throw error;
+  }
+};

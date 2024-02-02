@@ -7,6 +7,7 @@ import Registration from "./pages/Registration";
 import AdminDashboardRoutes from "./layouts/router/AdminDashboardRoutes";
 import FlightsSearchComponent from "./pages/FlightsSearch";
 import SearchResultsComponent from "./pages/SearchResults";
+import BookingsComponent from "./pages/Bookings";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="flight_search" element={<FlightsSearchComponent />} />
           <Route path="search_results" element={<SearchResultsComponent />} />
+          <Route path="bookings" element={<BookingsComponent />} />
         </Routes>
       </BrowserRouter>
     </>
