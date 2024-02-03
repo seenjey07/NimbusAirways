@@ -53,8 +53,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="flight_search" element={<FlightsSearchComponent />} />
           <Route path="search_results" element={<SearchResultsComponent />} />
-          <Route path="bookings" element={<BookingsComponent />} />
           <Route path="testalert" element={<TestAlerts addAlert={addAlert} />} />
+          <Route path="/bookings" element={<BookingsComponent />} />
         </Routes>
       </BrowserRouter>
     </>
