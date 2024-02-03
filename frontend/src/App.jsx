@@ -11,6 +11,7 @@ import BookingsComponent from "./pages/Bookings";
 import { useState } from "react";
 import TestAlerts from "./pages/test/TestAlerts";
 import Alert from "./components/Alert";
+import FlightBookingsLayout from "./layouts/FlightBookingsLayout";
 
 function App() {
   const [alerts, setAlerts] = useState([]);
@@ -29,32 +30,34 @@ function App() {
   return (
     <>
      <div
-            style={{
-              position: "absolute",
-              left: "50%",
-              transform: "translateX(-50%)",
-            }}
-          >
-            {alerts.map((alert, index) => (
-              <Alert
-                key={index}
-                type={alert.type}
-                message={alert.message}
-                onClose={() => removeAlert(index)}
-              />
-            ))}
-          </div>
+        style={{
+          position: "absolute",
+          left: "50%",
+          transform: "translateX(-50%)",
+          zIndex: 9999, 
+        }}
+      >
+        {alerts.map((alert, index) => (
+          <Alert
+            key={index}
+            type={alert.type}
+            message={alert.message}
+            onClose={() => removeAlert(index)}
+          />
+        ))}
+      </div>
       <BrowserRouter>
         <Routes>
           <Route path="/admin/*" element={<AdminDashboardRoutes />} />
           <Route path="/dashboard/*" element={<DashboardLayout />} />
-          <Route path="login" element={<Login />} />
+          <Route path="login" element={<Login addAlert={addAlert}/>} />
           <Route path="signup" element={<Registration />} />
           <Route path="/" element={<Home />} />
           <Route path="flight_search" element={<FlightsSearchComponent />} />
           <Route path="search_results" element={<SearchResultsComponent />} />
           <Route path="testalert" element={<TestAlerts addAlert={addAlert} />} />
-          <Route path="/bookings" element={<BookingsComponent />} />
+          <Route path="/bookings/*" element={<BookingsComponent />} />
+          <Route path="/bookings/create" element={<FlightBookingsLayout />} />
         </Routes>
       </BrowserRouter>
     </>
