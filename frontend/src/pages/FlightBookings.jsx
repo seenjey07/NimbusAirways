@@ -1,6 +1,17 @@
 import { useState } from "react";
 import { showCurrentUserApi } from "../lib/usersapi";
 import { createUserBookingApi } from "../lib/bookingsapi";
+import SeatSelection from "./Dashboard/SeatSelection";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "../components/ui/drawer";
 // eslint-disable-next-line react/prop-types
 const FlightBookings = ({addAlert}) => {
     const [bookForMyself, setBookForMyself] = useState(false);
@@ -16,6 +27,8 @@ const FlightBookings = ({addAlert}) => {
     const [departureDate, setDepartureDate] = useState('');
     const [destinationFlight, setDestinationFlight] = useState('');
     const [arrivalDate, setArrivalDate] = useState('');
+
+    
 
 ///TEMPORARY CODE HERE ///
     const flightOptions = [
@@ -291,8 +304,28 @@ const FlightBookings = ({addAlert}) => {
                         </button>
                     </div>
                 </div>
+               
+                <Drawer>
+                
+                <DrawerTrigger asChild>
+                    <button className="btn btn-primary">Open Seat Selection</button>
+                </DrawerTrigger>
+                  <DrawerContent>
+                  <div className="bg-base-100">
+                    <SeatSelection />
+                    <DrawerFooter>
+                      <DrawerClose asChild>
+                        <button className="btn btn-primary">Cancel</button>
+                      </DrawerClose>
+                    </DrawerFooter>
+                    </div>
+                  </DrawerContent>
+                  
+                </Drawer>
+
+                
             </>
     );
   };
 
-  export default FlightBookings;
+export default FlightBookings;

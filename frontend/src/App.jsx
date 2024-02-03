@@ -7,12 +7,11 @@ import Registration from "./pages/Registration";
 import AdminDashboardRoutes from "./layouts/router/AdminDashboardRoutes";
 import FlightsSearchComponent from "./pages/FlightsSearch";
 import SearchResultsComponent from "./pages/SearchResults";
-import { useState } from "react";
 import TestAlerts from "./pages/test/TestAlerts";
-import Alert from "./components/Alert";
 import FlightBookingsRouter from "./layouts/router/FlightBookingsRouter";
 import { Toaster } from "sonner";
 import { toast } from "sonner";
+import SeatSelection from "./pages/Dashboard/SeatSelection";
 
 function App() {
   // eslint-disable-next-line no-unused-vars
@@ -36,7 +35,9 @@ function App() {
           <Route path="flight_search" element={<FlightsSearchComponent />} />
           <Route path="search_results" element={<SearchResultsComponent />} />
           <Route path="testalert" element={<TestAlerts addAlert={addAlert} />} />
+          <Route path="seats" element={<SeatSelection />} />
           <Route path="/bookings/*" element={<FlightBookingsRouter addAlert={addAlert} />} />
+
         </Routes>
       </BrowserRouter>
     </>
