@@ -1,5 +1,6 @@
 
-
+import { Toaster } from "../../components/ui/sonner";
+import { toast } from "sonner";
 // eslint-disable-next-line react/prop-types
 const TestAlerts = ({ addAlert }) => {
   const handleSuccess = () => {
@@ -15,11 +16,13 @@ const TestAlerts = ({ addAlert }) => {
   };
 
   return (
+  <>
     <div className="flex flex-col">
       <button className="flex btn btn-primary"onClick={handleSuccess}>Show Success Alert</button>
       <button className="flex btn btn-success"onClick={handleError}>Show Error Alert</button>
       <button className="flex btn btn-infoy"onClick={handleInfo}>Show Info Alert</button>
     </div>
+  </>
   );
 };
 
