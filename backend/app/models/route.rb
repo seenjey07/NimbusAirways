@@ -1,5 +1,7 @@
 class Route < ApplicationRecord
   has_many :flights
+  has_one :origin, class_name: 'Location', primary_key: 'origin_location', foreign_key: 'code'
+  has_one :destination, class_name: 'Location', primary_key: 'destination_location', foreign_key: 'code'
 
   validates_presence_of :origin_location, :origin_code, :origin_name,
                         :destination_location, :destination_code, :destination_name,

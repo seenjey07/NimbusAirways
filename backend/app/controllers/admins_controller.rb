@@ -23,6 +23,20 @@ class AdminsController < ApplicationController
     end
   ## END OF SEATS ##
 
+  ## BOOKINGS ##
+  def index_bookings
+    @bookings = Booking.all
+    render json: @bookings
+  end
+  ## END OF BOOKINGS ##
+
+  ## PASSENGERS ##
+  def index_passengers
+    @passengers = Passenger.all
+    render json: @passengers
+  end
+ ## END OF PASSENGERS ##
+
 
   private
 
