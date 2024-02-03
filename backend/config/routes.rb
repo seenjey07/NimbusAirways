@@ -17,7 +17,15 @@ Rails.application.routes.draw do
 
   ## ADMIN ROUTES ##
   get '/admin/users', to: 'admins#index_users'
-  get '/admin/flights', to: 'admins#index_flights'
+
+  get '/admin/flights', to: 'admins_flight#index'
+  post '/admin/flights', to: 'admins_flight#create'
+
+  get '/admin/seats', to: 'admins#index_seats'
+
+
+  get '/admin/routes', to: 'admins_route#index_routes'
+  post '/admin/routes', to: 'admins_route#create_route'
 
   get "up" => "rails/health#show", as: :rails_health_check
 end
