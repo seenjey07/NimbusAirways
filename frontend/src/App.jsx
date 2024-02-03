@@ -11,40 +11,21 @@ import { useState } from "react";
 import TestAlerts from "./pages/test/TestAlerts";
 import Alert from "./components/Alert";
 import FlightBookingsRouter from "./layouts/router/FlightBookingsRouter";
+import { Toaster } from "sonner";
+import { toast } from "sonner";
 
 function App() {
-  const [alerts, setAlerts] = useState([]);
+  // eslint-disable-next-line no-unused-vars
 
   const addAlert = (type, message) => {
-    setAlerts((prev) => [...prev, { type, message }]);
-    setTimeout(() => {
-      removeAlert(0);
-    }, 5000);
-  };
-
-  const removeAlert = (index) => {
-    setAlerts((prev) => prev.filter((a, i) => i !== index));
+    toast(message, {
+      type, 
+    });
   };
 
   return (
     <>
-     <div
-        style={{
-          position: "absolute",
-          left: "50%",
-          transform: "translateX(-50%)",
-          zIndex: 9999, 
-        }}
-      >
-        {alerts.map((alert, index) => (
-          <Alert
-            key={index}
-            type={alert.type}
-            message={alert.message}
-            onClose={() => removeAlert(index)}
-          />
-        ))}
-      </div>
+      <Toaster />
       <BrowserRouter>
         <Routes>
           <Route path="/admin/*" element={<AdminDashboardRoutes />} />
