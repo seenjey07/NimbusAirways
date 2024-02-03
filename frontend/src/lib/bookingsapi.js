@@ -65,3 +65,14 @@ export const destroyBookingApi = async (booking_reference) => {
     throw error;
   }
 };
+
+
+export const createUserBookingApi = async (bookingData) => {
+  try {
+    const response = await axios.post(`${backendBaseUrl}/api/book`, { booking: bookingData });
+    return response.data;
+  } catch (error) {
+    console.error("createUserBookingApi error:", error);
+    throw error;
+  }
+};

@@ -7,11 +7,10 @@ import Registration from "./pages/Registration";
 import AdminDashboardRoutes from "./layouts/router/AdminDashboardRoutes";
 import FlightsSearchComponent from "./pages/FlightsSearch";
 import SearchResultsComponent from "./pages/SearchResults";
-import BookingsComponent from "./pages/Bookings";
 import { useState } from "react";
 import TestAlerts from "./pages/test/TestAlerts";
 import Alert from "./components/Alert";
-import FlightBookingsLayout from "./layouts/FlightBookingsLayout";
+import FlightBookingsRouter from "./layouts/router/FlightBookingsRouter";
 
 function App() {
   const [alerts, setAlerts] = useState([]);
@@ -56,8 +55,7 @@ function App() {
           <Route path="flight_search" element={<FlightsSearchComponent />} />
           <Route path="search_results" element={<SearchResultsComponent />} />
           <Route path="testalert" element={<TestAlerts addAlert={addAlert} />} />
-          <Route path="/bookings/*" element={<BookingsComponent />} />
-          <Route path="/bookings/create" element={<FlightBookingsLayout />} />
+          <Route path="/bookings/*" element={<FlightBookingsRouter addAlert={addAlert} />} />
         </Routes>
       </BrowserRouter>
     </>

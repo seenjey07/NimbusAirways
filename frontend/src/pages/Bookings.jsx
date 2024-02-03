@@ -29,7 +29,8 @@ const BookingsComponent = () => {
     const fetchBookings = async () => {
       try {
         const res = await indexBookingsApi();
-        setBookings(res);
+        console.log("User Bookings API response:", res.data);
+        setBookings(res.data);
         setError(null);
       } catch (error) {
         console.error("Error retrieving bookings:", error);
@@ -94,7 +95,7 @@ const BookingsComponent = () => {
   }
   return (
     <div>
-    {bookings.length !== 0 ? (
+    {bookings.length == 0 ? (
       <div className="flex items-center justify-center h-screen">
         <div className="card w-96 glass shadow-xl place-content-center">
           <div className="card-body items-center text-center">
@@ -123,9 +124,9 @@ const BookingsComponent = () => {
           {bookings.map((booking) => (
             <tr className="hover" key={booking.id}>
               <td>{booking.booking_reference}</td>
-              <td>{booking.flight.origin_location}</td>
-              <td>{booking.flight.destination_location}</td>
-              <td>{booking.route.date_of_departure}</td>
+              <td>{booking.origin_location}</td>
+              <td>{booking.destination_location}</td>
+              <td>{booking.departure_date}</td>
               <td className="dropdown dropdown-hover">
                 <div tabIndex="0" role="button" className="btn m-1">
                   Options
