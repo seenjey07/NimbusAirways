@@ -14,10 +14,7 @@ export const indexBookingsApi = async () => {
 
 export const createBookingApi = async () => {
   try {
-    const response = await axios.post(
-      `${backendBaseUrl}/api/bookings/create`,
-      bookingData
-    );
+    const response = await axios.post(`${backendBaseUrl}/api/bookings/create`);
     console.log("createBookingApi response:", response);
     return response;
   } catch (error) {

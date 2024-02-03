@@ -56,13 +56,12 @@ class BookingsController < ApplicationController
   end
 
   def booking_params
-    params.require(:booking).permit(:flight_id, :is_confirmed, :confirmation_date, :booking_reference)
+    params.require(:booking).permit(:flight_id, :confirmation_date, :booking_reference)
   end
 
   def update_booking_after_save
     @booking.flight.update(available_seats: @booking.flight.available_seats - 1)
     @booking.confirmation_date = Date.today
-    @booking.is_confirmed = true
     @booking.save
   end
 end
