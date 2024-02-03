@@ -1,6 +1,7 @@
 import { useState } from "react";
 import SeatLayoutA220_100 from "../../components/SeatLayoutA220_100";
-const SeatSelection = () => {
+// eslint-disable-next-line react/prop-types
+const SeatSelection = ({addAlert}) => {
   const [selectedSeat, setSelectedSeat] = useState(null);
 
   const handleSeatClick = (seatNumber) => {
@@ -15,13 +16,7 @@ const SeatSelection = () => {
     if (selectedSeat) {
       const seatLetter = selectedSeat.charAt(0);
       const seatNumber = selectedSeat.slice(1);
-
-      return (
-        <div>
-          <h2 className="text-xl font-semibold mb-2">Selected Seat</h2>
-          <p>{`Seat Letter: ${seatLetter}, Seat Number: ${seatNumber}`}</p>
-        </div>
-      );
+      addAlert('success', `You chose ${seatLetter}${seatNumber}, make sure to double check before booking!`);
     }
 
     return null;

@@ -6,10 +6,7 @@ import {
   Drawer,
   DrawerClose,
   DrawerContent,
-  DrawerDescription,
   DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
   DrawerTrigger,
 } from "../components/ui/drawer";
 // eslint-disable-next-line react/prop-types
@@ -312,7 +309,7 @@ const FlightBookings = ({addAlert}) => {
                 </DrawerTrigger>
                   <DrawerContent>
                   <div className="bg-base-100">
-                    <SeatSelection />
+                    <SeatSelection addAlert={addAlert} />
                     <DrawerFooter>
                       <DrawerClose asChild>
                         <button className="btn btn-primary">Cancel</button>
