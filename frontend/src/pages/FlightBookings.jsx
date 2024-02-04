@@ -140,189 +140,212 @@ const FlightBookings = ({addAlert}) => {
 ///END OF TEMPORARY CODE HERE ///
     
     return(
-            <>
-                     <div className="mb-4">
-                        <h2 className="text-xl font-semibold mb-2">Flight Details</h2>
-                        <div className="grid grid-cols-2 gap-4">
-                        <div>
-                            <label htmlFor="originFlight">Flight Number:</label>
-                            <select
-                            id="originFlight"
-                            name="originFlight"
-                            value={originFlight}
-                            onChange={(e) =>
-                                handleFlightChange(
-                                flightOptions.find(
-                                    (flight) => flight.flight_number === e.target.value
-                                )
-                                )
-                            }
-                            className="border p-2 w-full"
-                            >
-                            <option value="">Select Flight</option>
-                            {flightOptions.map((flight) => (
-                                <option key={flight.flight_number} value={flight.flight_number}>
-                                {flight.flight_number}
-                                </option>
-                            ))}
-                            </select>
-                        </div>
-                        <div>
-                            <label htmlFor="departureDate">Departure Date:</label>
-                            <input
-                            type="text"
-                            id="departureDate"
-                            name="departureDate"
-                            value={departureDate}
-                            readOnly
-                            className="border p-2 w-full"
-                            disabled
-                            />
-                        </div>
-                        </div>
-                    </div>
+    <>
+      <div className="hero min-h-screen bg-base-200">
+        <div className="hero-content h-full flex-col lg:flex-row-reverse">
+          <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+          <h2 className="text-xl font-semibold mb-2">Flight Details Dito</h2>
+            <div>
+              <label>Flight Number:</label>
+              <select
+              id="originFlight"
+              name="originFlight"
+              value={originFlight}
+              onChange={(e) =>
+                  handleFlightChange(
+                  flightOptions.find(
+                      (flight) => flight.flight_number === e.target.value
+                  )
+                  )
+              }
+              className="border p-2 w-full"
+              >
+              <option value="">Select Flight</option>
+              {flightOptions.map((flight) => (
+                  <option key={flight.flight_number} value={flight.flight_number}>
+                  {flight.flight_number}
+                  </option>
+              ))}
+              </select>
+            </div>
+
+            <div>
+              <label>Departure Date and Time:</label>
+              <input
+              type="text"
+              id="departureDate"
+              name="departureDate"
+              value={departureDate}
+              readOnly
+              className="border p-2 w-full"
+              disabled
+              />
+            </div>
+
+            <div>
+            <label>Estimated Arrival Date and Time:</label>
+            </div>
+            <div>
+            <label>Aircraft</label>
+            </div>
+            <div>
+              Price
+            </div>
+            <div>
+              Base Price
+            </div>
+            <div>
+              Administrative Cost
+            </div>
+            <div>
+              Seat Fee
+            </div>
+            <div>
+              Meals
+            </div>
 
 
-                    <div className="container mx-auto mt-8">
-                    <div className="form-control">
-                    <label className="label cursor-pointer">
-                        <div className="flex">
-                        <div>
-                            <span className="label-text mr-3">Book for yourself?</span>
-                        </div>
-                        <div>
-                            <input
-                            type="checkbox"
-                            className="toggle"
-                            name="bookForMyself"
-                            checked={bookForMyself}
-                            onChange={handleBookForMyselfChange}
-                            />
-                        </div>
-                        </div>
-                    </label>
-                    </div>
-                    <h1 className="text-3xl font-semibold mb-4">Flight Booking</h1>
-                    <div className="mb-4">
-                    <h2 className="text-xl font-semibold mb-2">Passenger Details</h2>
-                    <div className="grid grid-cols-2 gap-4">
-                        <div>
-                        <label htmlFor="firstName">First Name:</label>
-                        <input
-                            type="text"
-                            id="firstName"
-                            name="firstName"
-                            value={firstName}
-                            onChange={(e) => setFirstName(e.target.value)}
-                            className="border p-2 w-full"
-                            required
-                        />
-                        </div>
-                        <div>
-                        <label htmlFor="middleName">Middle Name:</label>
-                        <input
-                            type="text"
-                            id="middleName"
-                            name="middleName"
-                            value={middleName}
-                            onChange={(e) => setMiddleName(e.target.value)}
-                            className="border p-2 w-full"
-                        />
-                        </div>
-                        <div>
-                        <label htmlFor="lastName">Last Name:</label>
-                        <input
-                            type="text"
-                            id="lastName"
-                            name="lastName"
-                            value={lastName}
-                            onChange={(e) => setLastName(e.target.value)}
-                            className="border p-2 w-full"
-                            required
-                        />
-                        </div>
-                        <div>
-                        <label htmlFor="birthDate">Birth Date:</label>
-                        <input
-                            type="date"
-                            id="birthDate"
-                            name="birthDate"
-                            value={birthDate}
-                            onChange={(e) => setBirthDate(e.target.value)}
-                            className="border p-2 w-full"
-                            required
-                        />
-                        </div>
-                        <div>
-                        <label htmlFor="gender">Gender:</label>
-                        <select
-                            id="gender"
-                            name="gender"
-                            value={gender}
-                            onChange={(e) => setGender(e.target.value)}
-                            className="border p-2 w-full"
-                            required
-                        >
-                            <option value="">Select Gender</option>
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                        </select>
-                        </div>
-                        <div>
-                        <label htmlFor="isDiscounted">Check if Senior or PWD</label>
-                        <input
-                            type="checkbox"
-                            id="isDiscounted"
-                            name="isDiscounted"
-                            checked={isDiscounted}
-                            onChange={(e) => setIsDiscounted(e.target.checked)}
-                        />
-                        </div>
-                        <div>
-                        <label htmlFor="baggageQuantity">Baggage Quantity:</label>
-                        <input
-                            type="number"
-                            id="baggageQuantity"
-                            name="baggageQuantity"
-                            value={baggageQuantity}
-                            onChange={(e) => setBaggageQuantity(parseInt(e.target.value))}
-                            className="border p-2 w-full"
-                        />
-                        </div>
-                    </div>
-                    </div>
             
-                    <div>
-                        <button
-                            onClick={handleSubmit}
-                            className="btn btn-primary"
-                        >
-                            Book Flight
-                        </button>
-                    </div>
+          </div>
+
+          <div className="hero-content flex flex-col lg:text-left bg-base-100">
+
+            <h1 className="text-3xl font-semibold mb-4">Flight Booking</h1>
+            <h2 className="text-xl font-semibold mb-2">Passenger Details</h2>
+             <label className="label cursor-pointer flex-1 w-full">
+                <div className="flex">
+                <div>
+                    <span className="label-text mr-3">Book for yourself?</span>
                 </div>
-               
+                <div>
+                    <input
+                    type="checkbox"
+                    className="toggle"
+                    name="bookForMyself"
+                    checked={bookForMyself}
+                    onChange={handleBookForMyselfChange}
+                    />
+                </div>
+                </div>
+            </label>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label>First Name</label>
+                <input
+                    type="text"
+                    id="firstName"
+                    name="firstName"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    className="border p-2 w-full"
+                    required
+                />
+              </div>
+              <div>
+                <label>Middle Name</label>
+                <input
+                    type="text"
+                    id="middleName"
+                    name="middleName"
+                    value={middleName}
+                    onChange={(e) => setMiddleName(e.target.value)}
+                    className="border p-2 w-full"
+                />
+              </div>
+              <div>
+                <label>Last Name</label>
+                <input
+                    type="text"
+                    id="lastName"
+                    name="lastName"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    className="border p-2 w-full"
+                    required
+                />
+              </div>
+              <div>
+                <label>Birth Date</label>
+                <input
+                    type="date"
+                    id="birthDate"
+                    name="birthDate"
+                    value={birthDate}
+                    onChange={(e) => setBirthDate(e.target.value)}
+                    className="border p-2 w-full"
+                    required
+                />
+              </div>
+              <div>
+                <label>Gender</label>
+                <select
+                    id="gender"
+                    name="gender"
+                    value={gender}
+                    onChange={(e) => setGender(e.target.value)}
+                    className="border p-2 w-full"
+                    required
+                >
+                    <option value="">Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+              </div>
+              <div className="flex place-items-center justify-center ">
+                <div className="flex justify-center items-center">
+                <input
+                      type="checkbox"
+                      id="isDiscounted"
+                      name="isDiscounted"
+                      checked={isDiscounted}
+                      onChange={(e) => setIsDiscounted(e.target.checked)}
+                      className="mr-3"
+                  />
+                  <label>PWD or Senior Citizen?</label>
+                </div>
+              </div>
+              <div>
+                <label>Baggage Quantity:</label>
+                <input
+                    type="number"
+                    id="baggageQuantity"
+                    name="baggageQuantity"
+                    value={baggageQuantity}
+                    onChange={(e) => setBaggageQuantity(parseInt(e.target.value))}
+                    className="border p-2 w-full"
+                />
+              </div>
+              <div className="flex place-items-center justify-center">
                 <Drawer>
-                
-                <DrawerTrigger asChild>
-                    <button className="btn btn-primary">Open Seat Selection</button>
-                </DrawerTrigger>
+                  <DrawerTrigger asChild>
+                      <button className="btn btn-primary">Open Seat Selection</button>
+                  </DrawerTrigger>
                   <DrawerContent>
-                  <div className="bg-base-100">
-                    <SeatSelection addAlert={addAlert} />
-                    <DrawerFooter>
-                      <DrawerClose asChild>
-                        <button className="btn btn-primary">Cancel</button>
-                      </DrawerClose>
-                    </DrawerFooter>
+                    <div className="bg-base-100">
+                        <SeatSelection addAlert={addAlert} />
+                      <DrawerFooter>
+                        <DrawerClose asChild>
+                          <button className="btn btn-primary">Cancel</button>
+                        </DrawerClose>
+                      </DrawerFooter>
                     </div>
                   </DrawerContent>
-                  
                 </Drawer>
-
-                
-            </>
-    );
-  };
+              </div>
+            </div>
+            <div>
+            <button
+                onClick={handleSubmit}
+                className="btn btn-primary"
+            >
+                Book Flight
+            </button>
+          </div>
+          </div>
+        </div>
+      </div>               
+    </>
+  );
+};
 
 export default FlightBookings;
