@@ -3,7 +3,6 @@ const backendBaseUrl = import.meta.env.VITE_BACKEND_BASE_URL;
 const token = document.cookie.split("token=")[1];
 axios.defaults.headers.common["Authorization"] = token;
 
-
 export const indexFlightsApi = async () => {
   try {
     const response = await axios.get(`${backendBaseUrl}/api/flights`);

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import Navbar from "./home/navbar";
 import { useNavigate } from "react-router-dom";
 import { flightsApi, indexFlightsApi } from "../lib/flightsapi";
+import Footer from "./home/footer";
 
 const FlightsSearchComponent = () => {
   const [origin_location, setOrigin_location] = useState("");
@@ -123,7 +124,7 @@ const FlightsSearchComponent = () => {
         </div>
       </div>
 
-      {isInitialLoad && initialLoadFlights.length > 0 && (
+      {isInitialLoad && initialLoadFlights.length >= 0 && (
         <div className="overflow-x-auto mt-4">
           <table className="table table-zebra table-pin-cols">
             <thead>
@@ -182,6 +183,9 @@ const FlightsSearchComponent = () => {
           </table>
         </div>
       )}
+      <div>
+        <Footer />
+      </div>
     </>
   );
 };

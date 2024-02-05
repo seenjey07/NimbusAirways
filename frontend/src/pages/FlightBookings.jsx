@@ -202,7 +202,7 @@ const FlightBookings = ({ addAlert }) => {
             <div>Meals</div>
           </div>
 
-          <div className="hero-content flex flex-col lg:text-left bg-base-100">
+          <div className="hero-content card flex flex-col lg:text-left bg-base-100">
             <h1 className="text-3xl font-bold mb-4">Flight Booking</h1>
             <h2 className="text-xl font-semibold mb-2">Passenger Details</h2>
             <label className="label cursor-pointer flex-1 w-full">

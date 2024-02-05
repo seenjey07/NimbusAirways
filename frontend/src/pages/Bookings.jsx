@@ -107,8 +107,13 @@ const BookingsComponent = () => {
                 <h2 className="card-title">
                   You currently have no bookings. Plan your next trip with us!
                 </h2>
-                <div className="label-text-alt link link-hover btn btn-warning">
-                  <button onClick={handleCreateBooking}>Create</button>
+                <div className="label-text-alt link link-hover">
+                  <button
+                    onClick={handleCreateBooking}
+                    className="btn btn-warning"
+                  >
+                    Create
+                  </button>
                 </div>
               </div>
             </div>
