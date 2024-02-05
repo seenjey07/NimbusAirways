@@ -6,6 +6,7 @@ class CreateBookings < ActiveRecord::Migration[7.1]
       t.boolean :is_confirmed, default: false
       t.datetime :confirmation_date
       t.references :flight, foreign_key: true
+      t.integer :total_passengers, default: 0
 
       t.timestamps
     end

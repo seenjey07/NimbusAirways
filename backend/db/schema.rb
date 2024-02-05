@@ -28,6 +28,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_30_133933) do
     t.boolean "is_confirmed", default: false
     t.datetime "confirmation_date"
     t.bigint "flight_id"
+    t.integer "total_passengers", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["flight_id"], name: "index_bookings_on_flight_id"
@@ -67,6 +68,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_30_133933) do
     t.date "birth_date"
     t.string "gender"
     t.boolean "is_discounted", default: false
+    t.integer "baggage_quantity", default: 0
     t.bigint "booking_id"
     t.bigint "meal_id"
     t.bigint "seat_id"
@@ -95,9 +97,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_30_133933) do
     t.string "seat_letter"
     t.boolean "is_available", default: true
     t.bigint "aircraft_id"
+    t.bigint "flight_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["aircraft_id"], name: "index_seats_on_aircraft_id"
+    t.index ["flight_id"], name: "index_seats_on_flight_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -132,4 +136,5 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_30_133933) do
   add_foreign_key "passengers", "meals"
   add_foreign_key "passengers", "seats"
   add_foreign_key "seats", "aircrafts"
+  add_foreign_key "seats", "flights"
 end

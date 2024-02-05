@@ -21,10 +21,6 @@ const DeleteBookingButton = ({ onDeleteBooking }) => {
   return <button onClick={onDeleteBooking}>Delete</button>;
 };
 
-const CreateBookingButton = ({ onCreateBooking }) => {
-  return <button onClick={onCreateBooking}>Book a flight</button>;
-};
-
 const BookingsComponent = () => {
   const [bookings, setBookings] = useState([]);
   const [error, setError] = useState(null);
@@ -34,7 +30,8 @@ const BookingsComponent = () => {
     const fetchBookings = async () => {
       try {
         const res = await indexBookingsApi();
-        setBookings(res);
+        console.log("User Bookings API response:", res.data);
+        setBookings(res.data);
         setError(null);
       } catch (error) {
         console.error("Error retrieving bookings:", error);
@@ -93,6 +90,10 @@ const BookingsComponent = () => {
     }
   };
 
+
+  const onCreateBooking = () => {
+    navigate('/bookings/create');
+  }
   return (
     <>
       <div>
@@ -121,7 +122,7 @@ const BookingsComponent = () => {
                   <th>Booking Reference</th>
                   <th>Origin Location</th>
                   <th>Destination Location</th>
-                  <th>Date of Departure</th>
+                  <th>Departure Date</th>
                   <th>Actions</th>
                 </tr>
               </thead>
