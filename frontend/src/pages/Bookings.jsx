@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   indexBookingsApi,
-  createBookingApi,
   showBookingApi,
   updateBookingApi,
   destroyBookingApi,
@@ -51,23 +50,27 @@ const BookingsComponent = () => {
     }
   };
 
-  const handleCreateBooking = async () => {
-    try {
-      const bookingData = {
-        is_confirmed: bookings.is_confirmed,
-        confirmation_date: bookings.confirmation_date,
-        booking_reference: bookings.booking_reference,
-      };
-      console.log("Create Booking API data:", bookingData);
-
-      const res = await createBookingApi();
-      console.log("Create Booking API response:", res);
-      alert("Booking created successfully");
-    } catch (error) {
-      console.error("Error creating booking:", error);
-      throw error;
-    }
+  const handleCreateBooking = () => {
+    navigate("/bookings/create_booking");
   };
+
+  // const handleCreateBooking = async () => {
+  //   try {
+  //     const bookingData = {
+  //       is_confirmed: bookings.is_confirmed,
+  //       confirmation_date: bookings.confirmation_date,
+  //       booking_reference: bookings.booking_reference,
+  //     };
+  //     console.log("Create Booking API data:", bookingData);
+
+  //     const res = await createBookingApi();
+  //     console.log("Create Booking API response:", res);
+  //     alert("Booking created successfully");
+  //   } catch (error) {
+  //     console.error("Error creating booking:", error);
+  //     throw error;
+  //   }
+  // };
 
   const handleUpdateBooking = async (booking_reference) => {
     try {
@@ -90,10 +93,6 @@ const BookingsComponent = () => {
     }
   };
 
-
-  const onCreateBooking = () => {
-    navigate('/bookings/create');
-  }
   return (
     <>
       <div>
@@ -109,7 +108,7 @@ const BookingsComponent = () => {
                   You currently have no bookings. Plan your next trip with us!
                 </h2>
                 <div className="label-text-alt link link-hover btn btn-warning">
-                  <CreateBookingButton onCreateBooking={handleCreateBooking} />
+                  <button onClick={handleCreateBooking}>Create</button>
                 </div>
               </div>
             </div>
