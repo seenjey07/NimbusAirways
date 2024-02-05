@@ -51,7 +51,7 @@ const Login = ({addAlert}) => {
 
   return (
     <>
-      <div className="hero min-h-screen bg-base-200">
+      <div className="hero min-h-screen bg-base-100">
         <div className="hero-content flex-col lg:flex-row-reverse gap-16">
           <div className="text-center lg:text-left">
             <div className="flex">
@@ -115,13 +115,13 @@ const Login = ({addAlert}) => {
             <div className="flex justify-center mb-3">
               <label className="label">
                 <span className="label-text-alt mr-1">
-                  Dont have an account?
+                  Don't have an account?
                 </span>
                 <button
                   className="label-text-alt link link-hover"
                   onClick={handleSignUp}
                 >
-                  Register here
+                  Register here.
                 </button>
               </label>
             </div>

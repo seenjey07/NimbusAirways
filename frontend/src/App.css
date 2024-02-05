@@ -1,6 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+::placeholder {
+  color: black;
+}
+
+label,
+.navbar {
+  font-weight: bold;
+}
  
 /* @layer base {
   :root {
