@@ -114,8 +114,8 @@ const BookingsComponent = () => {
             </div>
           </div>
         ) : (
-          <div class="overflow-x-auto">
-            <table class="table table-zebra table-pin-cols">
+          <div className="overflow-x-auto">
+            <table className="table table-zebra table-pin-cols">
               <thead>
                 <tr>
                   <th>Booking Reference</th>
