@@ -20,6 +20,7 @@ const FlightBookings = ({ addAlert }) => {
   const [gender, setGender] = useState("");
   const [isDiscounted, setIsDiscounted] = useState(false);
   const [baggageQuantity, setBaggageQuantity] = useState(0);
+  const [seatData, setSeatData] = useState()
 
   const [originFlight, setOriginFlight] = useState("");
   const [departureDate, setDepartureDate] = useState("");
@@ -102,28 +103,38 @@ const FlightBookings = ({ addAlert }) => {
     }
   };
 
+  
+  
   const handleSubmit = async () => {
+    const selectedFlight = flightOptions.find(
+      (flight) => flight.flight_number === originFlight
+    );
+    const seatLetter = seatData.charAt(0);
+    const seatNumber = seatData.slice(1);
     const bookingData = {
-      flight_id: flightOptions.find(
-        (flight) => flight.flight_number === originFlight
-      )?.flight_id,
-      total_passengers: 1,
       booking: {
-        passengers: [
-          {
-            first_name: firstName,
-            middle_name: middleName,
-            last_name: lastName,
-            birth_date: birthDate,
-            gender: gender,
-            is_discounted: isDiscounted,
-            baggage_quantity: baggageQuantity,
-          },
-        ],
+        flight_id: selectedFlight?.flight_id,
+        total_passengers: 1,
       },
+      passengers: [
+        {
+          first_name: firstName,
+          last_name: lastName,
+          birth_date: birthDate,
+          gender: gender,
+          is_discounted: isDiscounted,
+          baggage_quantity: baggageQuantity,
+        },
+      ],
+      seats: [
+        {
+          seat_number: seatNumber,
+          seat_letter: seatLetter,
+          is_available: false,
+        },
+      ],
     };
-    console.log("flightid", bookingData.flight_id);
-
+  
     try {
       await createUserBookingApi(bookingData);
       addAlert("success", "Booking created successfully");
@@ -139,6 +150,11 @@ const FlightBookings = ({ addAlert }) => {
     setArrivalDate(selectedFlight.arrival_date);
   };
   ///END OF TEMPORARY CODE HERE ///
+
+  const handleSeatSelect = (seatData) => {
+    setSeatData(seatData)
+    console.log('Setter Seat Data', seatData)
+  };
 
   return (
     <>
@@ -317,7 +333,7 @@ const FlightBookings = ({ addAlert }) => {
                   </DrawerTrigger>
                   <DrawerContent>
                     <div className="bg-base-100">
-                      <SeatSelection addAlert={addAlert} />
+                      <SeatSelection addAlert={addAlert} onSeatSelect={handleSeatSelect} />
                       <DrawerFooter>
                         <DrawerClose asChild>
                           <button className="btn btn-primary">Cancel</button>
