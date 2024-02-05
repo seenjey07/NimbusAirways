@@ -1,29 +1,33 @@
 import { signUpApi } from "../lib/authenticationapi";
 import { useNavigate } from "react-router-dom";
-const Registration = () => {
+import logoImage from "../assets/logo.png";
 
+const Registration = () => {
   const navigate = useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault();
     const result = await signUpApi(event);
-    
 
-    if (result.response && result.response.data && result.response.data.status.code === 200) {
+    if (
+      result.response &&
+      result.response.data &&
+      result.response.data.status.code === 200
+    ) {
       console.error(result.response.data.status.message);
     } else if (result.data) {
-      console.log('Registration successful', result.data);
-      navigate('/login')
+      console.log("Registration successful", result.data);
+      navigate("/login");
     } else {
-      console.error('Registration failed');
+      console.error("Registration failed");
     }
   };
-  
+
   return (
     <>
+      <figure>
+        <img src={logoImage} alt="Logo" />
+      </figure>
       <div className="card lg:card-side bg-base-100 shadow-xl">
-        <figure>
-          <img src="" alt="Lologo" />
-        </figure>
         <form className="card-body" onSubmit={handleSubmit}>
           <h2 className="card-title justify-center">Register Now</h2>
           <div className="flex justify-center gap-5">
@@ -163,22 +167,24 @@ const Registration = () => {
           </div>
 
           <div className="card-actions justify-center mt-12">
-            <button className="btn btn-primary" type="submit">Submit</button>
+            <button className="btn btn-primary" type="submit">
+              Submit
+            </button>
           </div>
 
           <div className="flex justify-center mb-3">
-              <label className="label">
-                <span className="label-text-alt mr-1">
-                  Already have an account?
-                </span>
-                <button
-                  className="label-text-alt link link-hover"
-                  onClick={() => navigate('/login')}
-                >
-                  Login here
-                </button>
-              </label>
-            </div>
+            <label className="label">
+              <span className="label-text-alt mr-1">
+                Already have an account?
+              </span>
+              <button
+                className="label-text-alt link link-hover"
+                onClick={() => navigate("/login")}
+              >
+                Login here.
+              </button>
+            </label>
+          </div>
         </form>
       </div>
     </>
