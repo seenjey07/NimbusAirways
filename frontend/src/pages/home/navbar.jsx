@@ -13,6 +13,7 @@ const Navbar = () => {
   const isDashboardPage = location.pathname === "/my_dashboard";
   const isFlightsPage = location.pathname === "/flight_search";
   const isBookingsPage = location.pathname === "/bookings";
+  const isCreateBookingPage = location.pathname === "/bookings/create_booking";
 
   return (
     <div className="navbar m-0 bg-base-100 underline shadow">
@@ -55,7 +56,7 @@ const Navbar = () => {
               </li>
             </>
           )}
-          {isBookingsPage && (
+          {(isBookingsPage || isCreateBookingPage) && (
             <>
               <li>
                 <a onClick={() => navigate("/bookings")}>Bookings</a>
