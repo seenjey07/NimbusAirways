@@ -24,8 +24,8 @@ const Registration = () => {
 
   return (
     <>
-      <figure>
-        <img src={logoImage} alt="Logo" />
+      <figure className="flex mt-2 items-center justify-center">
+        <img src={logoImage} alt="Logo" className="w-32 h-auto" />
       </figure>
       <div className="card lg:card-side bg-base-100 shadow-xl">
         <form className="card-body" onSubmit={handleSubmit}>

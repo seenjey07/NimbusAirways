@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const Login = ({addAlert}) => {
+const Login = ({ addAlert }) => {
   const backendBaseUrl = import.meta.env.VITE_BACKEND_BASE_URL;
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
@@ -32,12 +32,12 @@ const Login = ({addAlert}) => {
       const token = res.headers.authorization;
       const user_id = res.data.data;
 
-      console.log('user_id', user_id)
-      console.log('token', token)
+      console.log("user_id", user_id);
+      console.log("token", token);
       document.cookie = `token=${token};path=/`;
       document.cookie = `user_id=${user_id};path=/`;
       addAlert("success", "Login successful");
-      navigate('/bookings')
+      navigate("/bookings");
       return res;
     } catch (error) {
       addAlert("error", "Login failed. Incorect email or password");
