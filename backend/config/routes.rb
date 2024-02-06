@@ -11,7 +11,9 @@ Rails.application.routes.draw do
 ########################### USER ROUTES #########################################
     get 'api/routes', to: 'routes#index'
     get 'api/flights', to: 'flights#index'
+    get 'api/indexedflights', to: 'flights#indexed_flights'
     post 'api/flights', to: 'flights#flight_search'
+
 
     get 'api/user', to: 'users#show'
     post 'api/book', to: 'bookings#create_booking'
@@ -21,7 +23,7 @@ Rails.application.routes.draw do
 
     resources :bookings, only: [:show, :create, :update, :destroy], path: 'api/bookings'
 ########################### END OF USER ROUTES #################################
-  ## ADMIN ROUTES ##
+###########################  ADMIN ROUTES ######################################
   get '/admin/users', to: 'admins#index_users'
 
   get '/admin/flights', to: 'admins_flight#index'
@@ -34,7 +36,10 @@ Rails.application.routes.draw do
   post '/admin/routes', to: 'admins_route#create_route'
 
   get '/admin/bookings', to: 'admins#index_bookings'
+  get '/admin/aircrafts', to: 'admins#index_aircrafts'
 
   get '/admin/passengers', to: 'admins#index_passengers'
   get "up" => "rails/health#show", as: :rails_health_check
+
+################################ END OF ADMIN ROUTES ################################
 end

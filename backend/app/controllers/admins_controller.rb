@@ -37,6 +37,13 @@ class AdminsController < ApplicationController
   end
  ## END OF PASSENGERS ##
 
+  ## PASSENGERS ##
+  def index_aircrafts
+    @aircrafts = Aircraft.all
+    render json: @aircrafts
+  end
+ ## END OF PASSENGERS ##
+
 
   private
 

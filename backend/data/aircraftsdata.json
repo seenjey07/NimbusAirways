@@ -5,13 +5,38 @@
     "seat_capacity": 133
   },
   {
+    "model": "A220-100",
+    "family": "Airbus",
+    "seat_capacity": 133
+  },
+  {
+    "model": "A320neo",
+    "family": "Airbus",
+    "seat_capacity": 180
+  },
+  {
+    "model": "A320neo",
+    "family": "Airbus",
+    "seat_capacity": 180
+  },
+  {
+    "model": "A220-100",
+    "family": "Airbus",
+    "seat_capacity": 133
+  },
+  {
+    "model": "A220-100",
+    "family": "Airbus",
+    "seat_capacity": 133
+  },
+  {
     "model": "ATR 72-600",
     "family": "Firefly",
     "seat_capacity": 72
   },
   {
-    "model": "A320-200",
-    "family": "Airbus",
-    "seat_capacity": 180
+    "model": "ATR 72-600",
+    "family": "Firefly",
+    "seat_capacity": 72
   }
 ]

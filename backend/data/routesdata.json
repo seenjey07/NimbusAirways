@@ -24,7 +24,7 @@
     "destination_location": "Puerto Prinsesa",
     "destination_code": "PPS",
     "destination_name": "Puerto Prinsesa International Airport",
-    "price": 4000.0
+    "price": 2300.0
   },
   {
     "origin_location": "Puerto Prinsesa",
@@ -33,7 +33,7 @@
     "destination_location": "Manila",
     "destination_code": "MNL",
     "destination_name": "Ninoy Aquino International Airport",
-    "price": 4000.0
+    "price": 2300.0
   },
   {
     "origin_location": "Manila",
@@ -42,7 +42,7 @@
     "destination_location": "Cebu",
     "destination_code": "CEB",
     "destination_name": "Mactan-Cebu International Airport",
-    "price": 4000.0
+    "price": 1700.0
   },
   {
     "origin_location": "Cebu",
@@ -51,7 +51,7 @@
     "destination_location": "Manila",
     "destination_code": "MNL",
     "destination_name": "Ninoy Aquino International Airport",
-    "price": 4000.0
+    "price": 1700.0
   },
   {
     "origin_location": "Manila",
@@ -60,7 +60,7 @@
     "destination_location": "Davao",
     "destination_code": "DVO",
     "destination_name": "Francisco Bangoy International Airport",
-    "price": 4000.0
+    "price": 2600.0
   },
   {
     "origin_location": "Davao",
@@ -69,7 +69,7 @@
     "destination_location": "Manila",
     "destination_code": "MNL",
     "destination_name": "Ninoy Aquino International Airport",
-    "price": 4000.0
+    "price": 2600.0
   },
   {
     "origin_location": "Manila",
@@ -78,7 +78,7 @@
     "destination_location": "Tagbilaran",
     "destination_code": "TAG",
     "destination_name": "Bohol-Panglao International Airport",
-    "price": 4000.0
+    "price": 3200.0
   },
   {
     "origin_location": "Tagbilaran",
@@ -87,7 +87,7 @@
     "destination_location": "Manila",
     "destination_code": "MNL",
     "destination_name": "Ninoy Aquino International Airport",
-    "price": 4000.0
+    "price": 3200.0
   },
   {
     "origin_location": "Manila",
@@ -96,7 +96,7 @@
     "destination_location": "Bacolod",
     "destination_code": "BCD",
     "destination_name": "Bacolod-Silay International Airport",
-    "price": 4000.0
+    "price": 3600.0
   },
   {
     "origin_location": "Bacolod",
@@ -105,7 +105,7 @@
     "destination_location": "Manila",
     "destination_code": "MNL",
     "destination_name": "Ninoy Aquino International Airport",
-    "price": 4000.0
+    "price": 3600.0
   },
   {
     "origin_location": "Manila",

@@ -5,6 +5,23 @@ class FlightsController < ApplicationController
     render json: { flights: flights.collect { |flight| render_json(flight) } }
   end
 
+  def indexed_flights
+    today = Date.today
+    start_date = today + 7
+    end_date = today + 14
+
+    @routes = Route.all
+    @flights = []
+
+    @routes.each do |route|
+      flight = route.flights.where(departure_date: start_date..end_date).order('RANDOM()').limit(1).first
+      @flights << { routes: route, flights: flight } if flight
+    end
+
+    render json: @flights
+  end
+
+
   def flight_search
     origin_location = params[:origin_location]
     destination_location = params[:destination_location]
