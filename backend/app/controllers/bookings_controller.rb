@@ -52,9 +52,6 @@ class BookingsController < ApplicationController
   end
 
 
-
-
-
   def show
     @booking = current_user.bookings.find_by(params[:booking_reference])
     render json: @booking
@@ -108,6 +105,4 @@ class BookingsController < ApplicationController
       }
     end
   end
-
-
 end

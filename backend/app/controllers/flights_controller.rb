@@ -1,8 +1,8 @@
 class FlightsController < ApplicationController
-  
+
   def index
     flights = Flight.all
-    render json: { flights: flights }
+    render json: { flights: flights.collect { |flight| render_json(flight) } }
   end
 
   def flight_search
@@ -20,9 +20,20 @@ class FlightsController < ApplicationController
     flights = Flight.joins(:route).where(routes: { origin_location: origin_location, destination_location: destination_location })
                       .where('DATE(departure_date) = ?', search_date)
 
-    routes = Route.where(origin_location: origin_location, destination_location: destination_location)
+    render json: { flights: flights.collect { |flight| render_json(flight) } }
+  end
 
-    render json: { flights: flights, routes: routes }
+  private
+
+  def render_json(flight)
+    {
+      flight_number: flight.flight_number,
+      departure_date: flight.departure_date,
+      arrival_date: flight.arrival_date,
+      origin_location: flight.route.origin_location,
+      destination_location: flight.route.destination_location,
+      price: flight.route.price
+    }
   end
 
 end

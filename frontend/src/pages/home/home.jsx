@@ -76,7 +76,6 @@ const Home = () => {
       >
         <video
           src={homepageVideo}
-          controls
           autoPlay
           loop
           muted
