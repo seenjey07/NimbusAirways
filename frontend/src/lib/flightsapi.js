@@ -43,4 +43,12 @@ export const flightsApi = async ({
   }
 };
 
+export const indexedRoutesApi = async () => {
+  try {
+    const response = await axios.get(`${backendBaseUrl}/api/routes`, {});
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+}; 
 

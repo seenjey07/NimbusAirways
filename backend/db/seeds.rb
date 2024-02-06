@@ -41,7 +41,7 @@ flightsdata = JSON.parse(json_data)
 flightsdata.each do |flight|
   Flight.create(flight)
 end
-puts "Finally. Flight Data successfuly imported"
+puts "Flight Data successfuly imported"
 
 
 
@@ -179,7 +179,7 @@ puts "Finally. Flight Data successfuly imported"
 #       arrival_time = departure_time + 1.hour + 30.minutes
 
 #       departure_flight_data = {
-#         flight_number: "NA#{month}#{day}#{hour}",
+#         flight_number: "NA11#{month}#{day}#{hour}",
 #         route_id: 1,
 #         departure_date: departure_time,
 #         arrival_date: arrival_time,
@@ -201,7 +201,7 @@ puts "Finally. Flight Data successfuly imported"
 #       return_arrival_time = return_departure_time + 1.hours + 30.minutes
 
 #       return_flight_data = {
-#         flight_number: "NA#{month}#{day}#{hour}",
+#         flight_number: "NA12#{month}#{day}#{hour}",
 #         route_id: 2,
 #         departure_date: return_departure_time,
 #         arrival_date: return_arrival_time,
@@ -250,7 +250,7 @@ puts "Finally. Flight Data successfuly imported"
 #       arrival_time = departure_time + 1.hours + 50.minutes
 
 #       departure_flight_data = {
-#         flight_number: "NA#{month}#{day}#{hour}",
+#         flight_number: "NA23#{month}#{day}#{hour}",
 #         route_id: 3,
 #         departure_date: departure_time,
 #         arrival_date: arrival_time,
@@ -272,7 +272,7 @@ puts "Finally. Flight Data successfuly imported"
 #       return_arrival_time = return_departure_time + 1.hours + 50.minutes
 
 #       return_flight_data = {
-#         flight_number: "NA#{month}#{day}#{hour}",
+#         flight_number: "NA24#{month}#{day}#{hour}",
 #         route_id: 4,
 #         departure_date: return_departure_time,
 #         arrival_date: return_arrival_time,
@@ -321,7 +321,7 @@ puts "Finally. Flight Data successfuly imported"
 #       arrival_time = departure_time + 1.hours + 55.minutes
 
 #       departure_flight_data = {
-#         flight_number: "NA#{month}#{day}#{hour}",
+#         flight_number: "NA35#{month}#{day}#{hour}",
 #         route_id: 5,
 #         departure_date: departure_time,
 #         arrival_date: arrival_time,
@@ -343,7 +343,7 @@ puts "Finally. Flight Data successfuly imported"
 #       return_arrival_time = return_departure_time + 1.hours + 55.minutes
 
 #       return_flight_data = {
-#         flight_number: "NA#{month}#{day}#{hour}",
+#         flight_number: "NA36#{month}#{day}#{hour}",
 #         route_id: 6,
 #         departure_date: return_departure_time,
 #         arrival_date: return_arrival_time,
@@ -392,7 +392,7 @@ puts "Finally. Flight Data successfuly imported"
 #       arrival_time = departure_time + 2.hours + 20.minutes
 
 #       departure_flight_data = {
-#         flight_number: "NA#{month}#{day}#{hour}",
+#         flight_number: "NA47#{month}#{day}#{hour}",
 #         route_id: 7,
 #         departure_date: departure_time,
 #         arrival_date: arrival_time,
@@ -414,7 +414,7 @@ puts "Finally. Flight Data successfuly imported"
 #       return_arrival_time = return_departure_time + 2.hours + 20.minutes
 
 #       return_flight_data = {
-#         flight_number: "NA#{month}#{day}#{hour}",
+#         flight_number: "NA48#{month}#{day}#{hour}",
 #         route_id: 8,
 #         departure_date: return_departure_time,
 #         arrival_date: return_arrival_time,
@@ -463,7 +463,7 @@ puts "Finally. Flight Data successfuly imported"
 #       arrival_time = departure_time + 1.hours + 55.minutes
 
 #       departure_flight_data = {
-#         flight_number: "NA#{month}#{day}#{hour}",
+#         flight_number: "NA59#{month}#{day}#{hour}",
 #         route_id: 9,
 #         departure_date: departure_time,
 #         arrival_date: arrival_time,
@@ -485,7 +485,7 @@ puts "Finally. Flight Data successfuly imported"
 #       return_arrival_time = return_departure_time + 1.hours + 55.minutes
 
 #       return_flight_data = {
-#         flight_number: "NA#{month}#{day}#{hour}",
+#         flight_number: "NA510#{month}#{day}#{hour}",
 #         route_id: 10,
 #         departure_date: return_departure_time,
 #         arrival_date: return_arrival_time,
@@ -534,7 +534,7 @@ puts "Finally. Flight Data successfuly imported"
 #       arrival_time = departure_time + 1.hours + 40.minutes
 
 #       departure_flight_data = {
-#         flight_number: "NA#{month}#{day}#{hour}",
+#         flight_number: "NA611#{month}#{day}#{hour}",
 #         route_id: 11,
 #         departure_date: departure_time,
 #         arrival_date: arrival_time,
@@ -556,7 +556,7 @@ puts "Finally. Flight Data successfuly imported"
 #       return_arrival_time = return_departure_time + 1.hours + 40.minutes
 
 #       return_flight_data = {
-#         flight_number: "NA#{month}#{day}#{hour}",
+#         flight_number: "NA612#{month}#{day}#{hour}",
 #         route_id: 12,
 #         departure_date: return_departure_time,
 #         arrival_date: return_arrival_time,
@@ -605,7 +605,7 @@ puts "Finally. Flight Data successfuly imported"
 #       arrival_time = departure_time + 1.hours + 30.minutes
 
 #       departure_flight_data = {
-#         flight_number: "NA#{month}#{day}#{hour}",
+#         flight_number: "NA713#{month}#{day}#{hour}",
 #         route_id: 13,
 #         departure_date: departure_time,
 #         arrival_date: arrival_time,
@@ -627,7 +627,7 @@ puts "Finally. Flight Data successfuly imported"
 #       return_arrival_time = return_departure_time + 1.hours + 30.minutes
 
 #       return_flight_data = {
-#         flight_number: "NA#{month}#{day}#{hour}",
+#         flight_number: "NA714#{month}#{day}#{hour}",
 #         route_id: 14,
 #         departure_date: return_departure_time,
 #         arrival_date: return_arrival_time,
@@ -676,7 +676,7 @@ puts "Finally. Flight Data successfuly imported"
 #       arrival_time = departure_time + 2.hours + 35.minutes
 
 #       departure_flight_data = {
-#         flight_number: "NA#{month}#{day}#{hour}",
+#         flight_number: "NA815#{month}#{day}#{hour}",
 #         route_id: 15,
 #         departure_date: departure_time,
 #         arrival_date: arrival_time,
@@ -698,7 +698,7 @@ puts "Finally. Flight Data successfuly imported"
 #       return_arrival_time = return_departure_time + 2.hours + 35.minutes
 
 #       return_flight_data = {
-#         flight_number: "NA#{month}#{day}#{hour}",
+#         flight_number: "NA816#{month}#{day}#{hour}",
 #         route_id: 16,
 #         departure_date: return_departure_time,
 #         arrival_date: return_arrival_time,

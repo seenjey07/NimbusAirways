@@ -72,7 +72,7 @@ class BookingsController < ApplicationController
     "NA#{random_number}#{random_letters1}#{random_number}#{random_letters2}"
   end
 
-  
+
   def show
     @booking = current_user.bookings.find_by(params[:booking_reference])
     render json: @booking
@@ -135,3 +135,4 @@ class BookingsController < ApplicationController
       }
     end
   end
+end
