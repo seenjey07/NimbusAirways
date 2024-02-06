@@ -2,7 +2,7 @@ import "../App.css";
 import React, { useState, useEffect } from "react";
 import Navbar from "./home/navbar";
 import { useNavigate } from "react-router-dom";
-import { flightsApi, indexFlightsApi } from "../lib/flightsapi";
+import { flightsApi, indexedFlightsApi } from "../lib/flightsapi";
 import Footer from "./home/footer";
 
 const FlightsSearchComponent = () => {
@@ -18,7 +18,7 @@ const FlightsSearchComponent = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const flightsData = await indexFlightsApi();
+        const flightsData = await indexedFlightsApi();
         setFlights(flightsData);
       } catch (error) {
         console.error("Error fetching initial flight information:", error);

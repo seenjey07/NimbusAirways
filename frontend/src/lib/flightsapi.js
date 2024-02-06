@@ -29,6 +29,15 @@ export const indexFlightsApi = async () => {
   }
 };
 
+export const indexedFlightsApi = async () => {
+  try {
+    const response = await axios.get(`${backendBaseUrl}/api/indexedflights`, {});
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+
 export const flightsApi = async ({
   origin_location,
   destination_location,
@@ -47,3 +56,5 @@ export const flightsApi = async ({
     throw error;
   }
 };
+
+
