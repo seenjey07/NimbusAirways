@@ -1,7 +1,6 @@
 import "../App.css";
 import React, { useState, useEffect } from "react";
 import Navbar from "./home/navbar";
-import { useNavigate } from "react-router-dom";
 import { flightsApi, indexFlightsApi } from "../lib/flightsapi";
 import Footer from "./home/footer";
 
@@ -13,13 +12,13 @@ const FlightsSearchComponent = () => {
   const [error, setError] = useState(null);
   const [initialLoadFlights, setInitialLoadFlights] = useState([]);
   const [isInitialLoad, setIsInitialLoad] = useState(true);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const flightsData = await indexFlightsApi();
-        setFlights(flightsData);
+        setInitialLoadFlights(flightsData);
+        setIsInitialLoad(true);
       } catch (error) {
         console.error("Error fetching initial flight information:", error);
         setError("Error fetching flights. Please try again.");
@@ -28,6 +27,9 @@ const FlightsSearchComponent = () => {
 
     fetchData();
   }, []);
+
+  console.log("initialLoadFlights:", initialLoadFlights);
+  console.log("isInitialLoad:", isInitialLoad);
 
   const handleSearch = async (event) => {
     event.preventDefault();
@@ -38,8 +40,9 @@ const FlightsSearchComponent = () => {
         destination_location,
         departure_date,
       });
-      console.log("Retrieved flight information: ", res.flights);
-      setFlights(res.flights);
+      console.log("Retrieved flight information: ", res);
+      setFlights(res);
+      setIsInitialLoad(false);
       setError(null);
     } catch (error) {
       console.error("Error retrieving flight information:", error);
@@ -141,11 +144,11 @@ const FlightsSearchComponent = () => {
               {initialLoadFlights.map((flight) => (
                 <tr className="hover" key={flight.flight_number}>
                   <td>{flight.flight_number}</td>
-                  <td>{flight.route.origin_location}</td>
+                  <td>{flight.origin_location}</td>
                   <td>{flight.departure_date}</td>
-                  <td>{flight.route.departure_location}</td>
+                  <td>{flight.destination_location}</td>
                   <td>{flight.arrival_date}</td>
-                  <td>{flight.route.price}</td>
+                  <td>{flight.price}</td>
                 </tr>
               ))}
             </tbody>
@@ -153,11 +156,12 @@ const FlightsSearchComponent = () => {
         </div>
       )}
 
-      {!isInitialLoad && flights.length > 0 && (
+      {!isInitialLoad && flights.length >= 1 && (
         <div className="overflow-x-auto mt-4">
           <table className="table table-zebra table-pin-cols">
             <thead>
               <tr>
+                <th>Flight Number</th>
                 <th>Origin Location</th>
                 <th>Destination Location</th>
                 <th>Departure Date</th>
@@ -172,11 +176,12 @@ const FlightsSearchComponent = () => {
                     : 0
                 )
                 .map((flight) => (
-                  <tr className="hover" key={flight.id}>
-                    <td>{flight.route.origin_location}</td>
-                    <td>{flight.route.destination_location}</td>
+                  <tr className="hover" key={flight.flight_number}>
+                    <td>{flight.flight_number}</td>
+                    <td>{flight.origin_location}</td>
+                    <td>{flight.destination_location}</td>
                     <td>{flight.departure_date}</td>
-                    <td>{flight.route.price}</td>
+                    <td>{flight.price}</td>
                   </tr>
                 ))}
             </tbody>

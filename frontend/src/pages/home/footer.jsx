@@ -6,7 +6,7 @@ const Footer = () => {
   const navigate = useNavigate();
 
   return (
-    <footer className="footer p-4 bg-accent text-white footer-content fixed bottom-0">
+    <footer className="footer p-2 bg-accent text-white text-xs fixed bottom-0">
       <aside>
         <figure>
           <img
