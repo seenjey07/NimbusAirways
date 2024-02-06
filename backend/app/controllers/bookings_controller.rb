@@ -26,9 +26,11 @@ class BookingsController < ApplicationController
   def create_booking
     ActiveRecord::Base.transaction do
       @booking = current_user.bookings.build(booking_params)
+      @booking.booking_reference = generate_random_booking_reference
 
       if @booking.save
         create_passengers
+        # create_seats
         update_booking_after_save
         render json: @booking, status: :created
       else
@@ -41,10 +43,20 @@ class BookingsController < ApplicationController
     passengers_params = params[:passengers]
     return if passengers_params.blank?
 
-    passengers_params.each do |passenger_params|
+    seats_params = params[:seats] || []
+
+    passengers_params.each_with_index do |passenger_params, index|
       passenger = @booking.passengers.build(passenger_params.permit(:first_name, :middle_name, :last_name, :birth_date, :gender, :is_discounted, :baggage_quantity))
-      if passenger.save
-        puts "Passenger saved successfully: #{passenger.inspect}"
+
+      seat_params = seats_params[index] || {}
+      seat = Seat.new(seat_params.permit(:seat_number, :seat_letter, :is_available))
+
+      seat.flight = @booking.flight if @booking.flight.present?
+      seat.aircraft = @booking.flight.aircraft if @booking.flight&.aircraft.present?
+
+      if seat.save
+        passenger.update(seat: seat)
+        puts "Passenger and Seat saved successfully: #{passenger.inspect}, #{seat.inspect}"
       else
         puts "Error saving passenger: #{passenger.errors.full_messages.join(', ')}"
       end
@@ -52,6 +64,15 @@ class BookingsController < ApplicationController
   end
 
 
+  def generate_random_booking_reference
+    random_number = rand(10_000..99_999)
+    random_letters1 = ('A'..'Z').to_a.sample(3).join
+    random_letters2 = ('A'..'Z').to_a.sample(2).join
+
+    "NA#{random_number}#{random_letters1}#{random_number}#{random_letters2}"
+  end
+
+  
   def show
     @booking = current_user.bookings.find_by(params[:booking_reference])
     render json: @booking
@@ -76,16 +97,25 @@ class BookingsController < ApplicationController
 
 
   def set_booking
-    @booking = current_user.bookings.find_by(params[:booking_reference])
+    @booking = current_user.bookings.find_by(booking_reference: params[:booking_reference])
+
+    unless @booking
+      render json: { error: 'Booking not found' }, status: :not_found
+    end
   end
 
+
+
   def booking_params
-    params.require(:booking).permit(:flight_id, :total_passengers, passengers: [:first_name, :middle_name, :last_name, :birth_date, :gender, :is_discounted, :baggage_quantity])
+    params.require(:booking).permit(
+      :flight_id,
+      :total_passengers,
+      passengers: [:first_name, :middle_name, :last_name, :birth_date, :gender, :is_discounted, :baggage_quantity],
+      seats: [:seat_number, :seat_letter, :is_available])
   end
 
   def update_booking_after_save
     @booking.flight.update(available_seats: @booking.flight.available_seats - @booking.total_passengers)
-    @booking.confirmation_date = Date.today
     @booking.save
   end
   def formatted_bookings(bookings)
@@ -105,4 +135,3 @@ class BookingsController < ApplicationController
       }
     end
   end
-end
