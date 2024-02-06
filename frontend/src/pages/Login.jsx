@@ -62,7 +62,7 @@ const Login = ({ addAlert }) => {
               Beyond Boundaries
             </p>
           </div>
-          <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+          <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-primary">
             <div className="card-body">
               <div className="form-control">
                 <label className="label">
@@ -96,7 +96,7 @@ const Login = ({ addAlert }) => {
                 </label>
               </div>
               <div className="form-control mt-6">
-                <button className="btn btn-primary" onClick={handleLogin}>
+                <button className="btn btn-accent" onClick={handleLogin}>
                   Login
                 </button>
               </div>

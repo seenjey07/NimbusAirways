@@ -1,8 +1,10 @@
 import "../App.css";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "./home/navbar";
-import { flightsApi, indexFlightsApi } from "../lib/flightsapi";
+import { flightsApi, indexedFlightsApi, indexedRoutesApi } from "../lib/flightsapi";
 import Footer from "./home/footer";
+import FlightSearchOrigin from "../components/flightsearchorigin";
+import format from "date-fns/format";
 
 const FlightsSearchComponent = () => {
   const [origin_location, setOrigin_location] = useState("");
@@ -12,13 +14,19 @@ const FlightsSearchComponent = () => {
   const [error, setError] = useState(null);
   const [initialLoadFlights, setInitialLoadFlights] = useState([]);
   const [isInitialLoad, setIsInitialLoad] = useState(true);
+  const [originOptions, setOriginOptions] = useState([]);
+
+  
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const flightsData = await indexFlightsApi();
+        const flightsData = await indexedFlightsApi();
+        const routesData = await indexedRoutesApi();
         setInitialLoadFlights(flightsData);
         setIsInitialLoad(true);
+        const uniqueOriginLocations = Array.from(new Set(routesData.map(route => route.origin_location)));
+        setOriginOptions(uniqueOriginLocations);
       } catch (error) {
         console.error("Error fetching initial flight information:", error);
         setError("Error fetching flights. Please try again.");
@@ -50,6 +58,10 @@ const FlightsSearchComponent = () => {
     }
   };
 
+  const handleOriginSelect = (selectedOption) => {
+    setOrigin_location(selectedOption);
+  };
+
   return (
     <>
       <div>
@@ -62,13 +74,10 @@ const FlightsSearchComponent = () => {
             <div className="label">
               <span className="label-text">Origin Location:</span>
             </div>
-            <input
-              className="input input-bordered w-full max-w-xs"
-              type="text"
-              placeholder="Type here"
-              value={origin_location}
-              onChange={(e) => setOrigin_location(e.target.value)}
-            />
+            <FlightSearchOrigin 
+              originOptions={originOptions}
+              onSelect={handleOriginSelect}
+              />
           </label>
 
           <label className="form-control w-full max-w-xs">
@@ -143,12 +152,12 @@ const FlightsSearchComponent = () => {
             <tbody>
               {initialLoadFlights.map((flight) => (
                 <tr className="hover" key={flight.flight_number}>
-                  <td>{flight.flight_number}</td>
-                  <td>{flight.origin_location}</td>
-                  <td>{flight.departure_date}</td>
-                  <td>{flight.destination_location}</td>
-                  <td>{flight.arrival_date}</td>
-                  <td>{flight.price}</td>
+                  <td>{flight.flights.flight_number}</td>
+                  <td>{flight.routes.origin_location}</td>
+                  <td>{format(new Date(flight.flights.departure_date), 'MMMM dd, yyyy hh:mm a')}</td>
+                  <td>{flight.routes.destination_location}</td>
+                  <td>{format(new Date(flight.flights.arrival_date), 'MMMM dd, yyyy hh:mm a')}</td>
+                  <td>₱ {flight.routes.price}</td>
                 </tr>
               ))}
             </tbody>
@@ -181,7 +190,7 @@ const FlightsSearchComponent = () => {
                     <td>{flight.origin_location}</td>
                     <td>{flight.destination_location}</td>
                     <td>{flight.departure_date}</td>
-                    <td>{flight.price}</td>
+                    <td>₱ {flight.price}</td>
                   </tr>
                 ))}
             </tbody>
