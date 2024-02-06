@@ -1,28 +1,14 @@
-import axios from "axios";
 const backendBaseUrl = import.meta.env.VITE_BACKEND_BASE_URL;
-const token = document.cookie.split("token=")[1];
-axios.defaults.headers.common["Authorization"] = token;
+import axios from "axios";
 
 export const indexFlightsApi = async () => {
   try {
-    const response = await axios.get(`${backendBaseUrl}/api/flights`);
-    console.log("indexFlightsApi response:", response);
+    const response = await axios.get(`${backendBaseUrl}/api/flights#index`);
+    console.log("indexFlightsApi response:", response.data);
 
-    const routesResponse = await axios.get(`${backendBaseUrl}/api/routes`);
-    const routesMap = new Map(
-      routesResponse.data.routes.map((route) => [route.id, route])
-    );
-
-    const flightsWithRoutes = response.data.flights.map((flight) => ({
-      flight_number: flight.flight_number,
-      origin_location: flight.origin_location,
-      date_of_departure: flight.date_of_departure,
-      departure_location: flight.departure_location,
-      date_of_arrival: flight.date_of_arrival,
-      price: routesMap.get(flight.route_id)?.price || 0,
-    }));
-
-    return flightsWithRoutes;
+    const flights = response.data.flights;
+    console.log("flights:", flights);
+    return flights;
   } catch (error) {
     console.log("indexFlightsApi error:", error);
     throw error;
@@ -49,8 +35,8 @@ export const flightsApi = async ({
       destination_location,
       departure_date,
     });
-    console.log("flightsApi response:", response.data);
-    return response.data;
+    console.log("flightsApi response:", response.data.flights);
+    return response.data.flights;
   } catch (error) {
     console.log("flightsApi error:", error);
     throw error;
