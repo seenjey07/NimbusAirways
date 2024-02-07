@@ -73,7 +73,7 @@ const Registration = () => {
           <div className="flex justify-center gap-16">
             <label className="form-control w-full max-w-xs">
               <div className="label">
-                <span className="label-text">Birthday</span>
+                <span className="label-text">Birth Date</span>
               </div>
               <input
                 type="date"

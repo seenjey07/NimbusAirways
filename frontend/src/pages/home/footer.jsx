@@ -6,30 +6,34 @@ const Footer = () => {
   const navigate = useNavigate();
 
   return (
-    <footer className="footer p-2 bg-accent text-white text-xs fixed bottom-0">
-      <aside>
+    <footer className="footer p-1 bg-accent text-white text-xs fixed bottom-0">
+      <div className="flex flex-row self-center">
         <figure>
           <img
             src={logoImage}
             alt="Logo"
-            style={{ width: "40px", height: "auto" }}
+            style={{
+              width: "35px",
+              height: "auto",
+            }}
           />
         </figure>
-        <p>
+        <p className="footer text-xs">
           Discover the Skies with Nimbus Airways: Elevating Your Journey Beyond
           Boundaries
           <br />
           &copy; NimbusAirways 2024. All rights reserved.
         </p>
-      </aside>
+      </div>
+
       <nav>
         <h6 className="footer-title">Social</h6>
         <div className="grid grid-flow-col gap-4">
           <a>
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
+              width="15"
+              height="15"
               viewBox="0 0 24 24"
               className="fill-current"
             >
@@ -39,8 +43,8 @@ const Footer = () => {
           <a>
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
+              width="15"
+              height="15"
               viewBox="0 0 24 24"
               className="fill-current"
             >
@@ -50,8 +54,8 @@ const Footer = () => {
           <a>
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
+              width="15"
+              height="15"
               viewBox="0 0 24 24"
               className="fill-current"
             >
