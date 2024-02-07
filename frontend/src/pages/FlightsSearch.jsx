@@ -1,7 +1,11 @@
 import "../App.css";
 import { useState, useEffect } from "react";
 import Navbar from "./home/navbar";
-import { flightsApi, indexedFlightsApi, indexedRoutesApi } from "../lib/flightsapi";
+import {
+  flightsApi,
+  indexedFlightsApi,
+  indexedRoutesApi,
+} from "../lib/flightsapi";
 import Footer from "./home/footer";
 import FlightSearchOrigin from "../components/flightsearchorigin";
 import format from "date-fns/format";
@@ -16,8 +20,6 @@ const FlightsSearchComponent = () => {
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [originOptions, setOriginOptions] = useState([]);
 
-  
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -25,7 +27,9 @@ const FlightsSearchComponent = () => {
         const routesData = await indexedRoutesApi();
         setInitialLoadFlights(flightsData);
         setIsInitialLoad(true);
-        const uniqueOriginLocations = Array.from(new Set(routesData.map(route => route.origin_location)));
+        const uniqueOriginLocations = Array.from(
+          new Set(routesData.map((route) => route.origin_location))
+        );
         setOriginOptions(uniqueOriginLocations);
       } catch (error) {
         console.error("Error fetching initial flight information:", error);
@@ -74,10 +78,10 @@ const FlightsSearchComponent = () => {
             <div className="label">
               <span className="label-text">Origin Location:</span>
             </div>
-            <FlightSearchOrigin 
+            <FlightSearchOrigin
               originOptions={originOptions}
               onSelect={handleOriginSelect}
-              />
+            />
           </label>
 
           <label className="form-control w-full max-w-xs">
@@ -154,9 +158,19 @@ const FlightsSearchComponent = () => {
                 <tr className="hover" key={flight.flight_number}>
                   <td>{flight.flights.flight_number}</td>
                   <td>{flight.routes.origin_location}</td>
-                  <td>{format(new Date(flight.flights.departure_date), 'MMMM dd, yyyy hh:mm a')}</td>
+                  <td>
+                    {format(
+                      new Date(flight.flights.departure_date),
+                      "MMMM dd, yyyy hh:mm a"
+                    )}
+                  </td>
                   <td>{flight.routes.destination_location}</td>
-                  <td>{format(new Date(flight.flights.arrival_date), 'MMMM dd, yyyy hh:mm a')}</td>
+                  <td>
+                    {format(
+                      new Date(flight.flights.arrival_date),
+                      "MMMM dd, yyyy hh:mm a"
+                    )}
+                  </td>
                   <td>₱ {flight.routes.price}</td>
                 </tr>
               ))}
