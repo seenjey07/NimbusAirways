@@ -60,7 +60,7 @@ const EditUsersModal = ({addAlert, selectedUserId, isEditModalOpen, setIsEditMod
         addAlert('success', 'User updated successfully!');
         console.log('User updated successfully:', response);
         document.getElementById('EditUsers').close();
-        setIsEditModalOpen(false); // Fix this line
+        setIsEditModalOpen(false);
     } catch (error) {
       addAlert('error', error.response?.data?.errors || 'Error updating user');
       console.error('Error updating user:', error);

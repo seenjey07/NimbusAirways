@@ -1,4 +1,6 @@
 class AdminsUserController < ApplicationController
+  before_action :authenticate_user!
+  before_action :require_admin
   before_action :set_user, only: [:show, :update, :destroy]
 
   def index
@@ -48,5 +50,11 @@ end
 
   def update_user_params
     params.require(:user).permit(:first_name, :middle_name, :last_name, :phone_number, :birth_date, :gender, :email)
+  end
+
+  def require_admin
+    unless current_user && (current_user.role == 'admin' || current_user.role == 'superadmin')
+      render json: { error: 'You are not authorized to access this page.' }, status: :unauthorized
+    end
   end
 end

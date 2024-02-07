@@ -1,4 +1,6 @@
 class AdminsRouteController < ApplicationController
+  before_action :authenticate_user!
+  before_action :require_admin
   def index
     @routes = Route.all
     render json: @routes
@@ -42,6 +44,13 @@ class AdminsRouteController < ApplicationController
       end
     else
       render json: { error: 'Failed to create route' }, status: :unprocessable_entity
+    end
+  end
+
+  private
+  def require_admin
+    unless current_user && (current_user.role == 'admin' || current_user.role == 'superadmin')
+      render json: { error: 'You are not authorized to access this page.' }, status: :unauthorized
     end
   end
 end

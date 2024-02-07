@@ -1,4 +1,6 @@
 class AdminsMealController < ApplicationController
+  before_action :authenticate_user!
+  before_action :require_admin
   def index_meals
     @meals = Meal.all
     render json: @meals
@@ -28,5 +30,11 @@ class AdminsMealController < ApplicationController
 
   def meal_params
     params.require(:meal).permit(:food, :quantity, :is_available)
+  end
+
+  def require_admin
+    unless current_user && (current_user.role == 'admin' || current_user.role == 'superadmin')
+      render json: { error: 'You are not authorized to access this page.' }, status: :unauthorized
+    end
   end
 end
