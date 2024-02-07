@@ -22,3 +22,41 @@ export const adminIndexFlightsApi = async () => {
     return error;
   }
 };
+
+export const adminCreateUserApi = async ({userData}) => {
+  try {
+    const response = await axios.post(`${backendBaseUrl}/admin/users`, {user: userData});
+    return response.data;
+  } catch (error) {
+    return Promise.reject(error)
+  }
+};
+
+export const adminDeleteeUserApi = async ({id}) => {
+  try {
+    const response = await axios.delete(`${backendBaseUrl}/admin/users/${id}`);
+    return response.data;
+  } catch (error) {
+    return Promise.reject(error)
+  }
+};
+
+export const adminUpdateUserApi = async (id, userData) => {
+  try {
+    const response = await axios.put(`${backendBaseUrl}/admin/users/${id}`, {user: userData});
+    return response.data;
+  }
+  catch (error) {
+    return Promise.reject(error)
+  }
+}
+
+export const adminShowUserApi = async (id) => {
+  try {
+    const response = await axios.get(`${backendBaseUrl}/admin/users/${id}`);
+    return response.data;
+  }
+  catch (error) {
+    return Promise.reject(error)
+  }
+}

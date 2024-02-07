@@ -6,7 +6,8 @@ import AdminMeals from "../../pages/admin/dashboard/AdminMeals";
 import AdminSeats from "../../pages/admin/dashboard/AdminsSeats";
 import AdminUsers from "../../pages/admin/dashboard/AdminUsers";
 import AdminFlightsAndRoutesLayout from "../AdminFlightsAndRoutesLayout";
-const AdminDashboardRoutes = () => {    
+// eslint-disable-next-line react/prop-types
+const AdminDashboardRoutes = ({addAlert}) => {    
     return (
 
         <>
@@ -17,7 +18,7 @@ const AdminDashboardRoutes = () => {
                     <Route path="flights" element={<AdminFlightsAndRoutesLayout />} />
                     <Route path="meals" element={<AdminMeals />} />
                     <Route path="seats" element={<AdminSeats/>} />
-                    <Route path="users" element={<AdminUsers />} />
+                    <Route path="users" element={<AdminUsers addAlert={addAlert} />} />
                 </Routes>
             </AdminDashboardLayout>
         </>
