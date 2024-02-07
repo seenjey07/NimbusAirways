@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   delete '/admin/users/:id', to: 'admins_user#destroy'
   post '/admin/users', to: 'admins_user#create'
   put '/admin/users/:id', to: 'admins_user#update'
+  get '/admin', to: 'admins#check_authorization'
 
 
   get '/admin/flights', to: 'admins_flight#index'

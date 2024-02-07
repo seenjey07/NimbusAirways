@@ -1,6 +1,13 @@
 class AdminsController < ApplicationController
-  # before_action :authenticate_user!
-  # before_action :require_admin
+  before_action :authenticate_user!
+  before_action :require_admin
+
+  def check_authorization
+    render json: { message: 'Authorized' }
+  end
+
+
+
 
   ## FLIGHTS ##
     def index_flights
@@ -41,8 +48,8 @@ class AdminsController < ApplicationController
   private
 
   def require_admin
-    unless current_user && current_user.role == 'admin' || 'superadmin'
-      redirect_to root_path, alert: 'You are not authorized to access this page.'
+    unless current_user && (current_user.role == 'admin' || current_user.role == 'superadmin')
+      render json: { error: 'You are not authorized to access this page.' }, status: :unauthorized
     end
   end
 end

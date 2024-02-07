@@ -60,3 +60,13 @@ export const adminShowUserApi = async (id) => {
     return Promise.reject(error)
   }
 }
+
+export const adminCheckAuthorization = async () => {
+  try {
+    const response = await axios.get(`${backendBaseUrl}/admin`);
+    return response.data;
+  }
+  catch (error) {
+    return Promise.reject(error)
+  }
+}

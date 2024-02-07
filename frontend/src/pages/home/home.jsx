@@ -3,6 +3,7 @@ import Footer from "../home/footer";
 import logoImage from "../../assets/logo.png";
 import homepageVideo from "../../assets/HomepageVideo.mp4";
 import { useNavigate } from "react-router-dom";
+import HomeFooter from "../../assets/HomeFooter";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -93,7 +94,7 @@ const Home = () => {
           overflow: "hidden",
         }}
       >
-        <Footer />
+        <HomeFooter />
       </div>
     </div>
   );

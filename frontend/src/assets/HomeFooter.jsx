@@ -1,12 +1,11 @@
 import { useNavigate } from "react-router-dom";
-import logoImage from "../../assets/logo-no-text.png";
+import logoImage from "../assets/logo-no-text.png";
 
-const Footer = () => {
+const HomeFooter = () => {
   const navigate = useNavigate();
 
   return (
-    <footer className="footer p-1 bg-accent text-white text-xs">
-    {/* <footer className="footer p-1 bg-accent text-white text-xs fixed bottom-0"> */}
+    <footer className="footer p-1 bg-accent text-white text-xs fixed bottom-0">
       <div className="flex flex-row self-center">
         <figure>
           <img
@@ -68,4 +67,4 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default HomeFooter;
