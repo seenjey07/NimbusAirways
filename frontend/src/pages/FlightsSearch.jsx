@@ -1,6 +1,6 @@
 import "../App.css";
 import { useState, useEffect } from "react";
-import Navbar from "./home/navbar";
+import Navbar from "../components/UserNavBar";
 import {
   flightsApi,
   indexedFlightsApi,
@@ -142,9 +142,9 @@ const FlightsSearchComponent = () => {
 
       {isInitialLoad && initialLoadFlights.length >= 0 && (
         <div className="overflow-x-auto mt-4">
-          <table className="table table-zebra table-pin-cols">
+          <table className="table table-zebra table-pin-cols text-center">
             <thead>
-              <tr>
+              <tr className="text-black">
                 <th>Flight Number</th>
                 <th>Origin Location</th>
                 <th>Departure Date</th>
@@ -153,7 +153,7 @@ const FlightsSearchComponent = () => {
                 <th>Price</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="text-center">
               {initialLoadFlights.map((flight) => (
                 <tr className="hover" key={flight.flight_number}>
                   <td>{flight.flights.flight_number}</td>

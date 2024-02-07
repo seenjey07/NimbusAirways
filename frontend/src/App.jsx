@@ -5,9 +5,9 @@ import Login from "./pages/Login";
 import DashboardLayout from "./layouts/dashboardlayout";
 import Registration from "./pages/Registration";
 import AdminDashboardRoutes from "./layouts/router/AdminDashboardRoutes";
+import UserDashboard from "./pages/Dashboard/UserDashboard";
 import BookingsComponent from "./pages/Bookings";
 import FlightsSearchComponent from "./pages/FlightsSearch";
-import SearchResultsComponent from "./pages/SearchResults";
 import TestAlerts from "./pages/test/TestAlerts";
 import FlightBookingsRouter from "./layouts/router/FlightBookingsRouter";
 import { Toaster } from "sonner";
@@ -33,9 +33,9 @@ function App() {
           <Route path="login" element={<Login addAlert={addAlert} />} />
           <Route path="signup" element={<Registration />} />
           <Route path="/" element={<Home />} />
+          <Route path="/my_dashboard" element={<UserDashboard />} />
           <Route path="/bookings" element={<BookingsComponent />} />
           <Route path="flight_search" element={<FlightsSearchComponent />} />
-          <Route path="search_results" element={<SearchResultsComponent />} />
           <Route
             path="testalert"
             element={<TestAlerts addAlert={addAlert} />}

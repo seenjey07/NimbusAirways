@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Navbar from "./home/navbar";
+import Navbar from "../components/UserNavBar";
 import { showCurrentUserApi } from "../lib/usersapi";
 import { createUserBookingApi } from "../lib/bookingsapi";
 import SeatSelection from "./Dashboard/SeatSelection";
@@ -20,7 +20,7 @@ const FlightBookings = ({ addAlert }) => {
   const [gender, setGender] = useState("");
   const [isDiscounted, setIsDiscounted] = useState(false);
   const [baggageQuantity, setBaggageQuantity] = useState(0);
-  const [seatData, setSeatData] = useState()
+  const [seatData, setSeatData] = useState();
 
   const [originFlight, setOriginFlight] = useState("");
   const [departureDate, setDepartureDate] = useState("");
@@ -103,8 +103,6 @@ const FlightBookings = ({ addAlert }) => {
     }
   };
 
-  
-  
   const handleSubmit = async () => {
     const selectedFlight = flightOptions.find(
       (flight) => flight.flight_number === originFlight
@@ -134,7 +132,7 @@ const FlightBookings = ({ addAlert }) => {
         },
       ],
     };
-  
+
     try {
       await createUserBookingApi(bookingData);
       addAlert("success", "Booking created successfully");
@@ -152,8 +150,8 @@ const FlightBookings = ({ addAlert }) => {
   ///END OF TEMPORARY CODE HERE ///
 
   const handleSeatSelect = (seatData) => {
-    setSeatData(seatData)
-    console.log('Setter Seat Data', seatData)
+    setSeatData(seatData);
+    console.log("Setter Seat Data", seatData);
   };
 
   return (
@@ -333,7 +331,10 @@ const FlightBookings = ({ addAlert }) => {
                   </DrawerTrigger>
                   <DrawerContent>
                     <div className="bg-base-100">
-                      <SeatSelection addAlert={addAlert} onSeatSelect={handleSeatSelect} />
+                      <SeatSelection
+                        addAlert={addAlert}
+                        onSeatSelect={handleSeatSelect}
+                      />
                       <DrawerFooter>
                         <DrawerClose asChild>
                           <button className="btn btn-primary">Cancel</button>
