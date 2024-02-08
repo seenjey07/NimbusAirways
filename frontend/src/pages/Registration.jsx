@@ -34,6 +34,8 @@ const Registration = () => {
           position: "absolute",
           top: 0,
           left: 0,
+          right: 0,
+          bottom: 0,
           width: "100%",
           height: "100%",
           zIndex: -1,
@@ -43,7 +45,7 @@ const Registration = () => {
         }}
       ></div>
 
-      <div className=" lg:card-side bg-ghost shadow-xl relative">
+      <div className="hero lg:card-side p-1 bg-ghost shadow-xl relative">
         <form className="pt-0" onSubmit={handleSubmit}>
           <h2 className="card-title justify-center font-serif text-accent mb-4">
             Register Now
@@ -192,7 +194,7 @@ const Registration = () => {
             </label>
           </div>
 
-          <div className="card-actions justify-center my-5">
+          <div className="card-actions justify-center my-4">
             <button className="btn btn-primary" type="submit">
               Submit
             </button>
