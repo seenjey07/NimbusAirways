@@ -1,6 +1,8 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+
 
 const AdminNavBar = () => {
+    const navigate = useNavigate()
     return (
         <>
             <div className="navbar bg-accent rounded-b-lg text-secondary">
@@ -27,8 +29,8 @@ const AdminNavBar = () => {
                         </li>
     
                         <li>
-                            <Link to="seats">
-                            <a>Seats</a>
+                            <Link to="aircraft">
+                            <a>Aircraft</a>
                             </Link>
                         </li>
 
@@ -65,8 +67,8 @@ const AdminNavBar = () => {
                         </li>
     
                         <li>
-                            <Link to="seats">
-                            <a>Seats</a>
+                            <Link to="aircrafts">
+                            <a>Aircraft</a>
                             </Link>
                         </li>
 
@@ -107,7 +109,11 @@ const AdminNavBar = () => {
                             </a>
                             </li>
                             <li><a>Settings</a></li>
-                            <li><a>Logout</a></li>
+                            <li>
+                                <button onClick={()=>(navigate("/login"))}>
+                                    <a>Logout</a>
+                                </button>
+                            </li>
                         </ul>
                     </div>
                 </div>
