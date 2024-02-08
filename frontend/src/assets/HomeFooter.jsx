@@ -1,11 +1,12 @@
-import React from "react";
-import logoImage from "../../assets/logo-no-text.png";
+import { useNavigate } from "react-router-dom";
+import logoImage from "../assets/logo-no-text.png";
 
-const Footer = () => {
+const HomeFooter = () => {
+  const navigate = useNavigate();
+
   return (
-
     <footer className="footer p-1 bg-accent text-white text-xs fixed bottom-0">
-      <div className="flex flex-row items-center">
+      <div className="flex flex-row self-center">
         <figure>
           <img
             src={logoImage}
@@ -16,7 +17,7 @@ const Footer = () => {
             }}
           />
         </figure>
-        <p className="footer text-[11px]">
+        <p className="footer text-xs">
           Discover the Skies with Nimbus Airways: Elevating Your Journey Beyond
           Boundaries
           <br />
@@ -24,27 +25,8 @@ const Footer = () => {
         </p>
       </div>
 
-      <div className="footer-center">
-        <p className="footer-title m-0">Developed by:</p>
-        <div className="grid grid-flow-col gap-2">
-          <a
-            className="link link-hover font-sans text-[9px]"
-            href="https://github.com/andradajus"
-          >
-            Justin Andrada
-          </a>
-          |
-          <a
-            className="link link-hover font-sans text-[9px]"
-            href="https://github.com/seenjey07"
-          >
-            Christine Rosales
-          </a>
-        </div>
-      </div>
-
-      <nav className="footer-center">
-        <h6 className="footer-title m-0">Social</h6>
+      <nav>
+        <h6 className="footer-title">Social</h6>
         <div className="grid grid-flow-col gap-4">
           <a>
             <svg
@@ -85,4 +67,4 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default HomeFooter;

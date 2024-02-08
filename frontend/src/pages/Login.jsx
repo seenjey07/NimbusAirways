@@ -72,11 +72,11 @@ const Login = ({ addAlert }) => {
               Beyond Boundaries
             </p>
           </div>
-          <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-primary">
+          <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-accent">
             <div className="card-body">
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">Email</span>
+                  <span className="label-text text-secondary">Email</span>
                 </label>
                 <input
                   type="email"
@@ -89,7 +89,7 @@ const Login = ({ addAlert }) => {
               </div>
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">Password</span>
+                  <span className="label-text text-secondary">Password</span>
                 </label>
                 <input
                   type="password"
@@ -100,19 +100,19 @@ const Login = ({ addAlert }) => {
                   required
                 />
                 <label className="label">
-                  <button className="label-text-alt link link-hover">
+                  <button className="label-text-alt link link-hover text-secondary">
                     Forgot password?
                   </button>
                 </label>
               </div>
               <div className="form-control mt-6">
-                <button className="btn btn-accent" onClick={handleLogin}>
+                <button className="btn btn-secondary" onClick={handleLogin}>
                   Login
                 </button>
               </div>
-              <div className="divider">OR</div>
+              <div className="divider divider-secondary text-secondary">OR</div>
 
-              <button className="btn btn-accent">
+              <button className="btn btn-secondary">
                 <img
                   className="w-6 h-6"
                   src="https://www.svgrepo.com/show/475656/google-color.svg"
@@ -124,11 +124,11 @@ const Login = ({ addAlert }) => {
             </div>
             <div className="flex justify-center mb-3">
               <label className="label">
-                <span className="label-text-alt mr-1">
+                <span className="label-text-alt mr-1 text-secondary">
                   Don't have an account?
                 </span>
                 <button
-                  className="label-text-alt link link-hover"
+                  className="label-text-alt link link-hover text-secondary"
                   onClick={handleSignUp}
                 >
                   Register here.

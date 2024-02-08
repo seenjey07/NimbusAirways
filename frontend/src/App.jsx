@@ -28,7 +28,7 @@ function App() {
       <Toaster />
       <BrowserRouter>
         <Routes>
-          <Route path="/admin/*" element={<AdminDashboardRoutes />} />
+          <Route path="/admin/*" element={<AdminDashboardRoutes addAlert={addAlert}/>} />
           <Route path="/dashboard/*" element={<DashboardLayout />} />
           <Route path="login" element={<Login addAlert={addAlert} />} />
           <Route path="signup" element={<Registration />} />
