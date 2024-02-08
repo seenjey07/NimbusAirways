@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import LoginImage from "../assets/LoginImage.jpg";
 import axios from "axios";
 
 const Login = ({ addAlert }) => {
@@ -51,7 +52,16 @@ const Login = ({ addAlert }) => {
 
   return (
     <>
-      <div className="hero min-h-screen bg-base-100">
+      <div className="hero min-h-screen bg-white">
+        <div
+          style={{
+            backgroundImage: `url(${LoginImage})`,
+            height: "100vh",
+            width: "100vw",
+            backgroundRepeat: "no-repeat",
+            opacity: "0.4",
+          }}
+        ></div>
         <div className="hero-content flex-col lg:flex-row-reverse gap-16">
           <div className="text-center lg:text-left">
             <div className="flex">
@@ -71,7 +81,7 @@ const Login = ({ addAlert }) => {
                 <input
                   type="email"
                   placeholder="Email"
-                  className="input input-bordered"
+                  className="input input-bordered bg-white"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -84,7 +94,7 @@ const Login = ({ addAlert }) => {
                 <input
                   type="password"
                   placeholder="Password"
-                  className="input input-bordered"
+                  className="input input-bordered bg-white"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required

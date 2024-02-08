@@ -33,13 +33,16 @@ const Home = () => {
             <div className="form-control">
               <input
                 type="text"
-                placeholder="Search"
-                className="input input-bordered w-24 md:w-auto"
+                placeholder="Enter a city"
+                className="input input-bordered bg-white text-sm w-20 md:w-auto"
               />
             </div>
+            <div>
+              <button className="btn btn-info">Search</button>
+            </div>
             <div className="dropdown dropdown-end">
-              <div tabIndex={0} role="button" className="btn btn-ghost">
-                <div className="w-10 rounded-full text-base-100">Menu</div>
+              <div tabIndex={0} role="button" className="btn btn-primary ">
+                <div className="w-10 rounded-full text-white">Menu</div>
               </div>
               <ul
                 tabIndex={0}
@@ -67,10 +70,8 @@ const Home = () => {
 
       <div
         style={{
-          flex: "1 0 auto",
-          overflow: "hidden",
           position: "relative",
-          height: "34vw", // Aspect ratio: 16:9 (1280x800)
+          height: "38vw", // Aspect ratio: 16:9 (1280x800)
           maxWidth: "100%",
         }}
       >
@@ -87,12 +88,7 @@ const Home = () => {
         />
       </div>
 
-      <div
-        style={{
-          flex: "1 0 auto",
-          overflow: "hidden",
-        }}
-      >
+      <div>
         <Footer />
       </div>
     </div>
