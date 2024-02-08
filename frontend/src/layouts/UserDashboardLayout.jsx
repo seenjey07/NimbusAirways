@@ -5,7 +5,7 @@ import Footer from ".././pages/home/footer"
 const UserDashboardLayout = ({ children }) => {
   return (
     <>
-      <div className="flex flex-col min-h-screen">
+      <div className="grid grid-rows-[auto_1fr_auto] h-screen">
         <NavBar />
         <main className="flex-grow">{children}</main>
         <Footer />

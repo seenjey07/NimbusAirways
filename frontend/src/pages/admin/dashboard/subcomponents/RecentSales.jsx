@@ -25,7 +25,7 @@ const RecentUsers = ({users}) => {
                   <AvatarFallback>User</AvatarFallback>
                 </Avatar>
                 <div className="ml-4 space-y-1">
-                  <p className="text-sm font-medium leading-none">{user.first_name}</p>
+                  <p className="font-bold leading-none">{user.first_name} {user.last_name}</p>
                   <p className="text-sm text-muted-foreground">{user.email}</p>
                 </div>
                 <div className="ml-auto font-medium">{user.role}</div>

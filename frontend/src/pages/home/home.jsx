@@ -9,6 +9,7 @@ const Home = () => {
   const navigate = useNavigate();
 
   return (
+  
     <div
       style={{
         display: "flex",
