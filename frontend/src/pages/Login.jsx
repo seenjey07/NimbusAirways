@@ -38,7 +38,7 @@ const Login = ({ addAlert }) => {
       document.cookie = `token=${token};path=/`;
       document.cookie = `user_id=${user_id};path=/`;
       addAlert("success", "Login successful");
-      navigate("/bookings");
+      navigate("/my_dashboard");
       return res;
     } catch (error) {
       addAlert("error", "Login failed. Incorect email or password");
