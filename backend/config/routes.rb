@@ -46,7 +46,7 @@ Rails.application.routes.draw do
   post '/admin/routes', to: 'admins_route#create_route'
 
   get '/admin/bookings', to: 'admins#index_bookings'
-  get '/admin/aircrafts', to: 'admins#index_aircrafts'
+  get '/admin/aircrafts', to: 'admins_aircraft#index'
 
   get '/admin/passengers', to: 'admins#index_passengers'
 

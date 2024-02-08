@@ -23,6 +23,15 @@ export const adminIndexFlightsApi = async () => {
   }
 };
 
+export const adminIndexAircraftsApi = async () => {
+  try {
+    const response = await axios.get(`${backendBaseUrl}/admin/aircrafts`, {});
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+
 export const adminCreateUserApi = async ({userData}) => {
   try {
     const response = await axios.post(`${backendBaseUrl}/admin/users`, {user: userData});

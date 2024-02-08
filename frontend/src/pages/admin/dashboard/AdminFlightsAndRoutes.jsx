@@ -3,6 +3,7 @@ import { Calendar, momentLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import moment from "moment";
 import { adminIndexFlightsApi } from "../../../lib/admin/adminusersapi";
+import { CreateFlightIcon, CreateRouteIcon } from "../../../components/icons/icons"
 
 const AdminFlightsAndRoutes = () => {
   const localizer = momentLocalizer(moment);
@@ -40,17 +41,8 @@ const AdminFlightsAndRoutes = () => {
   };
 
   return (
-    <div className="glass">
-      <Calendar
-         localizer={localizer}
-         events={events}
-         startAccessor="start"
-         endAccessor="end"
-         views={['day']} 
-         defaultView="day"
-        onSelectEvent={handleEventClick}
-      />
-      
+  <>
+        
       <dialog id="FlightDetails" className="modal">
         <div className="modal-box">
           <form method="dialog">
@@ -61,7 +53,7 @@ const AdminFlightsAndRoutes = () => {
               ✕
             </button>
           </form>
-          <span className="font-bold text-2xl mb-5">FLIGHT DETAILS</span>
+          <span className="font-bold text-2xl mb-5 flex justify-center">FLIGHT DETAILS</span>
           {selectedEvent && (
             <div className="overflow-x-auto">
             <table className="table">
@@ -120,7 +112,39 @@ const AdminFlightsAndRoutes = () => {
           )}
         </div>
       </dialog>
-    </div>
+
+      <div>
+        <div className="mt-2 flex">
+          <div className="flex">
+              <button 
+              className="btn btn-accent text-secondary self-center ml-3 px-6" 
+              onClick={()=>document.getElementById('CreateUsers').showModal()}>
+              <CreateFlightIcon className="w-6 h-6"/>
+                Create Flight
+              </button>
+          </div>
+
+          <div className="flex">
+              <button 
+              className="btn btn-accent text-secondary self-center ml-3 px-6" 
+              onClick={()=>document.getElementById('CreateUsers').showModal()}>
+              <CreateRouteIcon className="w-6 h-6"/>
+                Create Routes
+              </button>
+          </div>
+        </div>
+
+        <Calendar
+          localizer={localizer}
+          events={events}
+          startAccessor="start"
+          endAccessor="end"
+          views={['day']} 
+          defaultView="day"
+          onSelectEvent={handleEventClick}
+        />
+      </div>
+    </>
   );
 };
 

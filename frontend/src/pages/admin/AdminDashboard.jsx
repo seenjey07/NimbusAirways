@@ -6,7 +6,6 @@ import {
   CardHeader,
   CardTitle,
 } from "../../components/ui/card";
-import { ScrollArea } from "../../components/ui/scroll-area";
 import { Tabs, TabsContent } from "../../components/ui/tabs";
 import Overview from "./dashboard/subcomponents/Overview";
 import RecentUsers from "./dashboard/subcomponents/RecentSales";
@@ -29,7 +28,6 @@ const AdminDashboard = () => {
       }, []);
     
   return (
-    <ScrollArea className="h-full mt-3 rounded-md">
       <div className="flex-1 space-y-4 p-4 md:p-8 pt-6 bg-white">
         <Tabs defaultValue="overview" className="space-y-4">
           <TabsContent value="overview" className="space-y-4">
@@ -163,7 +161,6 @@ const AdminDashboard = () => {
           </TabsContent>
         </Tabs>
       </div>
-    </ScrollArea>
   );
 }
 
