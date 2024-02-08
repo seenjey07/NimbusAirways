@@ -70,3 +70,13 @@ export const adminCheckAuthorization = async () => {
     return Promise.reject(error)
   }
 }
+
+export const adminCompanyStats = async () => {
+  try {
+    const response = await axios.get(`${backendBaseUrl}/admin/stats`);
+    return response.data;
+  }
+  catch (error) {
+    return Promise.reject(error)
+  }
+}

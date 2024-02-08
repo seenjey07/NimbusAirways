@@ -49,6 +49,8 @@ Rails.application.routes.draw do
   get '/admin/aircrafts', to: 'admins#index_aircrafts'
 
   get '/admin/passengers', to: 'admins#index_passengers'
+
+  get '/admin/stats', to: 'admins_stat#index'
   get "up" => "rails/health#show", as: :rails_health_check
 
 ################################ END OF ADMIN ROUTES ################################
