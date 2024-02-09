@@ -41,6 +41,15 @@ export const adminCreateUserApi = async ({userData}) => {
   }
 };
 
+export const adminCreateAircraftApi = async (aircraftData) => {
+  try {
+    const response = await axios.post(`${backendBaseUrl}/admin/aircrafts`, aircraftData);
+    return response.data;
+  } catch (error) {
+    return Promise.reject(error)
+  }
+};
+
 export const adminDeleteeUserApi = async ({id}) => {
   try {
     const response = await axios.delete(`${backendBaseUrl}/admin/users/${id}`);
