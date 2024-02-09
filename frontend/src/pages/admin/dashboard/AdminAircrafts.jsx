@@ -1,32 +1,59 @@
 import { adminIndexAircraftsApi } from "../../../lib/admin/adminusersapi";
 import { useEffect, useState } from "react";
 import { CreateFlightIcon, CreateRouteIcon, Elipsis, AircraftDetailsIcon, FlightDetailsIcon, UpdateAircraftIcon } from "../../../components/icons/icons"
-const AdminAircrafts = () => {
+import CreateAircraftModal from "./modals/CreateAircraftModal";
+// eslint-disable-next-line react/prop-types
+const AdminAircrafts = ({addAlert}) => {
     const [aircrafts, setAircrafts] = useState([])
     const [loading, setLoading] = useState(true);
+    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
-    useEffect(() => {
-        const fetchAircrafts = async () => {
-          try {
+    const fetchAircraftsData = async () => {
+        try {
             const res = await adminIndexAircraftsApi();
             setAircrafts(res);
             console.log('Aircrafts', res);
-          } catch (error) {
-            console.error("Error fetching flights:", error);
-          } finally {
+        } catch (error) {
+            console.error("Error fetching aircrafts:", error);
+        } finally {
             setLoading(false);
         }
     };
-    fetchAircrafts();
-    }, []);
+
+    useEffect(() => {
+        if (!isCreateModalOpen) {
+          fetchAircraftsData();
+        }
+      }, [isCreateModalOpen])
+
+    const handleCreateClick = () => {
+    document.getElementById('CreateAircraft').showModal()
+    setIsCreateModalOpen(true)
+    }
 
     return (
-    <>
+    <>  
+        <dialog id="CreateAircraft" className="modal">
+            <div className="modal-box bg-accent">
+            <form method="dialog">
+                <button 
+                className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-secondary"
+                >
+                ✕
+                </button> 
+            </form>
+                <CreateAircraftModal addAlert={addAlert}  setIsCreateModalOpen={setIsCreateModalOpen} isCreateModalOpen={isCreateModalOpen} />
+            </div>
+        </dialog>
+
+        
+        
+        
         <div className="mt-4 flex">
             <div className="flex">
                 <button 
                     className="btn btn-accent text-secondary self-center ml-3 px-6" 
-                    onClick={() => document.getElementById('CreateUsers').showModal()}
+                    onClick={handleCreateClick}
                 >
                     <CreateFlightIcon className="w-6 h-6"/>
                     Add Aircraft
@@ -70,8 +97,14 @@ const AdminAircrafts = () => {
                                 <td>{aircraft.model}</td>
                                 <td>{aircraft.family}</td>
                                 <td>{aircraft.seat_capacity}</td>
-                                <td>{aircraft.current_route.id - 1}, {aircraft.current_route.id}</td>
-                                <td>{`${aircraft.current_route.origin_location} to ${aircraft.current_route.destination_location}`}</td>
+                                <td> {aircraft.current_route ? 
+                                    `${aircraft.current_route.id - 1}, ${aircraft.current_route.id}` :
+                                    'N/A'
+                                }</td>
+                                <td> {aircraft.current_route ? 
+                                    `${aircraft.current_route.origin_location} to ${aircraft.current_route.destination_location}` :
+                                    'N/A'
+                                }</td>
                                 <td
                                 className={`text-center text-xs font-bold rounded-lg hover:bg-slate-200 ${
                                     aircraft.status === 'inactive' ? 'bg-gray-500' : 

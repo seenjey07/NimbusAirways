@@ -41,7 +41,7 @@ const AdminDashboardRoutes = ({addAlert}) => {
                     <Route path="bookings" element={<AdminBookings />} />
                     <Route path="flights" element={<AdminFlightsAndRoutesLayout />} />
                     <Route path="meals" element={<AdminMeals />} />
-                    <Route path="aircrafts" element={<AdminAircrafts />} />
+                    <Route path="aircrafts" element={<AdminAircrafts addAlert={addAlert} />} />
                     <Route path="users" element={<AdminUsers addAlert={addAlert} />} />
                 </Routes>
             </AdminDashboardLayout>

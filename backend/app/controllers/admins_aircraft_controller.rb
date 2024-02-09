@@ -1,6 +1,6 @@
 class AdminsAircraftController < ApplicationController
-  # before_action :authenticate_user!
-  # before_action :require_admin
+  before_action :authenticate_user!
+  before_action :require_admin
 
   def index
     @aircrafts = Aircraft.all.map do |aircraft|
@@ -12,6 +12,16 @@ class AdminsAircraftController < ApplicationController
       )
     end
     render json: @aircrafts
+  end
+
+  def create
+    @aircraft = Aircraft.new(aircraft_params)
+
+    if @aircraft.save
+      render json: @aircraft, status: :created
+    else
+      render json: { error: @aircraft.errors.full_messages }, status: :unprocessable_entity
+    end
   end
 
 
@@ -67,6 +77,10 @@ class AdminsAircraftController < ApplicationController
     end
 
     return "inactive"
+  end
+
+  def aircraft_params
+    params.require(:aircraft).permit(:model, :family, :seat_capacity)
   end
 
 
