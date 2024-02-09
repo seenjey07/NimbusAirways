@@ -46,7 +46,10 @@ Rails.application.routes.draw do
   post '/admin/routes', to: 'admins_route#create_route'
 
   get '/admin/bookings', to: 'admins#index_bookings'
+
   get '/admin/aircrafts', to: 'admins_aircraft#index'
+  post '/admin/aircrafts', to: 'admins_aircraft#create'
+  delete '/admin/aircrafts/:id', to: 'admins_aircraft#destroy'
 
   get '/admin/passengers', to: 'admins#index_passengers'
 
