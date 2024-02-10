@@ -23,9 +23,27 @@ export const adminIndexFlightsApi = async () => {
   }
 };
 
+export const adminIndexAircraftsApi = async () => {
+  try {
+    const response = await axios.get(`${backendBaseUrl}/admin/aircrafts`, {});
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+
 export const adminCreateUserApi = async ({userData}) => {
   try {
     const response = await axios.post(`${backendBaseUrl}/admin/users`, {user: userData});
+    return response.data;
+  } catch (error) {
+    return Promise.reject(error)
+  }
+};
+
+export const adminCreateAircraftApi = async (aircraftData) => {
+  try {
+    const response = await axios.post(`${backendBaseUrl}/admin/aircrafts`, aircraftData);
     return response.data;
   } catch (error) {
     return Promise.reject(error)

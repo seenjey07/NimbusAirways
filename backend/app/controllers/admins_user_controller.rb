@@ -49,11 +49,11 @@ end
   end
 
   def update_user_params
-    params.require(:user).permit(:first_name, :middle_name, :last_name, :phone_number, :birth_date, :gender, :email)
+    params.require(:user).permit(:first_name, :middle_name, :last_name, :phone_number, :birth_date, :gender, :email, :role)
   end
 
   def require_admin
-    unless current_user && (current_user.role == 'admin' || current_user.role == 'superadmin')
+    unless current_user && (current_user.role.downcase == 'admin' || current_user.role.downcase == 'superadmin')
       render json: { error: 'You are not authorized to access this page.' }, status: :unauthorized
     end
   end

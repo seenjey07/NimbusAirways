@@ -3,6 +3,8 @@ import { Calendar, momentLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import moment from "moment";
 import { adminIndexFlightsApi } from "../../../lib/admin/adminusersapi";
+import { CreateFlightIcon, CreateRouteIcon } from "../../../components/icons/icons"
+import format from "date-fns/format";
 
 const AdminFlightsAndRoutes = () => {
   const localizer = momentLocalizer(moment);
@@ -40,19 +42,10 @@ const AdminFlightsAndRoutes = () => {
   };
 
   return (
-    <div className="glass">
-      <Calendar
-         localizer={localizer}
-         events={events}
-         startAccessor="start"
-         endAccessor="end"
-         views={['day']} 
-         defaultView="day"
-        onSelectEvent={handleEventClick}
-      />
-      
+  <>
+        
       <dialog id="FlightDetails" className="modal">
-        <div className="modal-box">
+        <div className="modal-box bg-white">
           <form method="dialog">
             <button
               className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
@@ -61,10 +54,10 @@ const AdminFlightsAndRoutes = () => {
               ✕
             </button>
           </form>
-          <span className="font-bold text-2xl mb-5">FLIGHT DETAILS</span>
+          <span className="font-bold text-2xl mb-5 flex justify-center">FLIGHT DETAILS</span>
           {selectedEvent && (
             <div className="overflow-x-auto">
-            <table className="table">
+            <table className="table bg-slate-200 rounded-md shadow-md">
               <tbody>
                 <tr className="bg-base-200">
                   <th className="text-right">Flight Number:</th>
@@ -76,15 +69,16 @@ const AdminFlightsAndRoutes = () => {
                 </tr>
                 <tr className="bg-base-200">
                   <th className="text-right">ETD:</th>
-                  <td>{selectedEvent.departure_date}</td>
+                  <td>{format(new Date(selectedEvent.departure_date), "MMMM dd, yyyy hh:mm a") || selectedEvent.departure_date}</td>
                 </tr>
                 <tr>
                   <th className="text-right">Destination:</th>
                   <td>{selectedEvent.route.destination_name} ({selectedEvent.route.destination_code})</td>
+                
                 </tr>
                 <tr className="bg-base-200">
                   <th className="text-right">ETA:</th>
-                  <td>{selectedEvent.arrival_date}</td>
+                  <td>{format(new Date(selectedEvent.arrival_date), "MMMM dd, yyyy hh:mm a") || selectedEvent.arrival_date}</td>
                 </tr>
                 <tr>
                   <th className="text-right">Available Seats:</th>
@@ -120,7 +114,39 @@ const AdminFlightsAndRoutes = () => {
           )}
         </div>
       </dialog>
-    </div>
+
+      <div>
+        <div className="mt-2 flex">
+          <div className="flex">
+              <button 
+              className="btn btn-accent text-secondary self-center ml-3 px-6" 
+              onClick={()=>document.getElementById('CreateUsers').showModal()}>
+              <CreateFlightIcon className="w-6 h-6"/>
+                Create Flight
+              </button>
+          </div>
+
+          <div className="flex">
+              <button 
+              className="btn btn-accent text-secondary self-center ml-3 px-6" 
+              onClick={()=>document.getElementById('CreateUsers').showModal()}>
+              <CreateRouteIcon className="w-6 h-6"/>
+                Create Routes
+              </button>
+          </div>
+        </div>
+
+        <Calendar
+          localizer={localizer}
+          events={events}
+          startAccessor="start"
+          endAccessor="end"
+          views={['day']} 
+          defaultView="day"
+          onSelectEvent={handleEventClick}
+        />
+      </div>
+    </>
   );
 };
 

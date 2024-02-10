@@ -15,6 +15,29 @@ body {
   background-color: white;
 }
 
+.rbc-calendar {
+  @apply rounded-md bg-white m-3
+}
+.rbc-toolbar {
+  @apply flex justify-between;
+}
+ 
+.rbc-btn-group button {
+  @apply btn btn-primary text-accent mx-2;
+}
+
+.rbc-toolbar-label {
+  @apply text-2xl font-bold mt-2;
+}
+
+.rbc-header {
+  @apply flex justify-center font-bold text-2xl border border-y-black
+}
+
+.rbc-row-content {
+  @apply hidden
+}
+
 /* @layer base {
   :root {
     --background: 0 0% 100%;
