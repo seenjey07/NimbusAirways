@@ -1,6 +1,6 @@
 class AdminsAircraftController < ApplicationController
-  before_action :authenticate_user!
-  before_action :require_admin
+  # before_action :authenticate_user!
+  # before_action :require_admin
 
   def index
     @aircrafts = Aircraft.all.map do |aircraft|

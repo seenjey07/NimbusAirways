@@ -5,6 +5,7 @@ import moment from "moment";
 import { adminIndexFlightsApi } from "../../../lib/admin/adminusersapi";
 import { CreateFlightIcon, CreateRouteIcon } from "../../../components/icons/icons"
 import format from "date-fns/format";
+import CreateFlightsModal from "./modals/CreateFlightsModal";
 
 const AdminFlightsAndRoutes = () => {
   const localizer = momentLocalizer(moment);
@@ -43,7 +44,20 @@ const AdminFlightsAndRoutes = () => {
 
   return (
   <>
-        
+        <dialog id="CreateFlights" className="modal">
+            <div className="modal-box bg-accent">
+            <form method="dialog">
+                <button 
+                className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-secondary"
+                >
+                ✕
+                </button> 
+            </form>
+                <CreateFlightsModal />
+            </div>
+        </dialog>
+
+
       <dialog id="FlightDetails" className="modal">
         <div className="modal-box bg-white">
           <form method="dialog">
@@ -54,6 +68,7 @@ const AdminFlightsAndRoutes = () => {
               ✕
             </button>
           </form>
+
           <span className="font-bold text-2xl mb-5 flex justify-center">FLIGHT DETAILS</span>
           {selectedEvent && (
             <div className="overflow-x-auto">
@@ -120,7 +135,7 @@ const AdminFlightsAndRoutes = () => {
           <div className="flex">
               <button 
               className="btn btn-accent text-secondary self-center ml-3 px-6" 
-              onClick={()=>document.getElementById('CreateUsers').showModal()}>
+              onClick={()=>document.getElementById('CreateFlights').showModal()}>
               <CreateFlightIcon className="w-6 h-6"/>
                 Create Flight
               </button>
