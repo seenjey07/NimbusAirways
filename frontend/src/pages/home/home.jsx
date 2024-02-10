@@ -2,14 +2,12 @@ import React from "react";
 import Footer from "../home/footer";
 import logoImage from "../../assets/logo.png";
 import homepageVideo from "../../assets/HomepageVideo.mp4";
-import { useNavigate } from "react-router-dom";
-import HomeFooter from "../../assets/HomeFooter";
+import { Link, useNavigate } from "react-router-dom";
 
 const Home = () => {
   const navigate = useNavigate();
 
   return (
-  
     <div
       style={{
         display: "flex",
@@ -59,10 +57,10 @@ const Home = () => {
                   </a>
                 </li>
                 <li>
-                  <a>About</a>
+                  <Link to="/about_us">About Us</Link>
                 </li>
                 <li>
-                  <a>Contact Us</a>
+                  <Link to="/contact_us">Contact Us</Link>
                 </li>
               </ul>
             </div>
@@ -73,8 +71,7 @@ const Home = () => {
       <div
         style={{
           position: "relative",
-          height: "38vw", // Aspect ratio: 16:9 (1280x800)
-          maxWidth: "100%",
+          flex: 1,
         }}
       >
         <video

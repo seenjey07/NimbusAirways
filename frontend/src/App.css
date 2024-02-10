@@ -11,6 +11,10 @@ label,
   font-weight: bold;
 }
 
+body {
+  background-color: white;
+}
+
 .rbc-calendar {
   @apply rounded-md bg-white m-3
 }
@@ -33,8 +37,6 @@ label,
 .rbc-row-content {
   @apply hidden
 }
-
-
 
 /* @layer base {
   :root {

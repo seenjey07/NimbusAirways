@@ -3,8 +3,7 @@ import logoImage from "../../assets/logo-no-text.png";
 
 const Footer = () => {
   return (
-
-    <footer className="footer p-1 bg-accent text-white text-xs">
+    <footer className="footer p-1 bg-accent text-white text-xs fixed bottom-0 w-full">
       <div className="flex flex-row items-center">
         <figure>
           <img
