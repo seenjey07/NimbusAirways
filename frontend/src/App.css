@@ -10,7 +10,11 @@ label,
 .navbar {
   font-weight: bold;
 }
- 
+
+body {
+  background-color: white;
+}
+
 /* @layer base {
   :root {
     --background: 0 0% 100%;
