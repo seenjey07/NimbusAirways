@@ -10,22 +10,34 @@ import { Tabs, TabsContent } from "../../components/ui/tabs";
 import Overview from "./dashboard/subcomponents/Overview";
 import RecentUsers from "./dashboard/subcomponents/RecentSales";
 import { useState, useEffect } from "react";
+import Loading from "../../components/Loading"
 const AdminDashboard = () => {
     const [stats, setStats] = useState('');
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const getCompanyStats = async () => {
-          try {
-            const res = await adminCompanyStats();
-            console.log('Company stats', res)
-            setStats(res)
-          } catch (error) {
-            console.error("Error fetching initial flight information:", error);
-          }
-        };
-    
-        getCompanyStats() 
-      }, []);
+      const getCompanyStats = async () => {
+        try {
+          const res = await adminCompanyStats();
+          console.log('Company stats', res);
+          setStats(res);
+        } catch (error) {
+          console.error("Error fetching initial flight information:", error);
+        } finally {
+          setLoading(false);
+        }
+      };
+  
+      getCompanyStats();
+    }, []);
+
+    if (loading) {
+      return (
+        <div>
+          <Loading />
+        </div>
+      );
+    }
     
   return (
       <div className="flex-1 space-y-4 p-4 md:p-8 pt-6 bg-white">

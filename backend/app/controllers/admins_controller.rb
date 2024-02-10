@@ -40,9 +40,13 @@ class AdminsController < ApplicationController
   private
 
   def require_admin
-    unless current_user && (current_user.role.downcase == 'admin' || current_user.role.downcase == 'superadmin')
+    if current_user.nil?
+      render json: { error: 'You must be logged in to access this page.' }, status: :unauthorized
+    elsif current_user.role.downcase.in?(['admin', 'superadmin'])
+    else
       render json: { error: 'You are not authorized to access this page.' }, status: :unauthorized
     end
   end
+
 
 end

@@ -50,6 +50,15 @@ export const adminCreateAircraftApi = async (aircraftData) => {
   }
 };
 
+export const adminCreateFlightsApi = async (flightsData) => {
+  try {
+    const response = await axios.post(`${backendBaseUrl}/admin/flights`, flightsData);
+    return response.data;
+  } catch (error) {
+    return Promise.reject(error)
+  }
+};
+
 export const adminDeleteeUserApi = async ({id}) => {
   try {
     const response = await axios.delete(`${backendBaseUrl}/admin/users/${id}`);
@@ -92,6 +101,16 @@ export const adminCheckAuthorization = async () => {
 export const adminCompanyStats = async () => {
   try {
     const response = await axios.get(`${backendBaseUrl}/admin/stats`);
+    return response.data;
+  }
+  catch (error) {
+    return Promise.reject(error)
+  }
+}
+
+export const adminIndexRoutesApi = async () => {
+  try {
+    const response = await axios.get(`${backendBaseUrl}/admin/routes`);
     return response.data;
   }
   catch (error) {

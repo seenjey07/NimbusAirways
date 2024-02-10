@@ -1,4 +1,5 @@
 import { Link, useNavigate } from "react-router-dom"
+import { AdminIcon } from "./icons/icons"
 
 
 const AdminNavBar = () => {
@@ -49,8 +50,17 @@ const AdminNavBar = () => {
                     </ul>
                     </div>
                     <Link to="/admin">
-                        <a className="btn btn-ghost text-xl">Nimbus Airways</a>
+                            <sub className="flex text-xs">
+                             <AdminIcon className="mr-2" />
+                            Admin Dashboard
+                            </sub>
+                            <a className="btn btn-ghost text-xl flex flex-col">
+                                Nimbus Airways
+                                
+                            </a>
+                            
                     </Link>
+                        
                 </div>
                 <div className="navbar-center hidden lg:flex">
                     <ul className="menu menu-horizontal px-1">
