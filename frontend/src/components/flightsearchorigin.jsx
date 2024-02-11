@@ -1,32 +1,32 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Check, ChevronsUpDown } from "lucide-react"
-import { Button } from "./ui/button"
-import { cn } from "../lib/utils"
+import * as React from "react";
+import { Check, ChevronsUpDown } from "lucide-react";
+import { Button } from "./ui/button";
+import { cn } from "../lib/utils";
 import {
   Command,
   CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
-} from "../components/ui/command"
+} from "../components/ui/command";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "../components/ui/popover"
+} from "../components/ui/popover";
 
 // eslint-disable-next-line react/prop-types
 export function FlightSearchOrigin({ originOptions, onSelect }) {
-    const [open, setOpen] = React.useState(false);
-    const [value, setValue] = React.useState("");
-    
-    console.log('Origin Options', originOptions);
-    console.log('Value', value);
-  
-    return (
-        <>
+  const [open, setOpen] = React.useState(false);
+  const [value, setValue] = React.useState("");
+
+  console.log("Origin Options", originOptions);
+  console.log("Value", value);
+
+  return (
+    <>
       <Popover open={open} onOpenChange={setOpen} className="bg-accent">
         <PopoverTrigger asChild>
           <Button
@@ -34,16 +34,14 @@ export function FlightSearchOrigin({ originOptions, onSelect }) {
             aria-expanded={open}
             className="w-[200px] justify-between"
           >
-            {value
-              ? originOptions.find((data) => data === value)
-              : 'Select place...'}
+            {value ? originOptions.find((data) => data === value) : "Select..."}
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
 
         <PopoverContent className="bg-secondary">
           <Command>
-            <CommandInput placeholder="Search place..." />
+            <CommandInput placeholder="Search..." />
             <CommandEmpty>No place found.</CommandEmpty>
             <CommandGroup>
               {originOptions.map((data) => (
@@ -52,14 +50,16 @@ export function FlightSearchOrigin({ originOptions, onSelect }) {
                   value={data}
                   onSelect={() => {
                     setValue((currentValue) =>
-                      currentValue === data ? '' : data
+                      currentValue === data ? "" : data
                     );
                     setOpen(false);
-                    onSelect(data)
+                    onSelect(data);
                   }}
                 >
                   <Check
-                    className={`mr-2 h-4 w-4 ${value === data ? 'opacity-100' : 'opacity-0'}`}
+                    className={`mr-2 h-4 w-4 ${
+                      value === data ? "opacity-100" : "opacity-0"
+                    }`}
                   />
                   {data}
                 </CommandItem>
@@ -69,7 +69,7 @@ export function FlightSearchOrigin({ originOptions, onSelect }) {
         </PopoverContent>
       </Popover>
     </>
-    );
-  }
+  );
+}
 
-export default FlightSearchOrigin
+export default FlightSearchOrigin;

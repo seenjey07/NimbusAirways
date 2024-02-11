@@ -1,5 +1,5 @@
-import NavBar from "../components/UserNavBar"
-import Footer from ".././pages/home/footer"
+import NavBar from "../components/UserNavBar";
+import Footer from ".././pages/home/footer";
 
 // eslint-disable-next-line react/prop-types
 const UserDashboardLayout = ({ children }) => {
