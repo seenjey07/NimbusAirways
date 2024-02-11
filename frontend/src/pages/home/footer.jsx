@@ -16,7 +16,7 @@ const Footer = () => {
           />
         </figure>
         <p className="footer text-[11px]">
-          Discover the Skies with Nimbus Airways: Elevating Your Journey Beyond
+          Discover the Skies with NimbusAirways: Elevating Your Journey Beyond
           Boundaries
           <br />
           &copy; NimbusAirways 2024. All rights reserved.

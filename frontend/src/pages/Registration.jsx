@@ -24,28 +24,29 @@ const Registration = () => {
   };
 
   return (
-    <>
-      <figure className="flex mt-2 pl-10 justify-start">
-        <img src={logoImage} alt="Logo" className="w-32 h-auto" />
+    <div className="flex flex-col justify-center items-center overflow-y-hidden h-screen">
+      <figure className="flex w-32 h-auto mt-2 hover:cursor-pointer">
+        <img
+          src={logoImage}
+          alt="Logo"
+          className="z-10"
+          onClick={() => navigate("/")}
+        />
       </figure>
 
       <div
         style={{
           position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
           width: "100%",
           height: "100%",
-          zIndex: -1,
+          zIndex: 0,
           backgroundImage: `url(${RegistrationImage})`,
           backgroundSize: "cover",
           opacity: 0.4,
         }}
       ></div>
 
-      <div className="hero lg:card-side p-1 bg-ghost shadow-xl relative">
+      <div className="lg:card-side p-1 bg-transparent relative">
         <form className="pt-0" onSubmit={handleSubmit}>
           <h2 className="card-title justify-center font-serif text-accent mb-4">
             Register Now
@@ -215,7 +216,7 @@ const Registration = () => {
           </div>
         </form>
       </div>
-    </>
+    </div>
   );
 };
 
