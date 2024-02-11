@@ -29,6 +29,9 @@ const PassengerForm = ({
     handleSubmit,
     addAlert,
   }) => {
+
+
+    
     return (
         <div className="hero-content card flex flex-col lg:text-left  bg-white">
         <h1 className="text-3xl font-bold mb-4">Flight Booking</h1>

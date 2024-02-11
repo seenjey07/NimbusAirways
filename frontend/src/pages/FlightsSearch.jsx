@@ -9,17 +9,19 @@ import FlightSearchOrigin from "../components/flightsearchorigin";
 import FlightSearchDestination from "../components/flightsearchdestination";
 import format from "date-fns/format";
 import UserDashboardLayout from "../layouts/UserDashboardLayout";
-
-const FlightsSearchComponent = () => {
+import { useNavigate } from "react-router-dom";
+// eslint-disable-next-line react/prop-types
+const FlightsSearchComponent = ({addAlert}) => {
   const [origin_location, setOrigin_location] = useState("");
   const [destination_location, setDestination_location] = useState("");
   const [departure_date, setDeparture_date] = useState("");
   const [flights, setFlights] = useState([]);
-  const [error, setError] = useState(null);
   const [initialLoadFlights, setInitialLoadFlights] = useState([]);
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [originOptions, setOriginOptions] = useState([]);
   const [destinationOptions, setDestinationOptions] = useState([]);
+  const [passengers, setPassengers] = useState("")
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,7 +40,7 @@ const FlightsSearchComponent = () => {
         setDestinationOptions(uniqueDestinationLocations);
       } catch (error) {
         console.error("Error fetching initial flight information:", error);
-        setError("Error fetching flights. Please try again.");
+        addAlert("Error fetching flights. Please try again.");
       }
     };
 
@@ -50,20 +52,32 @@ const FlightsSearchComponent = () => {
 
   const handleSearch = async (event) => {
     event.preventDefault();
-
+  
+    if (!passengers) {
+      addAlert("error", "Please select the number of passengers.");
+      return;
+    }
+  
     try {
       const res = await flightsApi({
         origin_location,
         destination_location,
         departure_date,
+        passengers,
       });
+  
       console.log("Retrieved flight information: ", res);
-      setFlights(res);
-      setIsInitialLoad(false);
-      setError(null);
+  
+      if (res.length === 0) {
+        addAlert("error", "No available flights on that date or location, please try again.");
+      } else {
+        setFlights(res);
+        setIsInitialLoad(false);
+        addAlert("success", "Flight search successful!");
+      }
     } catch (error) {
-      console.error("Error retrieving flight information:", error);
-      setError("Error searching for flights. Please try again.");
+      console.error("Error retrieving flight information:", error.response.data);
+      addAlert("error", error.response.data.error);
     }
   };
 
@@ -75,14 +89,40 @@ const FlightsSearchComponent = () => {
     setDestination_location(selectedOption);
   };
 
+  const handleSelect = (flight_id) => {
+    console.log("Flight ID:", flight_id);
+    localStorage.setItem('selected_flight_id', flight_id);
+    localStorage.setItem('total', passengers);
+    navigate('/bookings/create_booking');
+  }
+
   return (
     <>
       <UserDashboardLayout>
         <div className="flex justify-center gap-5 shadow-xl my-4">
           <div className="flex justify-center gap-5">
+
+          <label className="form-control max-w-xs">
+            <div className="label">
+              <span className="label-text">Passengers</span>
+            </div>
+            <select
+                className="select select-bordered text-center"
+                value={passengers} 
+                onChange={(e) => setPassengers(e.target.value)}
+              >
+                <option disabled value="" selected>
+                  Pick one
+                </option>
+                {[...Array(10)].map((_, index) => (
+                  <option key={index + 1}>{index + 1}</option>
+                ))}
+              </select>
+          </label>
+
             <label className="form-control w-full max-w-xs">
               <div className="label">
-                <span className="label-text">Origin Location:</span>
+                <span className="label-text">Origin</span>
               </div>
               <FlightSearchOrigin
                 originOptions={originOptions}
@@ -92,7 +132,7 @@ const FlightsSearchComponent = () => {
 
             <label className="form-control w-full max-w-xs">
               <div className="label">
-                <span className="label-text">Destination:</span>
+                <span className="label-text">Destination</span>
               </div>
               {/* <input
                 className="input input-bordered w-full max-w-xs"
@@ -109,7 +149,7 @@ const FlightsSearchComponent = () => {
 
             <label className="form-control w-full max-w-xs">
               <div className="label">
-                <span className="label-text">Date:</span>
+                <span className="label-text">Date</span>
               </div>
               <input
                 className="input input-bordered w-full max-w-xs"
@@ -128,25 +168,6 @@ const FlightsSearchComponent = () => {
                 Search
               </button>
             </div>
-
-            {error && (
-              <div role="alert" className="alert alert-error">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="strokeCurrent shrink-0 h-2 w-2"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="1.5"
-                    d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-                <span className="text-white">{error}</span>
-              </div>
-            )}
           </div>
         </div>
 
@@ -193,12 +214,14 @@ const FlightsSearchComponent = () => {
           <div className="overflow-x-auto mt-4">
             <table className="table table-zebra table-pin-cols">
               <thead>
-                <tr>
+                <tr className="font-bold">
                   <th>Flight Number</th>
                   <th>Origin Location</th>
                   <th>Destination Location</th>
                   <th>Departure Date</th>
+                  <th>Arrival Date</th>
                   <th>Price</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
@@ -213,8 +236,25 @@ const FlightsSearchComponent = () => {
                       <td>{flight.flight_number}</td>
                       <td>{flight.origin_location}</td>
                       <td>{flight.destination_location}</td>
-                      <td>{flight.departure_date}</td>
+
+                      <td>{format(
+                        new Date(flight.departure_date),
+                        "MMMM dd, yyyy hh:mm a"
+                      )}</td>
+                      <td>
+
+                      {format(
+                        new Date(flight.arrival_date),
+                        "MMMM dd, yyyy hh:mm a"
+                      )}
+                      </td>
                       <td>₱ {flight.price}</td>
+                      <td>
+                        <button 
+                        className="btn btn-accent"
+                        onClick={() => handleSelect(flight.flight_id)}
+                        >Select</button>
+                      </td>
                     </tr>
                   ))}
               </tbody>

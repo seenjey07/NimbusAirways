@@ -1,8 +1,12 @@
 import { useState } from "react";
 import Navbar from "../components/UserNavBar";
-import { showCurrentUserApi } from "../lib/usersapi";
+import { showCurrentUserApi} from "../lib/usersapi";
+import { showCurrentFlightApi } from "../lib/flightsapi";
 import { createUserBookingApi } from "../lib/bookingsapi";
+import { useEffect } from "react";
 import PassengerForm from "../components/PassengerForm"
+import format from "date-fns/format";
+import Loading from "../components/Loading";
 
 // eslint-disable-next-line react/prop-types
 const FlightBookings = ({ addAlert }) => {
@@ -15,58 +19,29 @@ const FlightBookings = ({ addAlert }) => {
   const [isDiscounted, setIsDiscounted] = useState(false);
   const [baggageQuantity, setBaggageQuantity] = useState(0);
   const [seatData, setSeatData] = useState();
-
-  const [originFlight, setOriginFlight] = useState("");
   const [departureDate, setDepartureDate] = useState("");
-  const [destinationFlight, setDestinationFlight] = useState("");
   const [arrivalDate, setArrivalDate] = useState("");
+  const flight_id = localStorage.getItem('selected_flight_id');
+  const passenger = localStorage.getItem('total');
+  const passengersArray = Array.from({ length: parseInt(passenger) }, (_, index) => index + 1);
+  const [flight, setFlight] = useState({});
 
-  ///TEMPORARY CODE HERE ///
-  const flightOptions = [
-    {
-      flight_id: "1",
-      flight_number: "NA37",
-      departure_date: "2024-02-03T07:00:00+00:00",
-      arrival_date: "2024-02-03T08:30:00+00:00",
-    },
-    {
-      flight_id: "2",
-      flight_number: "NA38",
-      departure_date: "2024-02-03T08:00:00+00:00",
-      arrival_date: "2024-02-03T09:30:00+00:00",
-    },
-    {
-      flight_id: "3",
-      flight_number: "NA39",
-      departure_date: "2024-02-03T09:00:00+00:00",
-      arrival_date: "2024-02-03T10:30:00+00:00",
-    },
-    {
-      flight_id: "4",
-      flight_number: "NA310",
-      departure_date: "2024-02-03T10:00:00+00:00",
-      arrival_date: "2024-02-03T11:30:00+00:00",
-    },
-    {
-      flight_id: "5",
-      flight_number: "NA311",
-      departure_date: "2024-02-03T11:00:00+00:00",
-      arrival_date: "2024-02-03T12:30:00+00:00",
-    },
-    {
-      flight_id: "6",
-      flight_number: "NA312",
-      departure_date: "2024-02-03T12:00:00+00:00",
-      arrival_date: "2024-02-03T13:30:00+00:00",
-    },
-    {
-      flight_id: "7",
-      flight_number: "NA313",
-      departure_date: "2024-02-03T13:00:00+00:00",
-      arrival_date: "2024-02-03T14:30:00+00:00",
-    },
-  ];
-  ///END OF TEMPORARY CODE HERE ///
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const flightsData = await showCurrentFlightApi(flight_id);
+        console.log("Flights data", flightsData)
+        setFlight(flightsData);
+        setDepartureDate(flightsData.departure_date)
+        setArrivalDate(flightsData.arrival_date)
+      } catch (error) {
+        console.error("Error fetching initial flight information:", error);
+        addAlert("Error fetching flights. Please try again.");
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleBookForMyselfChange = async (e) => {
     setBookForMyself(e.target.checked);
@@ -96,36 +71,32 @@ const FlightBookings = ({ addAlert }) => {
       setBaggageQuantity(0);
     }
   };
+  
 
   const handleSubmit = async () => {
-    const selectedFlight = flightOptions.find(
-      (flight) => flight.flight_number === originFlight
-    );
-    const seatLetter = seatData.charAt(0);
-    const seatNumber = seatData.slice(1);
     const bookingData = {
       booking: {
-        flight_id: selectedFlight?.flight_id,
-        total_passengers: 1,
+        flight_id: flight_id,
+        total_passengers: passenger,
       },
-      passengers: [
+      passengers: Array.from({ length: parseInt(passenger) }, () => ({
+        first_name: firstName,
+        last_name: lastName,
+        birth_date: birthDate,
+        gender: gender,
+        is_discounted: isDiscounted,
+        baggage_quantity: baggageQuantity,
+      })),
+      seats: seatData ? [
         {
-          first_name: firstName,
-          last_name: lastName,
-          birth_date: birthDate,
-          gender: gender,
-          is_discounted: isDiscounted,
-          baggage_quantity: baggageQuantity,
-        },
-      ],
-      seats: [
-        {
-          seat_number: seatNumber,
-          seat_letter: seatLetter,
+          seat_number: seatData.slice(1),
+          seat_letter: seatData.charAt(0),
           is_available: false,
-        },
-      ],
+        }
+      ] : [],
     };
+    
+    
 
     try {
       await createUserBookingApi(bookingData);
@@ -134,19 +105,13 @@ const FlightBookings = ({ addAlert }) => {
       addAlert("error", error.message || "Error creating booking");
     }
   };
-  ///TEMPORARY CODE HERE ///
-  const handleFlightChange = (selectedFlight) => {
-    setOriginFlight(selectedFlight.flight_number);
-    setDepartureDate(selectedFlight.departure_date);
-    setDestinationFlight(selectedFlight.flight_number);
-    setArrivalDate(selectedFlight.arrival_date);
-  };
-  ///END OF TEMPORARY CODE HERE ///
 
   const handleSeatSelect = (seatData) => {
     setSeatData(seatData);
     console.log("Setter Seat Data", seatData);
   };
+
+
 
   return (
     <>
@@ -155,84 +120,71 @@ const FlightBookings = ({ addAlert }) => {
       </div>
       <div className="hero min-h-screen bg-base-200">
         <div className="hero-content h-full flex-col lg:flex-row-reverse">
-          <div className="card shrink-0 w-full p-6 max-w-sm shadow-2xl bg-white">
+        <div className="card shrink-0 w-full p-6 max-w-sm shadow-2xl bg-white sticky top-0">
             <h2 className="text-xl font-bold mb-2">Flight Details</h2>
             <div>
               <label>Flight Number:</label>
-              <select
-                id="originFlight"
-                name="originFlight"
-                value={originFlight}
-                onChange={(e) =>
-                  handleFlightChange(
-                    flightOptions.find(
-                      (flight) => flight.flight_number === e.target.value
-                    )
-                  )
-                }
-                className="border p-2 w-full"
-              >
-                <option value="">Select Flight</option>
-                {flightOptions.map((flight) => (
-                  <option
-                    key={flight.flight_number}
-                    value={flight.flight_number}
-                  >
-                    {flight.flight_number}
-                  </option>
-                ))}
-              </select>
+              <p>{flight.flight_number}</p>
             </div>
 
             <div>
               <label>Departure Date and Time:</label>
-              <input
-                type="text"
-                id="departureDate"
-                name="departureDate"
-                value={departureDate}
-                readOnly
-                className="border p-2 w-full"
-                disabled
-              />
+              <p>{departureDate ? format(new Date(departureDate), "MMMM dd, yyyy hh:mm a") : "Not available"}</p>
             </div>
 
             <div>
               <label>Estimated Arrival Date and Time:</label>
+              <p>{arrivalDate ? format(new Date(arrivalDate), "MMMM dd, yyyy hh:mm a") : "Not available"}</p>
             </div>
             <div>
               <label>Aircraft</label>
+              {flight.aircraft ? (
+                <p>{flight.aircraft.name} {flight.aircraft.model}</p>
+              ) : (
+                <Loading />
+              )}
             </div>
-            <div>Price</div>
-            <div>Base Price</div>
-            <div>Administrative Cost</div>
+
+            <div>
+              <label>Price</label>
+              <p>₱{flight.price}</p>
+            </div>
+
             <div>Seat Fee</div>
             <div>Meals</div>
+            <div>Baggage</div>
+            <div>Total Fee</div>
           </div>
-
-          <PassengerForm 
-          bookForMyself={bookForMyself}
-          handleBookForMyselfChange={handleBookForMyselfChange}
-          firstName={firstName}
-          setFirstName={setFirstName}
-          middleName={middleName}
-          setMiddleName={setMiddleName}
-          lastName={lastName}
-          setLastName={setLastName}
-          birthDate={birthDate}
-          setBirthDate={setBirthDate}
-          gender={gender}
-          setGender={setGender}
-          isDiscounted={isDiscounted}
-          setIsDiscounted={setIsDiscounted}
-          baggageQuantity={baggageQuantity}
-          setBaggageQuantity={setBaggageQuantity}
-          seatData={seatData}
-          handleSeatSelect={handleSeatSelect}
-          handleSubmit={handleSubmit}
-          addAlert={addAlert}
-          />
-
+          <div className="flex flex-col gap-5">
+          {passengersArray.map((passengerNumber) => (
+          
+            <PassengerForm 
+              key={passengerNumber}
+              bookForMyself={bookForMyself}
+              handleBookForMyselfChange={handleBookForMyselfChange}
+              firstName={firstName}
+              setFirstName={setFirstName}
+              middleName={middleName}
+              setMiddleName={setMiddleName}
+              lastName={lastName}
+              setLastName={setLastName}
+              birthDate={birthDate}
+              setBirthDate={setBirthDate}
+              gender={gender}
+              setGender={setGender}
+              isDiscounted={isDiscounted}
+              setIsDiscounted={setIsDiscounted}
+              baggageQuantity={baggageQuantity}
+              setBaggageQuantity={setBaggageQuantity}
+              seatData={seatData}
+              handleSeatSelect={handleSeatSelect}
+              handleSubmit={handleSubmit}
+              addAlert={addAlert}
+              passengerNumber={passengerNumber}
+            />
+          
+          ))}
+          </div>
         </div>
       </div>
     </>
