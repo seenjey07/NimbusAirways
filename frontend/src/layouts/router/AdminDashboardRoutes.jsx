@@ -43,7 +43,7 @@ const AdminDashboardRoutes = ({addAlert}) => {
                 <Routes>
                     <Route path="/" element={<AdminDashboard />} />
                     <Route path="bookings" element={<AdminBookings />} />
-                    <Route path="flights" element={<AdminFlightsAndRoutes />} />
+                    <Route path="flights" element={<AdminFlightsAndRoutes addAlert={addAlert} />} />
                     <Route path="meals" element={<AdminMeals />} />
                     <Route path="aircrafts" element={<AdminAircrafts addAlert={addAlert} />} />
                     <Route path="users" element={<AdminUsers addAlert={addAlert} />} />

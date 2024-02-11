@@ -50,6 +50,15 @@ export const adminCreateAircraftApi = async (aircraftData) => {
   }
 };
 
+export const adminCreateRoutesApi = async (routeData) => {
+  try {
+    const response = await axios.post(`${backendBaseUrl}/admin/routes`, routeData);
+    return response.data;
+  } catch (error) {
+    return Promise.reject(error)
+  }
+};
+
 export const adminCreateFlightsApi = async (flightsData) => {
   try {
     const response = await axios.post(`${backendBaseUrl}/admin/flights`, flightsData);
