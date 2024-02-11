@@ -3,11 +3,14 @@ import { Calendar, momentLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import moment from "moment";
 import { adminIndexFlightsApi } from "../../../lib/admin/adminusersapi";
-import { CreateFlightIcon, CreateRouteIcon } from "../../../components/icons/icons"
+import { CreateFlightIcon, CreateRouteIcon, ShowRouteIcon } from "../../../components/icons/icons"
 import format from "date-fns/format";
 import CreateFlightsModal from "./modals/CreateFlightsModal";
+import CreateRoutesModal from "./modals/CreateRoutesModal";
+import ShowRoutesModal from "./modals/ShowRoutesModal";
 
-const AdminFlightsAndRoutes = () => {
+// eslint-disable-next-line react/prop-types
+const AdminFlightsAndRoutes = ({addAlert}) => {
   const localizer = momentLocalizer(moment);
   const [events, setEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
@@ -53,7 +56,33 @@ const AdminFlightsAndRoutes = () => {
                 ✕
                 </button> 
             </form>
-                <CreateFlightsModal />
+                <CreateFlightsModal addAlert={addAlert}/>
+            </div>
+        </dialog>
+
+        <dialog id="CreateRoutes" className="modal">
+            <div className="modal-box bg-accent">
+            <form method="dialog">
+                <button 
+                className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-secondary"
+                >
+                ✕
+                </button> 
+            </form>
+                <CreateRoutesModal addAlert={addAlert} />
+            </div>
+        </dialog>
+
+        <dialog id="ShowRoutes" className="modal">
+            <div className="modal-box w-11/12 max-w-5xl bg-accent">
+            <form method="dialog">
+                <button 
+                className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-secondary"
+                >
+                ✕
+                </button> 
+            </form>
+                <ShowRoutesModal />
             </div>
         </dialog>
 
@@ -141,13 +170,23 @@ const AdminFlightsAndRoutes = () => {
               </button>
           </div>
 
-          <div className="flex">
-              <button 
-              className="btn btn-accent text-secondary self-center ml-3 px-6" 
-              onClick={()=>document.getElementById('CreateUsers').showModal()}>
+
+
+
+          <div className="join ml-2 bg-accent">
+            <button 
+            className="btn join-item btn-accent text-secondary self-center" 
+            onClick={()=>document.getElementById('CreateRoutes').showModal()}>
               <CreateRouteIcon className="w-6 h-6"/>
-                Create Routes
-              </button>
+              Create Routes
+            </button>
+            <div className="divider divider-horizontal divider-secondary"></div> 
+            <button 
+            className="btn join-item btn-accent text-secondary self-center" 
+            onClick={()=>document.getElementById('ShowRoutes').showModal()}>
+              <ShowRouteIcon className="w-6 h-6"/>
+              Show Routes
+            </button>
           </div>
         </div>
 

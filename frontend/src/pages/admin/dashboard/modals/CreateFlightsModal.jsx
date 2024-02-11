@@ -192,7 +192,7 @@ const CreateFlightsModal = () => {
                     .filter((route) => route.origin_location !== "Manila")
                     .map((route) => (
                     <option key={route.id} value={route.route_id}>
-                        {route.id} - {route.origin_location}
+                        {route.origin_location}
                     </option>
                     ))
                 : <option>Manila</option>}
@@ -220,7 +220,7 @@ const CreateFlightsModal = () => {
                     .filter((route) => route.destination_location !== "Manila")
                     .map((route) => (
                     <option key={route.id} value={route.id}>
-                        {route.id} - {route.destination_location} 
+                        {route.destination_location} 
                     </option>
                     ))}
             </select>

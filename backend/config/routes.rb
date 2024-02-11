@@ -43,7 +43,7 @@ Rails.application.routes.draw do
   delete '/admin/meals/:id', to: 'admins_meal#destroy_meal'
 
   get '/admin/routes', to: 'admins_route#index'
-  post '/admin/routes', to: 'admins_route#create_route'
+  post '/admin/routes', to: 'admins_route#create'
 
   get '/admin/bookings', to: 'admins#index_bookings'
 
