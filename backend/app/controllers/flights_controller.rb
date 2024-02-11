@@ -5,6 +5,17 @@ class FlightsController < ApplicationController
     render json: { flights: flights.collect { |flight| render_json(flight) } }
   end
 
+  def show
+    flight_id = params[:id]
+    flight = Flight.find_by(id: flight_id)
+
+    if flight
+      render json: render_json_with_aircraft(flight)
+    else
+      render json: { error: "Flight not found" }, status: :not_found
+    end
+  end
+
   def indexed_flights
     today = Date.today
     start_date = today + 7
@@ -44,12 +55,29 @@ class FlightsController < ApplicationController
 
   def render_json(flight)
     {
+      flight_id: flight.id,
       flight_number: flight.flight_number,
       departure_date: flight.departure_date,
       arrival_date: flight.arrival_date,
       origin_location: flight.route.origin_location,
       destination_location: flight.route.destination_location,
       price: flight.route.price
+    }
+  end
+
+  def render_json_with_aircraft(flight)
+    {
+      flight_id: flight.id,
+      flight_number: flight.flight_number,
+      departure_date: flight.departure_date,
+      arrival_date: flight.arrival_date,
+      origin_location: flight.route.origin_location,
+      destination_location: flight.route.destination_location,
+      price: flight.route.price,
+      aircraft: {
+        name: flight.aircraft.family,
+        model: flight.aircraft.model,
+      }
     }
   end
 

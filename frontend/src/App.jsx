@@ -37,9 +37,9 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/about_us" element={<AboutUs />} />
           <Route path="/contact_us" element={<ContactUs />} />
-          <Route path="/my_dashboard" element={<UserDashboard />} />
+          <Route path="/my_dashboard" element={<UserDashboard addAlert={addAlert} />} />
           <Route path="/bookings" element={<BookingsComponent />} />
-          <Route path="flight_search" element={<FlightsSearchComponent />} />
+          <Route path="flight_search" element={<FlightsSearchComponent addAlert={addAlert} />} />
           <Route path="seats" element={<SeatSelection />} />
           <Route
             path="/bookings/create_booking/*"

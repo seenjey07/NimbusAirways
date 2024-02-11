@@ -7,7 +7,7 @@ class UsersController < ApplicationController
       last_name: user.last_name,
       birth_date: user.birth_date,
       phone_number: user.phone_number,
-      gender: user.gender
+      gender: user.gender,
       travel_fund: user.travel_fund,
       email: user.email,
     }

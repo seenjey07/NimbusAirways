@@ -26,7 +26,6 @@ const SeatSelection = ({addAlert, onSeatSelect}) => {
   return (
     <div >
       <h1 className="text-3xl font-semibold mb-4">Seat Selection</h1>
-      <p>DI PA TOH GUMAGANA AH!!! HAHAHA PERO GANITO BABATUHIN NALNG TO SA API OKAY NA RIN YUNG SEAT LABELS</p>
       <SeatLayoutA220_100 selectedSeat={selectedSeat} onSeatClick={handleSeatClick} />
       <div className="mt-4">
         {renderSeatInfo()}

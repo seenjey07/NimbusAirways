@@ -62,7 +62,7 @@ const Login = ({ addAlert }) => {
 
     if (existingToken && existingUserId) {
       console.log("Auto-login with existing token");
-      // You may want to validate the token on the server-side for security
+
       navigate("/my_dashboard");
     }
   }, []);
@@ -92,12 +92,10 @@ const Login = ({ addAlert }) => {
         <div className="hero-content flex-col lg:flex-row-reverse gap-16">
           <div className="text-center lg:text-left">
             <div className="flex">
-              <a href="/" className="text-5xl font-bold hover:text-primary">
-                NimbusAirways
-              </a>
+              <h1 className="text-5xl font-bold">Nimbus Airways</h1>
             </div>
             <p className="py-6 italic">
-              Discover the Skies with NimbusAirways: Elevating Your Journey
+              Discover the Skies with Nimbus Airways: Elevating Your Journey
               Beyond Boundaries
             </p>
           </div>

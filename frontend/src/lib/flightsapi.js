@@ -52,3 +52,14 @@ export const indexedRoutesApi = async () => {
   }
 }; 
 
+export const showCurrentFlightApi = async (flight_id) => {
+  try {
+    const response = await axios.get(`${backendBaseUrl}/api/flights/${flight_id}`);
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+}; 
+
+
+
