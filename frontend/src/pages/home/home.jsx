@@ -17,7 +17,7 @@ const Home = () => {
       }}
     >
       <div>
-        <div className="navbar bg-accent">
+        <div className="navbar bg-accent top-0">
           <div className="flex-1">
             <figure>
               <img
@@ -72,6 +72,8 @@ const Home = () => {
         style={{
           position: "relative",
           flex: 1,
+          height: "5%",
+          margin: "0",
         }}
       >
         <video
@@ -87,9 +89,7 @@ const Home = () => {
         />
       </div>
 
-      <div>
-        <Footer />
-      </div>
+      <Footer />
     </div>
   );
 };

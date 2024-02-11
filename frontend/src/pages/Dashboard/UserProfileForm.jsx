@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
+import Axios from "axios";
 
 const UserProfileForm = ({ current_user }) => {
   const [formValues, setFormValues] = useState({
@@ -25,6 +25,32 @@ const UserProfileForm = ({ current_user }) => {
     new_password: "",
     confirm_new_password: "",
   });
+
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      try {
+        const response = await Axios.get("/users/show");
+        console.log(response);
+        const user = response.data;
+
+        setFormValues({
+          first_name: user.first_name,
+          middle_name: user.middle_name,
+          last_name: user.last_name,
+          gender: user.gender,
+          phone_number: user.phone_number,
+          email: user.email,
+          password: "",
+          new_password: "",
+          confirm_new_password: "",
+        });
+      } catch (error) {
+        console.error("Error fetching user details:", error);
+      }
+    };
+
+    fetchUserDetails();
+  }, []);
 
   const validatePassword = () => {
     const { new_password, confirm_new_password } = formValues;
@@ -64,7 +90,7 @@ const UserProfileForm = ({ current_user }) => {
 
         if (response.status === 200) {
           console.log("User details updated successfully");
-          onUserUpdate(response.data); // to check yung sa user response eklabu
+          onUserUpdate(response.data); // I need to check pa yung sa user response eklabu
         } else {
           console.log("Update failed:", response.data.errors);
           setErrors(response.data.errors);
@@ -135,14 +161,16 @@ const UserProfileForm = ({ current_user }) => {
             <label className="form-control w-full max-w-xs">
               <div className="label">
                 <span className="label-text mb-0">Gender: </span>
-
-                <input
-                  type="dropdown"
+                <select
                   name="gender"
                   className="input input-bordered m-0 p-1 h-fit w-fit max-w-xs"
                   value={formValues.gender}
                   onChange={handleChange}
-                />
+                >
+                  <option value="">Select Gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
               </div>
             </label>
             <span>{errors.gender}</span>
@@ -250,7 +278,7 @@ const UserProfileForm = ({ current_user }) => {
 
         <div className="flex justify-center mt-1 mb-0 p-1">
           <button
-            onSubmit={handleSubmit}
+            onClick={handleSubmit}
             className="btn btn-primary text-sm py-0"
           >
             Update Profile

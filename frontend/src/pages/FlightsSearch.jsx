@@ -6,6 +6,7 @@ import {
   indexedRoutesApi,
 } from "../lib/flightsapi";
 import FlightSearchOrigin from "../components/flightsearchorigin";
+import FlightSearchDestination from "../components/flightsearchdestination";
 import format from "date-fns/format";
 import UserDashboardLayout from "../layouts/UserDashboardLayout";
 
@@ -18,6 +19,7 @@ const FlightsSearchComponent = () => {
   const [initialLoadFlights, setInitialLoadFlights] = useState([]);
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [originOptions, setOriginOptions] = useState([]);
+  const [destinationOptions, setDestinationOptions] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,6 +32,10 @@ const FlightsSearchComponent = () => {
           new Set(routesData.map((route) => route.origin_location))
         );
         setOriginOptions(uniqueOriginLocations);
+        const uniqueDestinationLocations = Array.from(
+          new Set(routesData.map((route) => route.destination_location))
+        );
+        setDestinationOptions(uniqueDestinationLocations);
       } catch (error) {
         console.error("Error fetching initial flight information:", error);
         setError("Error fetching flights. Please try again.");
@@ -65,6 +71,10 @@ const FlightsSearchComponent = () => {
     setOrigin_location(selectedOption);
   };
 
+  const handleDestinationSelect = (selectedOption) => {
+    setDestination_location(selectedOption);
+  };
+
   return (
     <>
       <UserDashboardLayout>
@@ -84,12 +94,16 @@ const FlightsSearchComponent = () => {
               <div className="label">
                 <span className="label-text">Destination:</span>
               </div>
-              <input
+              {/* <input
                 className="input input-bordered w-full max-w-xs"
                 type="text"
                 placeholder="Type here"
                 value={destination_location}
                 onChange={(e) => setDestination_location(e.target.value)}
+              /> */}
+              <FlightSearchDestination
+                destinationOptions={destinationOptions}
+                onSelect={handleDestinationSelect}
               />
             </label>
 

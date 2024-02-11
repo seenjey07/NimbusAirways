@@ -69,10 +69,12 @@ const Login = ({ addAlert }) => {
         <div className="hero-content flex-col lg:flex-row-reverse gap-16">
           <div className="text-center lg:text-left">
             <div className="flex">
-              <h1 className="text-5xl font-bold">Nimbus Airways</h1>
+              <a href="/" className="text-5xl font-bold hover:text-primary">
+                NimbusAirways
+              </a>
             </div>
             <p className="py-6 italic">
-              Discover the Skies with Nimbus Airways: Elevating Your Journey
+              Discover the Skies with NimbusAirways: Elevating Your Journey
               Beyond Boundaries
             </p>
           </div>

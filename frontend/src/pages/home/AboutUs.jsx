@@ -7,7 +7,7 @@ const AboutUs = () => {
   const navigate = useNavigate();
 
   return (
-    <>
+    <div className="overflow-x-hidden">
       <div>
         <div className="navbar bg-accent">
           <div className="flex-1">
@@ -68,9 +68,12 @@ const AboutUs = () => {
             left: 0,
             right: 0,
             bottom: 0,
-            height: "100vh",
-            width: "100vw",
-            backgroundSize: "cover",
+            height: "60vh",
+            width: "full",
+            backgroundSize: "fit",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            zIndex: -1,
             opacity: "0.4",
           }}
         ></div>
@@ -81,9 +84,10 @@ const AboutUs = () => {
               <h2 className="card-title mt-2">About NimbusAirways</h2>
               <p className="text-sm">
                 Welcome to NimbusAirways, where we transcend boundaries and
-                bring the world closer to you. At NimbusAirways, we believe in
-                fostering connections, enabling people to explore the wonders of
-                the world, and creating unforgettable travel experiences.
+                bring the world closer to you. <br />
+                At NimbusAirways, we believe in fostering connections, enabling
+                people to explore the wonders of the world, and creating
+                unforgettable travel experiences.
               </p>
             </div>
           </div>
@@ -146,9 +150,9 @@ const AboutUs = () => {
           <div className="bg-white text-neutral-content">
             <div className="card-body items-center text-center">
               <p className="text-sm">
-                Embark on a voyage with NimbusAirways – where each flight is a
+                Embark on a voyage with NimbusAirways - where each flight is a
                 step towards connecting the world, making dreams take flight,
-                and creating memories that last a lifetime. Thank you for
+                and creating memories that last a lifetime. <br /> Thank you for
                 choosing us as your travel companion. <br /> Discover the Skies
                 with Nimbus Airways: Elevating Your Journey Beyond Boundaries.
               </p>
@@ -156,7 +160,7 @@ const AboutUs = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 export default AboutUs;
