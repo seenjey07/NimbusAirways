@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LoginImage from "../assets/LoginImage.jpg";
 import axios from "axios";
+import { useEffect } from "react";
 
 const Login = ({ addAlert }) => {
   const backendBaseUrl = import.meta.env.VITE_BACKEND_BASE_URL;
@@ -45,6 +46,28 @@ const Login = ({ addAlert }) => {
       return error;
     }
   };
+
+  const getCookie = (name) => {
+    const cookieValue = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith(`${name}=`));
+
+    return cookieValue ? cookieValue.split("=")[1] : null;
+  };
+
+
+  useEffect(() => {
+    const existingToken = getCookie("token");
+    const existingUserId = getCookie("user_id");
+
+    if (existingToken && existingUserId) {
+      console.log("Auto-login with existing token");
+      // You may want to validate the token on the server-side for security
+      navigate("/my_dashboard");
+    }
+  }, []);
+
+
 
   const handleSignUp = () => {
     navigate("/signup");

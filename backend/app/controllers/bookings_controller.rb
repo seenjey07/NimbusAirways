@@ -30,7 +30,7 @@ class BookingsController < ApplicationController
 
       if @booking.save
         create_passengers
-        # create_seats
+
         update_booking_after_save
         render json: @booking, status: :created
       else
