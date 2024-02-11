@@ -49,17 +49,21 @@ const AdminNavBar = () => {
                         </li>
                     </ul>
                     </div>
-                    <Link to="/admin">
-                            <sub className="flex text-xs">
-                             <AdminIcon className="mr-2" />
-                            Admin Dashboard
+                    <div className="flex flex-col">
+                        <Link to="/my_dashboard">
+                            <sub className="flex text-xs hover:underline">
+                                <AdminIcon className="mr-2" />
+                            User Dashboard
                             </sub>
+                        </Link>
+                        
+                        <Link to="/admin">
                             <a className="btn btn-ghost text-xl flex flex-col">
                                 Nimbus Airways
                                 
                             </a>
-                            
-                    </Link>
+                        </Link>
+                    </div>
                         
                 </div>
                 <div className="navbar-center hidden lg:flex">
