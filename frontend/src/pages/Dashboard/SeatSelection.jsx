@@ -1,23 +1,19 @@
 import { useState } from "react";
 import SeatLayoutA220_100 from "../../components/SeatLayoutA220_100";
 // eslint-disable-next-line react/prop-types
-const SeatSelection = ({addAlert, onSeatSelect}) => {
+const SeatSelection = ({onSeatSelect}) => {
   const [selectedSeat, setSelectedSeat] = useState(null);
   const handleSeatClick = (seatNumber) => {
-    if (selectedSeat === seatNumber) {
-      setSelectedSeat(null);
-    } else {
-      setSelectedSeat(seatNumber);
-    }
-    onSeatSelect(selectedSeat);
+    setSelectedSeat((prevSelectedSeat) =>
+      prevSelectedSeat !== seatNumber ? seatNumber : null
+    );
+    onSeatSelect(seatNumber);
   };
 
   const renderSeatInfo = () => {
     if (selectedSeat) {
       const seatLetter = selectedSeat.charAt(0);
       const seatNumber = selectedSeat.slice(1);
-
-      addAlert('success', `You chose ${seatLetter}${seatNumber}, make sure to double check before booking!`);
     }
 
     return null;
