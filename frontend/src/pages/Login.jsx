@@ -1,9 +1,11 @@
+/* eslint-disable react/no-unescaped-entities */
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LoginImage from "../assets/LoginImage.jpg";
 import axios from "axios";
 import { useEffect } from "react";
 
+// eslint-disable-next-line react/prop-types
 const Login = ({ addAlert }) => {
   const backendBaseUrl = import.meta.env.VITE_BACKEND_BASE_URL;
   const [email, setEmail] = useState();

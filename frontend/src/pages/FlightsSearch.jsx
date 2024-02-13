@@ -57,7 +57,7 @@ const FlightsSearchComponent = ({addAlert}) => {
       addAlert("error", "Please select the number of passengers.");
       return;
     }
-  
+    setFlights("")
     try {
       const res = await flightsApi({
         origin_location,

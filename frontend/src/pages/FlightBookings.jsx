@@ -1,12 +1,12 @@
+/* eslint-disable no-unused-vars */
 import { useState } from "react";
 import Navbar from "../components/UserNavBar";
 import { showCurrentFlightApi } from "../lib/flightsapi";
 import { createUserBookingApi } from "../lib/bookingsapi";
 import { useEffect } from "react";
 import PassengerForm from "../components/PassengerForm"
-import format from "date-fns/format";
-import Loading from "../components/Loading";
 import FlightDetails from "../components/FlightDetails";
+import { useNavigate } from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
 const FlightBookings = ({ addAlert }) => {
@@ -18,6 +18,7 @@ const FlightBookings = ({ addAlert }) => {
   const [arrivalDate, setArrivalDate] = useState("");
   const [loadingFlight, setLoadingFlight] = useState(true);
   const [seatData, setSeatData] = useState([])
+  const navigate = useNavigate();
   
 
   useEffect(() => {
@@ -93,6 +94,7 @@ const FlightBookings = ({ addAlert }) => {
     try {
       await createUserBookingApi(bookingData);
       addAlert("success", "Booking created successfully");
+      navigate("/bookings");
     } catch (error) {
       addAlert("error", error.message || "Error creating booking");
     }
@@ -145,34 +147,60 @@ const FlightBookings = ({ addAlert }) => {
       
       
           <div className="bg-accent p-7 px-12 rounded-md">
-            <div className="card z-1 lg:card-side bg-purple-200 shadow-xl">
-              
-            {passengersArray.map((passengerNumber) => (
-                <div key={passengerNumber} className="card-body p-12 rounded-md">
-                  
-                  <h2 className="text-xl font-semibold mb-2 justify-center flex">{`Passenger ${passengerNumber}`}</h2>
-                  <PassengerForm
-                    key={passengerNumber}
-                    formFields={[
-                      { name: 'firstName', label: 'First Name', type: 'text', required: true },
-                      { name: 'middleName', label: 'Middle Name', type: 'text', required: true },
-                      { name: 'lastName', label: 'Last Name', type: 'text', required: true },
-                      { name: 'birthDate', label: 'Birth Date', type: 'date', required: true },
-                      { name: 'gender', label: 'Gender', type: 'select', options: ['Male', 'Female'], required: true },
-                      { name: 'baggageQuantity', label: 'Baggage Quantity', type: 'select', options: [0, 1, 2], required: true },
-                    ]}
-                    addAlert={addAlert}
-                    passengerNumber={passengerNumber} 
-                    handleSeatSelect={(seatData, passengerNumber) => {
-                      console.log('Seat Data Passenger Form FB:', seatData);
-                      console.log('Passenger Number:', passengerNumber);
-                      handleSeatSelect(passengerNumber, seatData);
-                    }}
-                    onInputChange={(field, value) => handlePassengerFormInputChange(passengerNumber, field, value)}
-                  />
-                </div>
-              ))}
-              
+          <div>
+              <div className="card z-1 lg:card-side bg-purple-200 shadow-xl">
+                {passengersArray.slice(0, 5).map((passengerNumber) => (
+                  <div key={passengerNumber} className="card-body p-12 rounded-md overflow-auto">
+                    <h2 className="text-xl font-semibold mb-2 justify-center flex">{`Passenger ${passengerNumber}`}</h2>
+                    <PassengerForm
+                      key={passengerNumber}
+                      formFields={[
+                        { name: 'firstName', label: 'First Name', type: 'text', required: true },
+                        { name: 'middleName', label: 'Middle Name', type: 'text', required: true },
+                        { name: 'lastName', label: 'Last Name', type: 'text', required: true },
+                        { name: 'birthDate', label: 'Birth Date', type: 'date', required: true },
+                        { name: 'gender', label: 'Gender', type: 'select', options: ['Male', 'Female'], required: true },
+                        { name: 'baggageQuantity', label: 'Baggage Quantity', type: 'select', options: [0, 1, 2], required: true },
+                      ]}
+                      addAlert={addAlert}
+                      passengerNumber={passengerNumber} 
+                      handleSeatSelect={(seatData, passengerNumber) => {
+                        console.log('Seat Data Passenger Form FB:', seatData);
+                        console.log('Passenger Number:', passengerNumber);
+                        handleSeatSelect(passengerNumber, seatData);
+                      }}
+                      onInputChange={(field, value) => handlePassengerFormInputChange(passengerNumber, field, value)}
+                    />
+                  </div>
+                ))}
+              </div>
+
+              <div className="card z-1 lg:card-side bg-purple-200 shadow-xl mt-4">
+                {passengersArray.slice(5, 10).map((passengerNumber) => (
+                  <div key={passengerNumber} className="card-body p-12 rounded-md overflow-auto">
+                    <h2 className="text-xl font-semibold mb-2 justify-center flex">{`Passenger ${passengerNumber}`}</h2>
+                    <PassengerForm
+                      key={passengerNumber}
+                      formFields={[
+                        { name: 'firstName', label: 'First Name', type: 'text', required: true },
+                        { name: 'middleName', label: 'Middle Name', type: 'text', required: true },
+                        { name: 'lastName', label: 'Last Name', type: 'text', required: true },
+                        { name: 'birthDate', label: 'Birth Date', type: 'date', required: true },
+                        { name: 'gender', label: 'Gender', type: 'select', options: ['Male', 'Female'], required: true },
+                        { name: 'baggageQuantity', label: 'Baggage Quantity', type: 'select', options: [0, 1, 2], required: true },
+                      ]}
+                      addAlert={addAlert}
+                      passengerNumber={passengerNumber} 
+                      handleSeatSelect={(seatData, passengerNumber) => {
+                        console.log('Seat Data Passenger Form FB:', seatData);
+                        console.log('Passenger Number:', passengerNumber);
+                        handleSeatSelect(passengerNumber, seatData);
+                      }}
+                      onInputChange={(field, value) => handlePassengerFormInputChange(passengerNumber, field, value)}
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
             
             <div className="mt-5 card-actions">
@@ -184,12 +212,20 @@ const FlightBookings = ({ addAlert }) => {
                 <div className="drawer-side z-20">
                   <label htmlFor="my-drawer-4" aria-label="close sidebar" className="drawer-overlay"></label>
                   <div className="menu p-4 w-80 min-h-full bg-white text-base-content">
-                    <FlightDetails flight={flight} departureDate={departureDate} arrivalDate={arrivalDate} handleFormSubmit={handleFormSubmit} passengerStates={passengerStates} passenger={passenger} seatDataArray={seatDataArray} />
+                    <FlightDetails 
+                    flight={flight} 
+                    departureDate={departureDate} 
+                    arrivalDate={arrivalDate} 
+                    handleFormSubmit={handleFormSubmit} 
+                    passengerStates={passengerStates} 
+                    passenger={passenger} 
+                    seatDataArray={seatDataArray} 
+                    addAlert={addAlert}
+                    />
                   </div>
                 </div>
               </div>
             </div>
-
           </div>     
         
 

@@ -59,11 +59,11 @@ const AdminDashboard = () => {
                     strokeWidth="2"
                     className="h-4 w-4 text-muted-foreground"
                   >
-                    <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                    <path d="M8 19V5h3.5a4.5 4.5 0 1 1 0 9H8m10-6H6m12 3H6" />
                   </svg>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">₱{stats?.revenue?.toFixed(2)}</div>
+                <div className="text-2xl font-bold">₱{parseInt(stats?.revenue).toFixed(2)}</div>
                   <p className="text-xs text-muted-foreground">
                     0% from last month
                   </p>
@@ -74,6 +74,7 @@ const AdminDashboard = () => {
                   <CardTitle className="text-sm font-medium">
                     Total Flights for this Year
                   </CardTitle>
+                  
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"

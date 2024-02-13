@@ -25,7 +25,6 @@ class AdminsStatController < ApplicationController
 
   def calculate_total_revenue
     total_revenue = Booking.joins(:flight, flight: :route)
-                           .where("bookings.is_confirmed": true)
                            .sum("routes.price * bookings.total_passengers")
     total_revenue
   end
