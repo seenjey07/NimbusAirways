@@ -6,7 +6,8 @@ import { Link, useNavigate } from "react-router-dom";
 import FlightSearchDestination from "../../components/flightsearchdestination";
 import { indexedRoutesApi } from "../../lib/flightsapi";
 
-const Home = () => {
+// eslint-disable-next-line react/prop-types
+const Home = ({addAlert}) => {
   const navigate = useNavigate();
   const [destinationOptions, setDestinationOptions] = useState([]);
   const [destination_location, setDestination_location] = useState("");
@@ -41,7 +42,7 @@ const Home = () => {
 
     localStorage.setItem("destination_from_homepage", destination_location);
 
-    navigate(`/flight_search`);
+    navigate(`user/flight_search`);
   };
 
   return (

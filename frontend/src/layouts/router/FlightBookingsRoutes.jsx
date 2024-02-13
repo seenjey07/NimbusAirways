@@ -22,7 +22,7 @@ const FlightBookingsRouter = ({ addAlert }) => {
         <Routes>
           <Route path="/" element={<BookingsComponent addAlert={addAlert} />} />
           <Route
-            path="/create_booking/*"
+            path="create_booking"
             element={<FlightBookings addAlert={addAlert} />}
           />
         </Routes>
