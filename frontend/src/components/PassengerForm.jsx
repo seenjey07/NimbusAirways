@@ -1,4 +1,4 @@
-import SeatSelection from "../pages/Dashboard/SeatSelection"
+import SeatSelection from "../pages/user/Dashboard/SeatSelection"
 import {
   Drawer,
   DrawerClose,

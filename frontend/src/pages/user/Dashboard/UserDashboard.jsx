@@ -4,7 +4,8 @@ import UserProfileForm from "./UserProfileForm";
 import { showCurrentUserApi } from "../../../lib/usersapi";
 import { id } from "date-fns/locale";
 
-const Dashboard = () => {
+// eslint-disable-next-line react/prop-types
+const UserDashboard = ({addAlert}) => {
   const [current_user, setCurrentUser] = useState({
     first_name: "",
     travel_fund: 0,
@@ -75,4 +76,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default UserDashboard;

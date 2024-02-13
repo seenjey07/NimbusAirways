@@ -96,10 +96,6 @@ const BookingsComponent = () => {
   return (
     <>
       <div>
-        <Navbar />
-      </div>
-
-      <div>
         {Array.isArray(bookings) && bookings.length > 0 ? (
           <div className="overflow-x-auto">
             <table className="table table-zebra table-pin-cols">

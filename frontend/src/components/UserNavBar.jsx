@@ -13,11 +13,11 @@ const Navbar = () => {
     navigate("/");
   };
 
-  const isDashboardPage = location.pathname === "user/my_dashboard";
-  const isFlightsPage = location.pathname === "user/flight_search";
-  const isBookingsPage = location.pathname === "user/bookings";
+  const isDashboardPage = location.pathname === "/user/my_dashboard";
+  const isFlightsPage = location.pathname === "/user/flight_search";
+  const isBookingsPage = location.pathname === "/user/bookings";
   const isCreateBookingPage =
-    location.pathname === "user/bookings/create_booking";
+    location.pathname === "/user/bookings/create_booking";
 
   // const hasCurrentUser = true;
 
@@ -38,39 +38,39 @@ const Navbar = () => {
           {isDashboardPage && (
             <>
               <li>
-                <Link to="user/my_dashboard">Dashboard</Link>
+                <Link to="my_dashboard">Dashboard</Link>
               </li>
               <li>
-                <Link to="user/flight_search">Flights</Link>
+                <Link to="flight_search">Flights</Link>
               </li>
               <li>
-                <Link to="user/bookings">Bookings</Link>
+                <Link to="bookings">Bookings</Link>
               </li>
             </>
           )}
           {isFlightsPage && (
             <>
               <li>
-                <Link to="user/flight_search">Flights</Link>
+                <Link to="flight_search">Flights</Link>
               </li>
               <li>
-                <Link to="user/bookings">Bookings</Link>
+                <Link to="bookings">Bookings</Link>
               </li>
               <li>
-                <Link to="user/my_dashboard">Dashboard</Link>
+                <Link to="my_dashboard">Dashboard</Link>
               </li>
             </>
           )}
           {(isBookingsPage || isCreateBookingPage) && (
             <>
               <li>
-                <Link to="user/bookings">Bookings</Link>
+                <Link to="bookings">Bookings</Link>
               </li>
               <li>
-                <Link to="user/my_dashboard">Dashboard</Link>
+                <Link to="my_dashboard">Dashboard</Link>
               </li>
               <li>
-                <Link to="user/flight_search">Flights</Link>
+                <Link to="flight_search">Flights</Link>
               </li>
             </>
           )}
