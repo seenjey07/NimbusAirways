@@ -1,6 +1,7 @@
-import { useEffect } from "react"
 import Loading from "./Loading"
 import format from "date-fns/format"
+import PaymentModal from "./PaymentModal";
+import { useState, useEffect } from "react";
 /* eslint-disable react/prop-types */
 const FlightDetails = ({flight, 
 departureDate, 
@@ -10,48 +11,68 @@ passengerStates,
 passenger,
 seatDataArray
 }) => {
+    const [isPaymentButtonDisabled, setIsPaymentButtonDisabled] = useState(true);
+    const combinedData = seatDataArray.map((seat, index) => ({
+    seat,
+    passenger: passengerStates[index],
+    }));
 
+
+  useEffect(() => {
+    const isAnySeatDataEmpty = seatDataArray.some((seatData) => seatData === '');
+    const isAnyPassengerDataEmpty = passengerStates.some(
+      (passenger) => !passenger.firstName || !passenger.lastName || !passenger.birthDate
+    );
+
+    setIsPaymentButtonDisabled(isAnySeatDataEmpty || isAnyPassengerDataEmpty);
+  }, [seatDataArray, passengerStates]);
     
 
-
-      const combinedData = seatDataArray.map((seat, index) => ({
-        seat,
-        passenger: passengerStates[index],
-      }));
-
-      useEffect(() => {
-        console.log('Merged', combinedData)
-      }, [seatDataArray, passengerStates]);
     
   
 return (     
         <>   
+            <dialog id="payment" className="modal">
+                <div className="modal-box w-11/12 max-w-5xl bg-white">
+                    <PaymentModal 
+                    handleFormSubmit={handleFormSubmit} 
+                    passengerStates={passengerStates} 
+                    />
+
+                    <div className="modal-action">
+                    <form method="dialog">
+                        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                    </form>
+                    </div>
+            </div>
+            </dialog>
+
             <h2 className="text-xl font-bold mb-2 flex justify-center">Booking Details</h2>
             <table>
                 <tbody>
                     <tr>
-                        <td>Flight Number:</td>
-                        <td>{flight.flight_number}</td>
+                        <td className="font-bold text-right">Flight Number</td>
+                        <td className="flex ml-3">{flight.flight_number}</td>
                     </tr>
                     <tr>
-                        <td>Departure Date and Time:</td>
-                        <td>{departureDate ? format(new Date(departureDate), "MMMM dd, yyyy hh:mm a") : "Not available"}</td>
+                        <td className="font-bold text-right">Departure Date and Time</td>
+                        <td className="flex ml-3">{departureDate ? format(new Date(departureDate), "MMMM dd, yyyy hh:mm a") : "Not available"}</td>
                     </tr>
                     <tr>
-                        <td>Estimated Arrival Date and Time:</td>
-                        <td>{arrivalDate ? format(new Date(arrivalDate), "MMMM dd, yyyy hh:mm a") : "Not available"}</td>
+                        <td className="font-bold text-right">Estimated Arrival Date and Time</td>
+                        <td className="flex ml-3">{arrivalDate ? format(new Date(arrivalDate), "MMMM dd, yyyy hh:mm a") : "Not available"}</td>
                     </tr>
                     <tr>
-                        <td>Aircraft:</td>
-                        <td>{flight.aircraft ? (
+                        <td className="font-bold text-right">Aircraft</td>
+                        <td className="flex ml-3">{flight.aircraft ? (
                             `${flight.aircraft.name} ${flight.aircraft.model}`
                         ) : (
                             <Loading />
                         )}</td>
                     </tr>
                     <tr>
-                        <td>Price:</td>
-                        <td>₱{(flight.price * passenger).toFixed(2)}</td>
+                        <td className="font-bold text-right">Price</td>
+                        <td className="flex ml-3">₱{(flight.price * passenger).toFixed(2)}</td>
                     </tr>
                 </tbody>
             </table>
@@ -60,42 +81,39 @@ return (
 
             <div>
         {combinedData.map((data, index) => (
-        (data.seat && data.passenger.firstName && data.passenger.middleName && data.passenger.lastName) && (
+        (data.seat && data.passenger.firstName && data.passenger.birthDate && data.passenger.lastName) && (
             <>
                 <div key={index}>
-                    <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                <span className="flex justify-center font-bold text-lg">Passenger {index + 1}</span>
+                    <table className="w-full">
                         <tbody>
                             <tr>
-                                <td>Passenger</td>
-                                <td>{index + 1}</td>
+                                <td className="font-bold text-right">First Name</td>
+                                <td className="flex ml-3">{data.passenger.firstName}</td>
                             </tr>
                             <tr>
-                                <td>First Name</td>
-                                <td>{data.passenger.firstName}</td>
+                                <td className="font-bold text-right">Middle Name</td>
+                                <td className="flex ml-3">{data.passenger.middleName}</td>
                             </tr>
                             <tr>
-                                <td>Middle Name</td>
-                                <td>{data.passenger.middleName}</td>
+                                <td className="font-bold text-right">Last Name</td>
+                                <td className="flex ml-3">{data.passenger.lastName}</td>
                             </tr>
                             <tr>
-                                <td>Last Name</td>
-                                <td>{data.passenger.lastName}</td>
+                                <td className="font-bold text-right">Gender</td>
+                                <td className="flex ml-3">{data.passenger.gender}</td>
                             </tr>
                             <tr>
-                                <td>Gender</td>
-                                <td>{data.passenger.gender}</td>
+                                <td className="font-bold text-right">Birthday</td>
+                                <td className="flex ml-3">{data.passenger.birthDate}</td>
                             </tr>
                             <tr>
-                                <td>Birthday</td>
-                                <td>{data.passenger.birthDate}</td>
+                                <td className="font-bold text-right">Baggage</td>
+                                <td className="flex ml-3">{data.passenger.baggageQuantity}</td>
                             </tr>
                             <tr>
-                                <td>Baggage</td>
-                                <td>{data.passenger.baggageQuantity}</td>
-                            </tr>
-                            <tr>
-                                <td>Seat</td>
-                                <td>{data.seat}</td>
+                                <td className="font-bold text-right">Seat</td>
+                                <td className="flex ml-3">{data.seat}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -106,18 +124,24 @@ return (
                 ))}
                 </div>
                 
-            <div className="mb-3">
-                <div>Seat Fee</div>
-                <div>Meals</div>
-                <div>Total Fee</div>
+            <div className="mb-1">
+                <div className="font-bold">Seat Fee</div>
+                <div className="font-bold">Meals</div>
+                <div className="font-bold">Total Fee</div>
             </div>
 
-            <button
-                onClick={() => handleFormSubmit(passengerStates)}
-                className="btn btn-primary"
-            >
-                Book Flight
-            </button>
+            <div className="mt-2">
+                <button
+                    onClick={() => document.getElementById("payment").showModal()}
+                    className="btn btn-primary w-full"
+                    disabled={isPaymentButtonDisabled}
+                >
+                    Payment
+                </button>
+
+                <span className="text-xs">*Please fill out all fields including seats in order to proceed.</span>
+            </div>
+
         </>
         ) 
     }

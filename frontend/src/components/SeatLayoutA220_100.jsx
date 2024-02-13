@@ -1,3 +1,4 @@
+// eslint-disable-next-line react/prop-types
 const SeatLayoutA220_100 = ({ onSeatClick, selectedSeat }) => {
   const getSeatClasses = (seatLetter, seatNumber) => {
     const seatColorMap = {

@@ -8,6 +8,7 @@ import {
   destroyBookingApi,
 } from "../lib/bookingsapi";
 
+// eslint-disable-next-line react/prop-types
 const OpenBookingDetailsButton = ({ onOpenBookingDetails }) => {
   return <button onClick={onOpenBookingDetails}>Show</button>;
 };
