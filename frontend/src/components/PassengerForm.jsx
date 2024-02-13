@@ -10,11 +10,14 @@ import {
 /* eslint-disable react/prop-types */
 const PassengerForm = ({ formFields, addAlert, handleSeatSelect, onInputChange, passengerNumber }) => {
   return (
-    <div className="flex flex-col lg:text-left bg-red-200">
+    <div className="flex flex-col lg:text-left ">
 
     {formFields.map((field) => (
     <>
-      <div key={field.name}>
+      <div 
+      className="flex justify-center "
+      key={field.name}
+      >
         {field.type === 'select' ? (
         <label className="form-control w-full max-w-xs">
           <div className="label">
@@ -56,13 +59,13 @@ const PassengerForm = ({ formFields, addAlert, handleSeatSelect, onInputChange, 
     </>
     ))}
 
-    <div className="flex place-items-center justify-center mt-4">
-      <Drawer>
+    <div className="flex place-items-center justify-center mt-4 ">
+      <Drawer >
         <DrawerTrigger asChild>
           <button className="btn btn-primary">Open Seat Selection</button>
         </DrawerTrigger>
-        <DrawerContent>
-          <div className="bg-base-100">
+        <DrawerContent className="bg-white">
+          <div>
           <SeatSelection
                 addAlert={addAlert}
                 onSeatSelect={(seatData) => {

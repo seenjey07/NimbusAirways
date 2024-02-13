@@ -65,6 +65,7 @@ const AdminAircrafts = ({addAlert}) => {
                     <button 
                         className="btn btn-accent text-secondary self-center ml-3 px-6" 
                         onClick={() => document.getElementById('CreateUsers').showModal()}
+                        disabled
                     >
                         <CreateRouteIcon className="w-6 h-6"/>
                         Create Seats
