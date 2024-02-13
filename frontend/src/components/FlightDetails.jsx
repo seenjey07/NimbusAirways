@@ -9,7 +9,8 @@ arrivalDate,
 handleFormSubmit, 
 passengerStates,
 passenger,
-seatDataArray
+seatDataArray,
+addAlert
 }) => {
     const [isPaymentButtonDisabled, setIsPaymentButtonDisabled] = useState(true);
     const combinedData = seatDataArray.map((seat, index) => ({
@@ -28,6 +29,33 @@ seatDataArray
   }, [seatDataArray, passengerStates]);
     
 
+  const handlePayment = () => {
+    console.log(seatDataArray);
+    const duplicateSeats = findDuplicateSeats(seatDataArray);
+
+    if (duplicateSeats.length > 0) {
+        const duplicateSeatNumbers = duplicateSeats.join(', ');
+        addAlert('error', `Seat ${duplicateSeatNumbers} are already selected. Please choose different seats for each passenger.`);
+    } else {
+        document.getElementById("payment").showModal();
+    }
+};
+
+// Helper function to find all duplicate seats
+const findDuplicateSeats = (seats) => {
+    const seatSet = new Set();
+    const duplicateSeats = [];
+
+    for (const seat of seats) {
+        if (seatSet.has(seat)) {
+            duplicateSeats.push(seat);
+        }
+
+        seatSet.add(seat);
+    }
+
+    return duplicateSeats;
+};
     
   
 return (     
@@ -132,14 +160,15 @@ return (
 
             <div className="mt-2">
                 <button
-                    onClick={() => document.getElementById("payment").showModal()}
+                    onClick={handlePayment}
                     className="btn btn-primary w-full"
                     disabled={isPaymentButtonDisabled}
                 >
                     Payment
                 </button>
 
-                <span className="text-xs">*Please fill out all fields including seats in order to proceed.</span>
+                <p className="text-xs">*Please fill out all fields including seats in order to proceed.</p>
+                <p className="text-xs">*Please double check the details before proceeding.</p>
             </div>
 
         </>
