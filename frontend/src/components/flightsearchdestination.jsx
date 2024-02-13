@@ -16,6 +16,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "../components/ui/popover";
+import { useEffect } from "react";
 
 // eslint-disable-next-line react/prop-types
 export function FlightSearchDestination({ destinationOptions, onSelect }) {
@@ -24,6 +25,29 @@ export function FlightSearchDestination({ destinationOptions, onSelect }) {
 
   console.log("Destination Options", destinationOptions);
   console.log("Value", value);
+
+  useEffect(() => {
+    const selectedDestination = localStorage.getItem(
+      "destination_from_homepage"
+    );
+
+    if (selectedDestination) {
+      setValue(selectedDestination);
+      onSelect(selectedDestination);
+    }
+  }, [onSelect]);
+
+  const handleSelect = (selectedOption) => {
+    setValue(selectedOption);
+
+    const storedDestination = localStorage.getItem("destination_from_homepage");
+
+    if (selectedOption !== storedDestination) {
+      localStorage.removeItem("destination_from_homepage");
+    }
+
+    onSelect(selectedOption);
+  };
 
   return (
     <>
@@ -51,11 +75,8 @@ export function FlightSearchDestination({ destinationOptions, onSelect }) {
                   key={data}
                   value={data}
                   onSelect={() => {
-                    setValue((currentValue) =>
-                      currentValue === data ? "" : data
-                    );
+                    handleSelect(data);
                     setOpen(false);
-                    onSelect(data);
                   }}
                 >
                   <Check

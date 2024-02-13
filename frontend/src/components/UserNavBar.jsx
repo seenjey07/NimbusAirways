@@ -7,15 +7,19 @@ const Navbar = () => {
   const location = useLocation();
 
   const handleLogout = () => {
-    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
-    document.cookie = "user_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
-    navigate("/login");
+    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie =
+      "user_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    navigate("/");
   };
 
-  const isDashboardPage = location.pathname === "/my_dashboard";
-  const isFlightsPage = location.pathname === "/flight_search";
-  const isBookingsPage = location.pathname === "/bookings";
-  const isCreateBookingPage = location.pathname === "/bookings/create_booking";
+  const isDashboardPage = location.pathname === "user/my_dashboard";
+  const isFlightsPage = location.pathname === "user/flight_search";
+  const isBookingsPage = location.pathname === "user/bookings";
+  const isCreateBookingPage =
+    location.pathname === "user/bookings/create_booking";
+
+  // const hasCurrentUser = true;
 
   return (
     <div className="navbar m-0 bg-base-100 underline shadow">
@@ -24,7 +28,6 @@ const Navbar = () => {
           <img
             src={logoImage}
             alt="Logo"
-            onClick={() => navigate("/my_dashboard")}
             className="cursor-pointer"
             style={{ width: "90px", height: "auto" }}
           />
@@ -35,45 +38,46 @@ const Navbar = () => {
           {isDashboardPage && (
             <>
               <li>
-                <Link to="/my_dashboard">Dashboard</Link>
+                <Link to="user/my_dashboard">Dashboard</Link>
               </li>
               <li>
-                <Link to="/flight_search">Flights</Link>
+                <Link to="user/flight_search">Flights</Link>
               </li>
               <li>
-                <Link to="/bookings">Bookings</Link>
+                <Link to="user/bookings">Bookings</Link>
               </li>
             </>
           )}
           {isFlightsPage && (
             <>
               <li>
-                <Link to="/flight_search">Flights</Link>
+                <Link to="user/flight_search">Flights</Link>
               </li>
               <li>
-                <Link to="/bookings">Bookings</Link>
+                <Link to="user/bookings">Bookings</Link>
               </li>
               <li>
-                <Link to="/my_dashboard">Dashboard</Link>
+                <Link to="user/my_dashboard">Dashboard</Link>
               </li>
             </>
           )}
           {(isBookingsPage || isCreateBookingPage) && (
             <>
               <li>
-                <Link to="/bookings">Bookings</Link>
+                <Link to="user/bookings">Bookings</Link>
               </li>
               <li>
-                <Link to="/my_dashboard">Dashboard</Link>
+                <Link to="user/my_dashboard">Dashboard</Link>
               </li>
               <li>
-                <Link to="/flight_search">Flights</Link>
+                <Link to="user/flight_search">Flights</Link>
               </li>
             </>
           )}
         </ul>
       </div>
       <div className="navbar-end">
+        {/* {hasCurrentUser ? ( */}
         <button
           type="button"
           value="Logout"
@@ -83,6 +87,14 @@ const Navbar = () => {
         >
           Logout
         </button>
+        {/* // ) : (
+        //   <Link
+        //     to="/"
+        //     className="btn btn-ghost text-sm rounded-box bg-base-100"
+        //   >
+        //     Home
+        //   </Link>
+        )} */}
       </div>
     </div>
   );

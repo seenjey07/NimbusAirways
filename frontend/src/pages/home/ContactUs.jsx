@@ -72,7 +72,7 @@ const ContactUs = () => {
             <br />
             <p className="font-bold text-center p-0">1-800-123-4567</p>
             <p className="font-bold text-center p-0">
-              contactus@nimbus-airways.com
+              contact_us@nimbus-airways.com
             </p>
           </div>
         </div>

@@ -1,32 +1,25 @@
-import Navbar from "../components/UserNavBar"
-import AdminUserNavbar from "../components/AdminUserNavBar"
-import Footer from ".././pages/home/footer"
-import { useEffect,useState } from "react";
-import { adminCheckAuthorization } from "../lib/admin/adminusersapi";
+import UserNavBar from "../components/UserNavBar";
+import Footer from ".././pages/home/footer";
+import { useEffect } from "react";
+import axios from "axios";
 
 // eslint-disable-next-line react/prop-types
-const UserDashboardLayout = ({ children }) => {
-
-  const [isAuthorized, setIsAuthorized] = useState(false);
-
+const UserDashboardLayout = ({ addAlert, children }) => {
   useEffect(() => {
-    const checkAuthorization = async () => {
-      try {
-        const response = await adminCheckAuthorization();
-        setIsAuthorized(response.message === 'Authorized');
-      } catch (error) {
-        console.error('Error checking authorization:', error);
+    const initiateAuthorization = () => {
+      const token = document.cookie.split("token=")[1];
+      if (token) {
+        axios.defaults.headers.common["Authorization"] = token;
+        console.log("User Dashboard Layout: token found");
       }
     };
-
-    checkAuthorization();
-  }, []);
-
+    initiateAuthorization();
+  }, [addAlert]);
 
   return (
     <>
       <div className="grid grid-rows-[auto_1fr_auto] h-screen">
-      {isAuthorized ? <AdminUserNavbar /> : <Navbar />}
+        <UserNavBar />
         <main className="flex-grow">{children}</main>
         <Footer />
       </div>

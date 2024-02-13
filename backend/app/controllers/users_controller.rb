@@ -1,4 +1,15 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user!, only: [:show, :update]
+
+  def index
+    @users = User.all
+    render json: @users
+  end
+
+  def create
+    @user = User.new(user_params)
+  end
+  
   def show
     user = current_user
     user_details = {

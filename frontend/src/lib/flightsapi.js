@@ -17,7 +17,10 @@ export const indexFlightsApi = async () => {
 
 export const indexedFlightsApi = async () => {
   try {
-    const response = await axios.get(`${backendBaseUrl}/api/indexedflights`, {});
+    const response = await axios.get(
+      `${backendBaseUrl}/api/indexedflights`,
+      {}
+    );
     return response.data;
   } catch (error) {
     return error;
@@ -50,16 +53,15 @@ export const indexedRoutesApi = async () => {
   } catch (error) {
     return error;
   }
-}; 
+};
 
 export const showCurrentFlightApi = async (flight_id) => {
   try {
-    const response = await axios.get(`${backendBaseUrl}/api/flights/${flight_id}`);
+    const response = await axios.get(
+      `${backendBaseUrl}/api/flights/${flight_id}`
+    );
     return response.data;
   } catch (error) {
     return error;
   }
-}; 
-
-
-
+};

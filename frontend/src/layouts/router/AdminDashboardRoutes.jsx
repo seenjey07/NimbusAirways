@@ -10,48 +10,55 @@ import { adminCheckAuthorization } from "../../lib/admin/adminusersapi";
 import AdminAircrafts from "../../pages/admin/dashboard/AdminAircrafts";
 import AdminFlightsAndRoutes from "../../pages/admin/dashboard/AdminFlightsAndRoutes";
 // eslint-disable-next-line react/prop-types
-const AdminDashboardRoutes = ({addAlert}) => {    
-    const navigate = useNavigate();
+const AdminDashboardRoutes = ({ addAlert }) => {
+  const navigate = useNavigate();
 
-    useEffect(() => {
-      const checkAuthorization = async () => {
-        try {
-          const response = await adminCheckAuthorization();
-          if (response.message === 'Authorized') {
-            console.log('Authorization check successful', response);
-          } else {
-            handleUnauthorizedAccess();
-          }
-        } catch (error) {
-          handleUnauthorizedAccess(error);
+  useEffect(() => {
+    const checkAuthorization = async () => {
+      try {
+        const response = await adminCheckAuthorization();
+        if (response.message === "Authorized") {
+          console.log("Authorization check successful", response);
+        } else {
+          handleUnauthorizedAccess();
         }
-      };
-    
-      const handleUnauthorizedAccess = (error) => {
-        addAlert('error', 'You are not authorized to access this page. Redirecting to login');
-        navigate('/login');
-        console.error('Error checking authorization:', error?.response);
-      };
-    
-      checkAuthorization();
-    }, [navigate, addAlert]);
+      } catch (error) {
+        handleUnauthorizedAccess(error);
+      }
+    };
 
-    return (
+    const handleUnauthorizedAccess = (error) => {
+      addAlert(
+        "error",
+        "You are not authorized to access this page. Redirecting to login"
+      );
+      navigate("/login");
+      console.error("Error checking authorization:", error?.response);
+    };
 
-        <>
-            <AdminDashboardLayout addAlert={addAlert}>
-                <Routes>
-                    <Route path="/" element={<AdminDashboard />} />
-                    <Route path="bookings" element={<AdminBookings />} />
-                    <Route path="flights" element={<AdminFlightsAndRoutes addAlert={addAlert} />} />
-                    <Route path="meals" element={<AdminMeals />} />
-                    <Route path="aircrafts" element={<AdminAircrafts addAlert={addAlert} />} />
-                    <Route path="users" element={<AdminUsers addAlert={addAlert} />} />
-                </Routes>
-            </AdminDashboardLayout>
-        </>
+    checkAuthorization();
+  }, [navigate, addAlert]);
 
-    )
-}
+  return (
+    <>
+      <AdminDashboardLayout addAlert={addAlert}>
+        <Routes>
+          <Route path="/" element={<AdminDashboard />} />
+          <Route path="bookings" element={<AdminBookings />} />
+          <Route
+            path="flights"
+            element={<AdminFlightsAndRoutes addAlert={addAlert} />}
+          />
+          <Route path="meals" element={<AdminMeals />} />
+          <Route
+            path="aircrafts"
+            element={<AdminAircrafts addAlert={addAlert} />}
+          />
+          <Route path="users" element={<AdminUsers addAlert={addAlert} />} />
+        </Routes>
+      </AdminDashboardLayout>
+    </>
+  );
+};
 
 export default AdminDashboardRoutes;
