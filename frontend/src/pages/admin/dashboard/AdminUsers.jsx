@@ -77,7 +77,12 @@ const AdminUsers = ({addAlert}) => {
                 ✕
               </button> 
             </form>
-            <EditUsersModal addAlert={addAlert} selectedUserId={selectedUserId} isEditModalOpen={isEditModalOpen} setIsEditModalOpen={setIsEditModalOpen} />
+            <EditUsersModal 
+            addAlert={addAlert} 
+            selectedUserId={selectedUserId} 
+            isEditModalOpen={isEditModalOpen} 
+            setIsEditModalOpen={setIsEditModalOpen} 
+            />
           </div>
         </dialog>
 
@@ -105,7 +110,7 @@ const AdminUsers = ({addAlert}) => {
                         <input 
                         type="text" 
                         placeholder="Type here" 
-                        className="placeholder:text-sm input input-bordered w-full max-w-xs" 
+                        className="placeholder:text-sm input input-bordered w-full max-w-xs bg-white" 
                         onChange={(e) => setSearchTerm(e.target.value)}
                         />
                       </label>
