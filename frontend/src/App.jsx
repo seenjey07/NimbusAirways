@@ -1,18 +1,16 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/home/Home";
-import Login from "./pages/Login";
-import Registration from "./pages/Registration";
+import Login from "./Login";
+import Registration from "./Registration";
 import AdminDashboardRoutes from "./layouts/router/AdminDashboardRoutes";
-import UserDashboard from "./pages/Dashboard/UserDashboard";
-import BookingsComponent from "./pages/Bookings";
-import FlightsSearchComponent from "./pages/FlightsSearch";
-import FlightBookingsRouter from "./layouts/router/FlightBookingsRouter";
 import { Toaster } from "sonner";
 import { toast } from "sonner";
-import SeatSelection from "./pages/Dashboard/SeatSelection";
+import SeatSelection from "./pages/user/Dashboard/SeatSelection";
 import AboutUs from "./pages/home/AboutUs";
 import ContactUs from "./pages/home/ContactUs";
+import UserDashboardRoutes from "./layouts/router/UserDashboardRoutes";
+import FlightsSearchComponent from "./pages/user/FlightsSearch";
 
 function App() {
   // eslint-disable-next-line no-unused-vars
@@ -32,19 +30,17 @@ function App() {
             path="/admin/*"
             element={<AdminDashboardRoutes addAlert={addAlert} />}
           />
+          <Route
+            path="/user/*"
+            element={<UserDashboardRoutes addAlert={addAlert} />}
+          />
           <Route path="login" element={<Login addAlert={addAlert} />} />
           <Route path="signup" element={<Registration />} />
           <Route path="/" element={<Home />} />
           <Route path="/about_us" element={<AboutUs />} />
           <Route path="/contact_us" element={<ContactUs />} />
-          <Route path="/my_dashboard" element={<UserDashboard addAlert={addAlert} />} />
-          <Route path="/bookings" element={<BookingsComponent />} />
-          <Route path="flight_search" element={<FlightsSearchComponent addAlert={addAlert} />} />
+          <Route path="/flight_search" element={<FlightsSearchComponent />} />
           <Route path="seats" element={<SeatSelection />} />
-          <Route
-            path="/bookings/create_booking/*"
-            element={<FlightBookingsRouter addAlert={addAlert} />}
-          />
         </Routes>
       </BrowserRouter>
     </>

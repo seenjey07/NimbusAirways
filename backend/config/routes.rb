@@ -10,20 +10,24 @@ Rails.application.routes.draw do
   }
 ########################### USER ROUTES #########################################
     get 'api/routes', to: 'routes#index'
+
     get 'api/flights', to: 'flights#index'
     get 'api/flights/:id', to: 'flights#show'
     get 'api/indexedflights', to: 'flights#indexed_flights'
     post 'api/flights', to: 'flights#flight_search'
 
-
-
-    get 'api/user', to: 'users#show'
-    post 'api/book', to: 'bookings#create_booking'
+    get 'api/users', to: 'users#index'
+    get 'api/users/:id', to: 'users#show'
+    put 'api/users/:id', to: 'users#update'
 
     get 'api/bookings/index', to: 'bookings#index'
+    get 'api/bookings/:id', to: 'bookings#show'
+    post 'api/book', to: 'bookings#create_booking'
+    put 'api/bookings/:id', to: 'bookings#update'
+    delete 'api/bookings/:id', to: 'bookings#destroy'
 
 
-    resources :bookings, only: [:show, :create, :update, :destroy], path: 'api/bookings'
+    # resources :bookings, only: [:show, :create, :update, :destroy], path: 'api/bookings'
 ########################### END OF USER ROUTES #################################
 
 ###########################  ADMIN ROUTES ######################################

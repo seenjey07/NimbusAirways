@@ -3,15 +3,31 @@ const backendBaseUrl = import.meta.env.VITE_BACKEND_BASE_URL;
 const token = document.cookie.split("token=")[1];
 axios.defaults.headers.common["Authorization"] = token;
 
-export const showCurrentUserApi = async () => {
-    try {
-      const response = await axios.get(
-        `${backendBaseUrl}/api/user`
-      );
-      console.log("showBookingApi response:", response);
-      return response;
-    } catch (error) {
-      console.log("showBookingApi error:", error);
-      throw error;
-    }
-  };
+export const indexUsersApi = async () => {
+  try {
+    const response = await axios.get(`${backendBaseUrl}/api/users`, {});
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const showCurrentUserApi = async (id) => {
+  try {
+    const response = await axios.get(`${backendBaseUrl}/api/users/${id}`);
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const updateCurrentUserApi = async (id, formValues) => {
+  try {
+    const response = await axios.put(`${backendBaseUrl}/api/users/${id}`, {
+      user: formValues,
+    });
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
