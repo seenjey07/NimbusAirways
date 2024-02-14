@@ -1,5 +1,14 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!, only: [:show, :update]
+  before_action :authenticate_user!, only: [:show, :update, :check_authorization]
+
+
+  def check_authorization
+    if current_user.nil?
+      render json: { message: 'Unauthorized' }, status: :unauthorized
+    else
+      render json: { message: 'Authorized' }
+    end
+  end
 
   def index
     @users = User.all
@@ -9,7 +18,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
   end
-  
+
   def show
     user = current_user
     user_details = {
