@@ -8,12 +8,14 @@ import format from "date-fns/format";
 import CreateFlightsModal from "./modals/CreateFlightsModal";
 import CreateRoutesModal from "./modals/CreateRoutesModal";
 import ShowRoutesModal from "./modals/ShowRoutesModal";
+import Loading from "../../../components/Loading"
 
 // eslint-disable-next-line react/prop-types
 const AdminFlightsAndRoutes = ({addAlert}) => {
   const localizer = momentLocalizer(moment);
   const [events, setEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchFlights = async () => {
@@ -29,6 +31,8 @@ const AdminFlightsAndRoutes = ({addAlert}) => {
         setEvents(formattedEvents);
       } catch (error) {
         console.error("Error fetching flights:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -190,15 +194,19 @@ const AdminFlightsAndRoutes = ({addAlert}) => {
           </div>
         </div>
 
-        <Calendar
-          localizer={localizer}
-          events={events}
-          startAccessor="start"
-          endAccessor="end"
-          views={['day']} 
-          defaultView="day"
-          onSelectEvent={handleEventClick}
-        />
+        {loading ? (
+          <Loading />
+        ) : (
+          <Calendar
+            localizer={localizer}
+            events={events}
+            startAccessor="start"
+            endAccessor="end"
+            views={['day']}
+            defaultView="day"
+            onSelectEvent={handleEventClick}
+          />
+        )}
       </div>
     </>
   );

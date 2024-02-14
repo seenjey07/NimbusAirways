@@ -50,7 +50,7 @@ const AdminNavBar = () => {
                     </ul>
                     </div>
                     <div className="flex flex-col">
-                        <Link to="/my_dashboard">
+                        <Link to="/user/my_dashboard">
                             <sub className="flex text-xs hover:underline">
                                 <AdminIcon className="mr-2" />
                             User Dashboard
@@ -59,8 +59,7 @@ const AdminNavBar = () => {
                         
                         <Link to="/admin">
                             <a className="btn btn-ghost text-xl flex flex-col">
-                                Nimbus Airways
-                                
+                                Nimbus Airways                  
                             </a>
                         </Link>
                     </div>
