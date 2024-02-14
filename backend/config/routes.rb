@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     post 'api/flights', to: 'flights#flight_search'
 
     get 'api/users', to: 'users#index'
+    get 'api/authorization', to: 'users#check_authorization'
     get 'api/users/:id', to: 'users#show'
     put 'api/users/:id', to: 'users#update'
 

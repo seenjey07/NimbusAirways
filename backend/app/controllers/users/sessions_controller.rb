@@ -5,11 +5,19 @@ class Users::SessionsController < Devise::SessionsController
   def login_params
     params.require(:user).permit(:email, :password)
   end
+
   def respond_with(resource, _opts = {})
+  if resource
     render json: {
       data: UserSerializer.new(resource).serializable_hash[:data]
     }, status: :ok
+  else
+    render json: {
+      message: "Not authenticated"
+    }, status: :unauthorized
   end
+end
+
 
   def respond_to_on_destroy
     if current_user
