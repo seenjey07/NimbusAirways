@@ -94,6 +94,7 @@ const FlightBookings = ({ addAlert }) => {
       await createUserBookingApi(bookingData);
       addAlert("success", "Booking created successfully");
       navigate("/user/bookings");
+      localStorage.removeItem('updatedSeatDataArray');
       localStorage.removeItem('selected_flight_id');
       localStorage.removeItem('total');
     } catch (error) {
@@ -112,6 +113,7 @@ const FlightBookings = ({ addAlert }) => {
         const updatedSeatDataArray = [...prevSeatDataArray];
         updatedSeatDataArray[parsedPassengerNumber - 1] = seatData;
         console.log('Updated SeatDataArray:', updatedSeatDataArray);
+        localStorage.setItem('updatedSeatDataArray', JSON.stringify(updatedSeatDataArray))
         return updatedSeatDataArray;
       });
     } else {
@@ -144,7 +146,7 @@ const FlightBookings = ({ addAlert }) => {
           <div className="bg-accent p-7 px-12 rounded-md">
           <div>
               <div className="card z-1 lg:card-side bg-purple-200 shadow-xl">
-                {passengersArray.slice(0, 5).map((passengerNumber) => (
+                {passengersArray.slice(0, 4).map((passengerNumber) => (
                   <div key={passengerNumber} className="card-body p-12 rounded-md overflow-auto">
                     <h2 className="text-xl font-semibold mb-2 justify-center flex">{`Passenger ${passengerNumber}`}</h2>
                     <PassengerForm
@@ -171,7 +173,34 @@ const FlightBookings = ({ addAlert }) => {
               </div>
 
               <div className="card z-1 lg:card-side bg-purple-200 shadow-xl mt-4">
-                {passengersArray.slice(5, 10).map((passengerNumber) => (
+                {passengersArray.slice(4, 8).map((passengerNumber) => (
+                  <div key={passengerNumber} className="card-body p-12 rounded-md overflow-auto">
+                    <h2 className="text-xl font-semibold mb-2 justify-center flex">{`Passenger ${passengerNumber}`}</h2>
+                    <PassengerForm
+                      key={passengerNumber}
+                      formFields={[
+                        { name: 'firstName', label: 'First Name', type: 'text', required: true },
+                        { name: 'middleName', label: 'Middle Name', type: 'text', required: true },
+                        { name: 'lastName', label: 'Last Name', type: 'text', required: true },
+                        { name: 'birthDate', label: 'Birth Date', type: 'date', required: true },
+                        { name: 'gender', label: 'Gender', type: 'select', options: ['Male', 'Female'], required: true },
+                        { name: 'baggageQuantity', label: 'Baggage Quantity', type: 'select', options: [0, 1, 2], required: true },
+                      ]}
+                      addAlert={addAlert}
+                      passengerNumber={passengerNumber} 
+                      handleSeatSelect={(seatData, passengerNumber) => {
+                        console.log('Seat Data Passenger Form FB:', seatData);
+                        console.log('Passenger Number:', passengerNumber);
+                        handleSeatSelect(passengerNumber, seatData);
+                      }}
+                      onInputChange={(field, value) => handlePassengerFormInputChange(passengerNumber, field, value)}
+                    />
+                  </div>
+                ))}
+              </div>
+
+              <div className="card z-1 lg:card-side bg-purple-200 shadow-xl mt-4">
+                {passengersArray.slice(8, 10).map((passengerNumber) => (
                   <div key={passengerNumber} className="card-body p-12 rounded-md overflow-auto">
                     <h2 className="text-xl font-semibold mb-2 justify-center flex">{`Passenger ${passengerNumber}`}</h2>
                     <PassengerForm
