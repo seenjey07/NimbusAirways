@@ -25,7 +25,6 @@ const ShowRoutesModal = () => {
     "Origin Airport",
     "Destination Airport",
     "Price",
-    "Is Available",
   ];
 
   return (
@@ -61,7 +60,6 @@ const ShowRoutesModal = () => {
 
               <td>{route.destination_name}</td>
               <td>{route.price}</td>
-              <td>{route.is_available.toString()}</td>
             </tr>
           ))}
         </tbody>

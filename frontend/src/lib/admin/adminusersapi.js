@@ -23,6 +23,15 @@ export const adminIndexFlightsApi = async () => {
   }
 };
 
+export const adminIndexBookingsApi = async () => {
+  try {
+    const response = await axios.get(`${backendBaseUrl}/admin/bookings`, {});
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+
 export const adminIndexAircraftsApi = async () => {
   try {
     const response = await axios.get(`${backendBaseUrl}/admin/aircrafts`, {});
@@ -90,6 +99,16 @@ export const adminUpdateUserApi = async (id, userData) => {
 export const adminShowUserApi = async (id) => {
   try {
     const response = await axios.get(`${backendBaseUrl}/admin/users/${id}`);
+    return response.data;
+  }
+  catch (error) {
+    return Promise.reject(error)
+  }
+}
+
+export const adminShowCurrentBookingApi= async (id) => {
+  try {
+    const response = await axios.get(`${backendBaseUrl}/admin/bookings/${id}`);
     return response.data;
   }
   catch (error) {

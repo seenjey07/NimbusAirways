@@ -53,6 +53,7 @@ Rails.application.routes.draw do
   post '/admin/routes', to: 'admins_route#create'
 
   get '/admin/bookings', to: 'admins#index_bookings'
+  get '/admin/bookings/:id', to: 'admins_booking#index'
 
   get '/admin/aircrafts', to: 'admins_aircraft#index'
   post '/admin/aircrafts', to: 'admins_aircraft#create'
