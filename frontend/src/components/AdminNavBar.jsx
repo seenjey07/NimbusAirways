@@ -47,7 +47,7 @@ const AdminNavBar = () => {
                     </ul>
                     </div>
                     <div className="flex flex-col">
-                        <Link to="user/my_dashboard">
+                        <Link to="/user/my_dashboard">
                             <sub className="flex text-xs hover:underline">
                                 <AdminIcon className="mr-2" />
                             User Dashboard

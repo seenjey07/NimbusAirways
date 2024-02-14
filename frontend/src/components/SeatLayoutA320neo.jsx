@@ -1,5 +1,10 @@
+
 /* eslint-disable react/prop-types */
 const SeatLayoutA320neo = ({ onSeatClick, selectedSeat }) => {
+  const retrievedSeatDataArray = localStorage.getItem('updatedSeatDataArray');
+  const seatDataArray = retrievedSeatDataArray ? JSON.parse(retrievedSeatDataArray) : [];
+
+  
   const getSeatClasses = (seatLetter, seatNumber) => {
     const seatColorMap = {
       F: 'bg-green-500',
@@ -12,6 +17,7 @@ const SeatLayoutA320neo = ({ onSeatClick, selectedSeat }) => {
 
     const isSelected = selectedSeat === `${seatLetter}${seatNumber}`;
     const isSeat = seatLetter === 'A' || seatLetter === 'B' || seatLetter === 'C' || seatLetter === 'D' || seatLetter === 'E' || seatLetter === 'F';
+    const isSeatTaken = seatDataArray.includes(`${seatLetter}${seatNumber}`);
 
     if (seatLetter === 'X') {
       return `text-black bg-black `;
@@ -21,7 +27,7 @@ const SeatLayoutA320neo = ({ onSeatClick, selectedSeat }) => {
       return `text-center cursor-pointer bg-red-500 border border-primary rounded-sm text-white`;
     }
 
-    return `w-10 text-center h-5 cursor-pointer text-white ${seatColorMap[seatLetter]} border border-primary rounded-sm ${isSelected ? 'bg-red-500' : ''}`;
+    return `w-10 text-center h-5 cursor-pointer text-white ${seatColorMap[seatLetter]} border border-primary rounded-sm ${isSeatTaken ? 'bg-red-500' : ''}`;
   };
 
   return (
@@ -33,17 +39,16 @@ const SeatLayoutA320neo = ({ onSeatClick, selectedSeat }) => {
                 {Array.from({ length: 30 }, (_, index) => {
                   const seatNumber = `${rowLetter}${index + 1}`;
                   const seatClasses = getSeatClasses(rowLetter, index + 1);
-                  
                   const isXSeatInRange = rowLetter === 'X' && index + 1 >= 1 && index + 1 <= 30;
 
                   return (
                     <td
-                      key={seatNumber}
-                      className={seatClasses}
-                      onClick={() => onSeatClick(isXSeatInRange ? null : seatNumber)}
-                    >
-                      {seatNumber}
-                    </td>
+                    key={seatNumber}
+                    className={seatClasses}
+                    onClick={() => onSeatClick(isXSeatInRange ? null : seatNumber)}
+                  >
+                    {seatNumber}
+                  </td>
                   );
                 })}
               </tr>
