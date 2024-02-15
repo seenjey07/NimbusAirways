@@ -8,6 +8,7 @@ import {
   CreateRouteIcon,
   GenerateFlightIcon,
   DataTableIcon,
+  ShowRouteIcon,
 } from "../../../components/icons/icons";
 import format from "date-fns/format";
 import CreateFlightsModal from "./modals/CreateFlightsModal";
@@ -15,7 +16,6 @@ import CreateRoutesModal from "./modals/CreateRoutesModal";
 import ShowRoutesModal from "./modals/ShowRoutesModal";
 import Loading from "../../../components/Loading";
 import GenerateFlightsModal from "./modals/GenerateFlightsModal";
-import Loading from "../../../components/Loading";
 import FlightsTableModal from "./modals/FlightsTableModal";
 
 // eslint-disable-next-line react/prop-types
@@ -64,93 +64,79 @@ const AdminFlightsAndRoutes = ({ addAlert }) => {
 
   return (
     <>
-      <dialog id="CreateFlights" className="modal">
-        <div className="modal-box bg-accent">
-          <form method="dialog">
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-secondary">
-              ✕
-            </button>
-          </form>
-          <CreateFlightsModal addAlert={addAlert} />
-        </div>
-      </dialog>
+  <dialog id="CreateFlights" className="modal">
+    <div className="modal-box bg-accent">
+      <form method="dialog">
+        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-secondary">
+          ✕
+        </button>
+      </form>
+      <CreateFlightsModal addAlert={addAlert} />
+    </div>
+  </dialog>
 
+  <dialog id="GenerateFlights" className="modal">
+    <div className="modal-box bg-accent">
+      <form method="dialog">
+        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-secondary">
+          ✕
+        </button>
+      </form>
+      <GenerateFlightsModal addAlert={addAlert} />
+    </div>
+  </dialog>
 
-      <dialog id="GenerateFlights" className="modal">
-        <div className="modal-box bg-accent">
-          <form method="dialog">
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-secondary">
-              ✕
-            </button>
-          </form>
-          <GenerateFlightsModal addAlert={addAlert} />
-        </div>
-      </dialog>
+  <dialog id="CreateRoutes" className="modal">
+    <div className="modal-box bg-accent">
+      <form method="dialog">
+        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-secondary">
+          ✕
+        </button>
+      </form>
+      <CreateRoutesModal addAlert={addAlert} />
+    </div>
+  </dialog>
 
+  <dialog id="ShowRoutes" className="modal">
+    <div className="modal-box w-11/12 max-w-5xl bg-accent">
+      <form method="dialog">
+        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-secondary">
+          ✕
+        </button>
+      </form>
+      <ShowRoutesModal addAlert={addAlert} />
+    </div>
+  </dialog>
 
-      <dialog id="CreateRoutes" className="modal">
-        <div className="modal-box bg-accent">
-          <form method="dialog">
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-secondary">
-              ✕
-            </button>
-          </form>
-          <CreateRoutesModal addAlert={addAlert} />
-        </div>
-      </dialog>
+  <dialog id="FlightsTable" className="modal">
+    <div className="modal-box w-11/12 max-w-5xl bg-white">
+      <form method="dialog">
+        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-black">
+          ✕
+        </button>
+      </form>
+      <FlightsTableModal addAlert={addAlert} flightsData={memoizedFlightsData} />
+    </div>
+  </dialog>
 
+  <dialog id="FlightDetails" className="modal">
+    <div className="modal-box bg-white">
+      <form method="dialog">
+        <button
+          className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+          onClick={() => document.getElementById("FlightDetails").close()}
+        >
+          ✕
+        </button>
+      </form>
 
-      <dialog id="ShowRoutes" className="modal">
-        <div className="modal-box w-11/12 max-w-5xl bg-accent">
-          <form method="dialog">
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-secondary">
-              ✕
-            </button>
-          </form>
-          <ShowRoutesModal addAlert={addAlert}/>
-        </div>
-      </dialog>
-
-      <dialog id="FlightsTable" className="modal">
-        <div className="modal-box w-11/12 max-w-5xl bg-white">
-          <form method="dialog">
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2  text-black">
-              ✕
-            </button>
-          </form>
-          <FlightsTableModal addAlert={addAlert} flightsData={memoizedFlightsData} />
-        </div>
-      </dialog>
-
-      <dialog id="ShowRoutes" className="modal">
-        <div className="modal-box w-11/12 max-w-5xl bg-accent">
-          <form method="dialog">
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-secondary">
-              ✕
-            </button>
-          </form>
-          <ShowRoutesModal />
-        </div>
-      </dialog>
-
-      <dialog id="FlightDetails" className="modal">
-        <div className="modal-box bg-white">
-          <form method="dialog">
-            <button
-              className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
-              onClick={() => document.getElementById("FlightDetails").close()}
-            >
-              ✕
-            </button>
-          </form>
-
-          <span className="font-bold text-2xl mb-5 flex justify-center">
-            FLIGHT DETAILS
-          </span>
-          {selectedEvent && (
-            <div className="overflow-x-auto">
-              <table className="table bg-slate-200 rounded-md shadow-md">
-                <tbody>
+      <span className="font-bold text-2xl mb-5 flex justify-center">
+        FLIGHT DETAILS
+      </span>
+      {selectedEvent && (
+        <div className="overflow-x-auto">
+          <table className="table bg-slate-200 rounded-md shadow-md">
+            <tbody>
                   <tr className="bg-base-200">
                     <th className="text-right">Flight Number:</th>
                     <td>{selectedEvent.flight_number}</td>
@@ -220,87 +206,79 @@ const AdminFlightsAndRoutes = ({ addAlert }) => {
                     <td>₱ {selectedEvent.route.price}</td>
 
                   </tr>
-                </tbody>
-              </table>
+                  </tbody>
+                  </table>
+                </div>
+              )}
             </div>
-          )}
+          </dialog>
+
+            <div>
+              <div className="mt-2 flex">
+                <div className="flex">
+                  <div className="join ml-2 bg-accent">
+                    <button
+                      className="btn btn-accent text-secondary self-center ml-3 px-6"
+                      onClick={() => document.getElementById("CreateFlights").showModal()}
+                    >
+                      <CreateFlightIcon className="w-6 h-6" />
+                      Create Flight
+                    </button>
+
+                    <div className="divider divider-horizontal divider-secondary"></div>
+                    <button
+                      className="btn join-item btn-accent text-secondary self-center"
+                      onClick={() => document.getElementById("GenerateFlights").showModal()}
+                    >
+                      <GenerateFlightIcon className="w-6 h-6" />
+                      Generate Flights
+                    </button>
+                    <div className="divider divider-horizontal divider-secondary"></div>
+                    <button
+                      className="btn join-item btn-accent text-secondary self-center"
+                      onClick={() => document.getElementById("FlightsTable").showModal()}
+                    >
+                      <DataTableIcon className="w-6 h-6" />
+                      Flights Table
+                    </button>
+
+                  </div>
+
+                  <div className="join ml-2 bg-accent">
+                    <button
+                      className="btn join-item btn-accent text-secondary self-center"
+                      onClick={() => document.getElementById("CreateRoutes").showModal()}
+                    >
+                      <CreateRouteIcon className="w-6 h-6" />
+                      Create Routes
+                    </button>
+                    <div className="divider divider-horizontal divider-secondary"></div>
+                    <button
+                      className="btn join-item btn-accent text-secondary self-center"
+                      onClick={() => document.getElementById("ShowRoutes").showModal()}
+                    >
+                      <ShowRouteIcon className="w-6 h-6" />
+                      Show Routes
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+            {loading ? (
+              <Loading />
+            ) : (
+              <Calendar
+                localizer={localizer}
+                events={events}
+                startAccessor="start"
+                endAccessor="end"
+                views={["day"]}
+                defaultView="day"
+                onSelectEvent={handleEventClick}
+              />
+            )}
         </div>
-      </dialog>
-
-      <div>
-        <div className="mt-2 flex">
-
-          <div className="flex">
-
-          <div className="join ml-2 bg-accent">
-
-            <button
-              className="btn btn-accent text-secondary self-center ml-3 px-6"
-              onClick={() =>
-                document.getElementById("CreateFlights").showModal()
-              }
-            >
-              <CreateFlightIcon className="w-6 h-6" />
-              Create Flight
-            </button>
-
-            <div className="divider divider-horizontal divider-secondary"></div>
-            <button
-              className="btn join-item btn-accent text-secondary self-center"
-              onClick={() =>
-                document.getElementById("GenerateFlights").showModal()
-              }
-            >
-              <GenerateFlightIcon className="w-6 h-6" />
-              Generate Flights
-            </button>
-            <div className="divider divider-horizontal divider-secondary"></div>
-            <button
-              className="btn join-item btn-accent text-secondary self-center"
-              onClick={() => document.getElementById("FlightsTable").showModal()}
-            >
-              <DataTableIcon className="w-6 h-6" />
-              Flights Table
-            </button>
-
-          </div>
-
-          <div className="join ml-2 bg-accent">
-            <button
-              className="btn join-item btn-accent text-secondary self-center"
-              onClick={() =>
-                document.getElementById("CreateRoutes").showModal()
-              }
-            >
-              <CreateRouteIcon className="w-6 h-6" />
-              Create Routes
-            </button>
-            <div className="divider divider-horizontal divider-secondary"></div>
-            <button
-              className="btn join-item btn-accent text-secondary self-center"
-              onClick={() => document.getElementById("ShowRoutes").showModal()}
-            >
-              <ShowRouteIcon className="w-6 h-6" />
-              Show Routes
-            </button>
-          </div>
-        </div>
-
-        {loading ? (
-          <Loading />
-        ) : (
-          <Calendar
-            localizer={localizer}
-            events={events}
-            startAccessor="start"
-            endAccessor="end"
-            views={["day"]}
-            defaultView="day"
-            onSelectEvent={handleEventClick}
-          />
-        )}
-      </div>
-    </>
+</>
   );
 };
 

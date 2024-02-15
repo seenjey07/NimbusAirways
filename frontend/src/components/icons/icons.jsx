@@ -193,9 +193,12 @@ export function ArrowRightIcon(props) {
       width="32"
       height="32"
       viewBox="0 0 20 20"
-    >
       {...props}
+      >
       <path fill="currentColor" d="M10 7H2v6h8v5l8-8l-8-8z" />
+    </svg>
+  )
+}
 
 export function ShowBookingIcon(props) {
   return (
@@ -217,8 +220,10 @@ export function ShowBookingIcon(props) {
 
 export function ArrowLeftIcon(props) {
   return (
-    <symbol viewBox="0 0 20 20" id="zondicons-arrow-thick-left">
-      {...props}
+    <symbol viewBox="0 0 20 20" id="zondicons-arrow-thick-left"
+    {...props}
+    >
+      
       <path fill="currentColor" d="M10 13h8V7h-8V2l-8 8l8 8z"></path>
     </symbol>
   );
