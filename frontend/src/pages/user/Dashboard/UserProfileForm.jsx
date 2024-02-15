@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from "react";
+import "../../../App.css";
 import {
   showCurrentUserApi,
   updateCurrentUserApi,
 } from "../../../lib/usersapi";
+import ConfirmProfileUpdateModal from "../../../pages/admin/dashboard/modals/ConfirmProfileUpdateModal";
 import { id } from "date-fns/locale";
+// eslint-disable-next-line react/prop-types
 
-const UserProfileForm = () => {
+const UserProfileForm = ({
+  addAlert,
+  // isConfirmUpdateModalOpen,
+  // setIsConfirmUpdateModalOpen,
+}) => {
   const [formValues, setFormValues] = useState({
     first_name: "",
     middle_name: "",
@@ -19,24 +26,14 @@ const UserProfileForm = () => {
     confirm_new_password: "",
   });
 
-  const [errors, setErrors] = useState({
-    first_name: "",
-    middle_name: "",
-    last_name: "",
-    gender: "",
-    birth_date: "",
-    phone_number: "",
-    email: "",
-    password: "",
-    new_password: "",
-    confirm_new_password: "",
-  });
+  const [isConfirmUpdateModalOpen, setIsConfirmUpdateModalOpen] =
+    useState(false);
+  const [typedPassword, setTypedPassword] = useState("");
 
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
         const response = await showCurrentUserApi({ id: id });
-        console.log("Fetch from UserProfileForm:", response);
         const user = response;
 
         setFormValues({
@@ -52,7 +49,7 @@ const UserProfileForm = () => {
           confirm_new_password: "",
         });
       } catch (error) {
-        console.error("Error fetching user details:", error);
+        addAlert("Error", "Error retrieving user details");
       }
     };
 
@@ -62,117 +59,140 @@ const UserProfileForm = () => {
   const validatePassword = () => {
     const { new_password, confirm_new_password } = formValues;
     if (new_password !== confirm_new_password) {
-      setErrors((prevErrors) => ({
+      addAlert((prevErrors) => ({
         ...prevErrors,
         new_password: "Passwords do not match",
         confirm_new_password: "Passwords do not match",
       }));
       return false;
     }
-    setErrors((prevErrors) => ({
-      ...prevErrors,
-      new_password: "",
-      confirm_new_password: "",
-    }));
     return true;
   };
 
-  const validateForm = () => {
-    return validatePassword();
+  const validateEmail = async () => {
+    const { email } = formValues;
+    try {
+      await updateCurrentUserApi(id, { email });
+      return true;
+    } catch (error) {
+      addAlert("error", "Invalid email address. Please try again.");
+      return false;
+    }
+  };
+
+  const validateForm = async () => {
+    const isPasswordValid = validatePassword();
+    const isEmailValid = await validateEmail();
+
+    return isPasswordValid && isEmailValid;
+  };
+
+  const handleUpdateClick = (e) => {
+    e.preventDefault();
+    setIsConfirmUpdateModalOpen(true);
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
 
     setFormValues((prevValues) => ({ ...prevValues, [name]: value }));
-    setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const confirmUpdate = async () => {
+    const userData = {
+      first_name: formValues.first_name,
+      middle_name: formValues.middle_name,
+      last_name: formValues.last_name,
+      birth_date: formValues.birth_date,
+      gender: formValues.gender,
+      phone_number: formValues.phone_number,
+      email: formValues.email,
+      password: formValues.password,
+      new_password: formValues.new_password,
+      confirm_new_password: formValues.confirm_new_password,
+    };
 
-    if (validateForm()) {
+    if (await validateForm()) {
       try {
-        const response = await updateCurrentUserApi(user.id, formValues);
-        console.log(response);
-        if (response.status === 200) {
-          console.log("User details updated successfully");
-          onUserUpdate(response.data);
-        } else {
-          console.log("Update failed:", response.data.errors);
-          setErrors(response.data.errors);
-        }
+        const response = await updateCurrentUserApi(id, userData);
+        console.log("Response:", userData);
+        setFormValues((prevValues) => ({
+          ...prevValues,
+          ...response,
+        }));
+        addAlert("success", "User details updated successfully");
+        // document.getElementById("ConfirmProfileUpdateModal").close();
+        // setIsConfirmUpdateModalOpen(false);
       } catch (error) {
         console.error("Error updating user details:", error);
+        addAlert("error", "Error updating user details");
       }
     } else {
       console.log("Form validation failed");
+      addAlert("error", "Form validation failed");
     }
-
-    updateCurrentUserApi(formValues);
   };
 
   return (
-    <>
-      <h3 className="card-title rounded text-white place-self-center">
+    <div
+      className={`profile my-1 ${isConfirmUpdateModalOpen ? "modal-open" : ""}`}
+    >
+      <h3 className="card-title text-black font-serif justify-center mb-3">
         Profile
       </h3>
-      <form>
+      <form onSubmit={handleUpdateClick}>
         <div className="flex flex-col lg:flex-row w-full bg-white rounded p-2">
           <div className="flex-grow lg:w-1/2">
             {/* Full Name */}
             <label className="form-control w-full max-w-xs">
               <div className="label">
-                <span className="label-text mb-0">First Name: </span>
+                <span className="label-text text-sm mb-0">First Name: </span>
 
                 <input
                   type="text"
                   name="first_name"
-                  className="input input-bordered m-0 p-1 h-fit w-fit max-w-xs"
+                  className="input input-bordered m-0 p-1 text-sm h-fit w-fit bg-blue-100 max-w-xs"
                   value={formValues.first_name}
                   onChange={handleChange}
                 />
               </div>
             </label>
-            <span>{errors.first_name}</span>
 
             <label className="form-control w-full max-w-xs">
               <div className="label">
-                <span className="label-text mb-0">Middle Name: </span>
+                <span className="label-text text-sm mb-0">Middle Name: </span>
 
                 <input
                   type="text"
                   name="middle_name"
-                  className="input input-bordered m-0 p-1 h-fit w-fit max-w-xs"
+                  className="input input-bordered m-0 p-1 text-sm h-fit w-fit bg-blue-100 max-w-xs"
                   value={formValues.middle_name}
                   onChange={handleChange}
                 />
               </div>
             </label>
-            <span>{errors.middle_name}</span>
 
             <label className="form-control w-full max-w-xs">
               <div className="label">
-                <span className="label-text mb-0">Last Name: </span>
+                <span className="label-text text-sm mb-0">Last Name: </span>
 
                 <input
                   type="text"
                   name="last_name"
-                  className="input input-bordered m-0 p-1 h-fit w-fit max-w-xs"
+                  className="input input-bordered m-0 p-1 text-sm h-fit w-fit bg-blue-100 max-w-xs"
                   value={formValues.last_name}
                   onChange={handleChange}
                 />
               </div>
             </label>
-            <span>{errors.last_name}</span>
 
             {/* Gender */}
             <label className="form-control w-full max-w-xs">
               <div className="label">
-                <span className="label-text mb-0">Gender: </span>
+                <span className="label-text text-sm mb-0">Gender: </span>
                 <select
                   name="gender"
-                  className="input input-bordered text-sm m-0 p-1 h-fit w-fit max-w-xs"
+                  className="input input-bordered text-sm m-0 p-1 h-fit w-fit bg-blue-100 max-w-xs"
                   value={formValues.gender}
                   onChange={handleChange}
                 >
@@ -182,23 +202,21 @@ const UserProfileForm = () => {
                 </select>
               </div>
             </label>
-            <span>{errors.gender}</span>
 
             {/* Birthday */}
             <label className="form-control w-full max-w-xs">
               <div className="label">
-                <span className="label-text mb-0">Birth Date: </span>
+                <span className="label-text text-sm mb-0">Birth Date: </span>
 
                 <input
                   type="date"
                   name="birth_date"
-                  className="input input-bordered text-sm m-0 p-1 h-fit w-fit max-w-xs"
+                  className="input input-bordered text-sm m-0 p-1 h-fit w-fit bg-blue-100 max-w-xs"
                   value={formValues.birth_date}
                   onChange={handleChange}
                 />
               </div>
             </label>
-            <span>{errors.birth_date}</span>
           </div>
           <div className="divider lg:divider-horizontal"></div>
 
@@ -206,95 +224,108 @@ const UserProfileForm = () => {
             {/* Contact Number */}
             <label className="form-control w-full max-w-xs">
               <div className="label">
-                <span className="label-text mb-0">Contact Number: </span>
+                <span className="label-text text-sm mb-0">
+                  Contact Number:{" "}
+                </span>
 
                 <input
                   type="number"
                   name="phone_number"
-                  className="input input-bordered m-0 p-1 h-fit w-fit max-w-xs"
+                  className="input input-bordered m-0 p-1 text-sm h-fit w-fit bg-blue-100 max-w-xs"
                   value={formValues.phone_number}
                   onChange={handleChange}
                 />
               </div>
             </label>
-            <span>{errors.phone_number}</span>
 
             {/* Email */}
             <label className="form-control w-full max-w-xs">
               <div className="label">
-                <span className="label-text mb-0">Email: </span>
+                <span className="label-text text-sm mb-0">Email: </span>
 
                 <input
                   type="email"
                   name="email"
-                  className="input input-bordered m-0 p-1 h-fit w-fit max-w-xs"
+                  className="input input-bordered m-0 p-1 text-sm h-fit w-fit bg-blue-100 max-w-xs"
                   value={formValues.email}
                   onChange={handleChange}
                 />
               </div>
             </label>
-            <span>{errors.email}</span>
 
             {/* Password */}
             <label className="form-control w-full max-w-xs">
               <div className="label">
-                <span className="label-text mb-0">Password: </span>
+                <span className="label-text text-sm mb-0">Password: </span>
 
                 <input
                   type="password"
                   name="password"
-                  className="input input-bordered m-0 p-1 h-fit w-fit max-w-xs"
+                  placeholder="******"
+                  className="input input-bordered m-0 p-1 text-sm h-fit w-fit bg-blue-100 max-w-xs"
                   value={formValues.password}
                   onChange={handleChange}
                 />
               </div>
             </label>
-            <span>{errors.password}</span>
 
             {/* New Password */}
             <label className="form-control w-full max-w-xs">
               <div className="label">
-                <span className="label-text mb-0">New Password: </span>
+                <span className="label-text text-sm mb-0">New Password: </span>
 
                 <input
                   type="password"
                   name="new_password"
-                  className="input input-bordered m-0 p-1 h-fit w-fit max-w-xs"
+                  className="input input-bordered m-0 p-1 text-sm h-fit w-fit bg-blue-100 max-w-xs"
                   value={formValues.new_password}
                   onChange={handleChange}
                 />
               </div>
             </label>
-            <span>{errors.new_password}</span>
 
             {/* Confirm New Password */}
             <label className="form-control w-full max-w-xs">
               <div className="label">
-                <span className="label-text mb-0">Confirm Password: </span>
+                <span className="label-text text-sm mb-0">
+                  Confirm Password:
+                </span>
 
                 <input
                   type="password"
                   name="confirm_new_password"
-                  className="input input-bordered m-0 p-1 h-fit w-fit max-w-xs"
+                  className="input input-bordered m-0 p-1 text-sm h-fit w-fit bg-blue-100 max-w-xs"
                   value={formValues.confirm_new_password}
                   onChange={handleChange}
                 />
               </div>
             </label>
-            <span>{errors.confirm_new_password}</span>
           </div>
         </div>
 
-        <div className="flex justify-center mt-1 mb-0 p-1">
+        <div className="flex justify-center mb-0">
           <button
-            onClick={handleSubmit}
-            className="btn btn-primary text-sm py-0"
+            type="submit"
+            className="btn bg-secondary text-sm mt-2 px-2 font-bold hover:bg-red-400 hover:text-accent"
           >
-            Update Profile
+            Update
           </button>
         </div>
       </form>
-    </>
+
+      {isConfirmUpdateModalOpen && (
+        <>
+          <div className="backdrop"></div>
+          <ConfirmProfileUpdateModal
+            addAlert={addAlert}
+            setTypedPassword={setTypedPassword}
+            setConfirmUpdateModalOpen={setIsConfirmUpdateModalOpen}
+            formValues={formValues.password}
+            onConfirmUpdate={confirmUpdate}
+          />
+        </>
+      )}
+    </div>
   );
 };
 

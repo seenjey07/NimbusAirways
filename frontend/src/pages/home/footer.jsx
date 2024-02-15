@@ -3,7 +3,7 @@ import logoImage from "../../assets/logo-no-text.png";
 
 const Footer = () => {
   return (
-    <footer className="footer p-1 bg-accent text-white text-xs fixed bottom-0 w-full">
+    <footer className="footer p-1 bg-accent text-white text-xs relative bottom-0 w-full">
       <div className="flex flex-row items-center">
         <figure>
           <img
@@ -15,7 +15,7 @@ const Footer = () => {
             }}
           />
         </figure>
-        <p className="footer text-[11px]">
+        <p className="footer text-[10px] text-center md:text-left">
           Discover the Skies with NimbusAirways: Elevating Your Journey Beyond
           Boundaries
           <br />
@@ -24,7 +24,9 @@ const Footer = () => {
       </div>
 
       <div className="footer-center">
-        <p className="footer-title m-0">Developed by:</p>
+        <p className="footer-title m-0 text-[8pt] text-center md:text-left">
+          Developed by:
+        </p>
         <div className="grid grid-flow-col gap-2">
           <a
             className="link link-hover font-sans text-[9px]"
@@ -42,8 +44,8 @@ const Footer = () => {
         </div>
       </div>
 
-      <nav className="footer-center">
-        <h6 className="footer-title m-0">Social</h6>
+      <nav className="footer-center text-center md:text-left">
+        <h6 className="footer-title m-0 text-[8pt]">Social</h6>
         <div className="grid grid-flow-col gap-4">
           <a>
             <svg

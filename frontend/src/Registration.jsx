@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import logoImage from "./assets/logo.png";
 import RegistrationImage from "./assets/RegistrationImage.jpg";
 
-const Registration = () => {
+const Registration = ({ addAlert }) => {
   const navigate = useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -17,6 +17,7 @@ const Registration = () => {
       console.error(result.response.data.status.message);
     } else if (result.data) {
       console.log("Registration successful", result.data);
+      addAlert("success", "Registration successful. Redirecting to login.");
       navigate("/login");
     } else {
       console.error("Registration failed");

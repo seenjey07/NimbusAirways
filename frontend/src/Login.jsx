@@ -42,7 +42,7 @@ const Login = ({ addAlert }) => {
       navigate("../user/my_dashboard");
       return res;
     } catch (error) {
-      addAlert("error", "Login failed. Incorect email or password");
+      addAlert("error", "Login failed. Incorect email or password.");
       return error;
     }
   };

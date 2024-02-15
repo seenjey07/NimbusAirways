@@ -39,7 +39,7 @@ export function FlightSearchOrigin({ originOptions, onSelect }) {
           </Button>
         </PopoverTrigger>
 
-        <PopoverContent className="bg-secondary">
+        <PopoverContent className="bg-primary text-white">
           <Command>
             <CommandInput placeholder="Search..." />
             <CommandEmpty>No place found.</CommandEmpty>

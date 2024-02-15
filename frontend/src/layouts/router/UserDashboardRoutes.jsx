@@ -27,7 +27,7 @@ const UserDashboardRoutes = ({ addAlert }) => {
       try {
         const response = await checkAuthorizationApi();
         if (response.message === "Authorized") {
-          console.log("Authorization check successful", response);
+          // console.log("Authorization check successful", response);
         } else {
           handleUnauthorizedAccess();
         }
@@ -40,11 +40,11 @@ const UserDashboardRoutes = ({ addAlert }) => {
       const errorMessage =
         error?.response?.data?.message ||
         "You are not authorized to access this page.";
-      addAlert("error", `${errorMessage}. Redirecting to login`);
+      addAlert("error", `${errorMessage}. Redirecting to login.`);
       navigate("/login");
 
       if (errorMessage === "Unauthorized") {
-        addAlert("error", `${errorMessage}. Redirecting to login`);
+        addAlert("error", `${errorMessage}. Redirecting to login.`);
         navigate("/login");
       } else {
         addAlert("error", errorMessage);

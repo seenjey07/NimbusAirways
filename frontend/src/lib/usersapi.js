@@ -21,11 +21,12 @@ export const showCurrentUserApi = async (id) => {
   }
 };
 
-export const updateCurrentUserApi = async (id, formValues) => {
+export const updateCurrentUserApi = async (id, userData) => {
   try {
-    const response = await axios.put(`${backendBaseUrl}/api/users/${id}`, {
-      user: formValues,
-    });
+    const response = await axios.put(
+      `${backendBaseUrl}/api/users/${id}`,
+      userData
+    );
     return response.data;
   } catch (error) {
     return error;
