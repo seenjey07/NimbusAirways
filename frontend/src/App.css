@@ -11,17 +11,33 @@ label,
   font-weight: bold;
 }
 
-body {
+body,
+main {
   background-color: white;
 }
 
+.profile.modal-open {
+  overflow: hidden;
+  z-index: 999;
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+}
+
 .rbc-calendar {
-  @apply rounded-md bg-white m-3
+  @apply rounded-md bg-white m-3;
 }
 .rbc-toolbar {
   @apply flex justify-between;
 }
- 
+
 .rbc-btn-group button {
   @apply btn btn-primary text-accent mx-2;
 }
@@ -31,11 +47,11 @@ body {
 }
 
 .rbc-header {
-  @apply flex justify-center font-bold text-2xl border border-y-black
+  @apply flex justify-center font-bold text-2xl border border-y-black;
 }
 
 .rbc-row-content {
-  @apply hidden
+  @apply hidden;
 }
 
 /* @layer base {

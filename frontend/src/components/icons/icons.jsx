@@ -185,6 +185,18 @@ export function ShowRouteIcon(props) {
   );
 }
 
+
+export function ArrowRightIcon(props) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="32"
+      height="32"
+      viewBox="0 0 20 20"
+    >
+      {...props}
+      <path fill="currentColor" d="M10 7H2v6h8v5l8-8l-8-8z" />
+
 export function ShowBookingIcon(props) {
   return (
     <svg
@@ -199,6 +211,16 @@ export function ShowBookingIcon(props) {
         d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h7c-.41-.25-.8-.56-1.14-.9a6.478 6.478 0 0 1-.36-9.18C13.69 9.5 17.33 9.13 20 11V8zm-1 7V3.5L18.5 9zm7.31 9.9c1.33-2.11.69-4.9-1.4-6.22c-2.11-1.33-4.91-.68-6.22 1.4c-1.34 2.11-.69 4.89 1.4 6.22c1.46.93 3.32.93 4.79.02L22 23.39L23.39 22zm-3.81.1a2.5 2.5 0 0 1-2.5-2.5a2.5 2.5 0 0 1 2.5-2.5a2.5 2.5 0 0 1 2.5 2.5a2.5 2.5 0 0 1-2.5 2.5"
       ></path>
     </svg>
+  );
+}
+
+
+export function ArrowLeftIcon(props) {
+  return (
+    <symbol viewBox="0 0 20 20" id="zondicons-arrow-thick-left">
+      {...props}
+      <path fill="currentColor" d="M10 13h8V7h-8V2l-8 8l8 8z"></path>
+    </symbol>
   );
 }
 
@@ -232,3 +254,4 @@ export function DataTableIcon(props) {
     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" {...props}><path fill="currentColor" d="M4 3h16a2 2 0 0 1 2 2v15a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2m0 4v3h4V7zm6 0v3h4V7zm10 3V7h-4v3zM4 12v3h4v-3zm0 8h4v-3H4zm6-8v3h4v-3zm0 8h4v-3h-4zm10 0v-3h-4v3zm0-8h-4v3h4z"></path></svg>
   )
 }
+

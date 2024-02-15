@@ -1,9 +1,9 @@
 import "../App.css";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import logoImage from "../assets/logo.png";
-import { AdminIcon} from "./icons/icons"
+import { AdminIcon } from "./icons/icons";
 import { useState, useEffect } from "react";
-import { adminCheckAuthorization } from "../lib/admin/adminusersapi"
+import { adminCheckAuthorization } from "../lib/admin/adminusersapi";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -16,15 +16,15 @@ const Navbar = () => {
         const response = await adminCheckAuthorization();
         if (response.message === "Authorized") {
           setIsAuthorized(true);
-          console.log("Authorization check successful", response);
+          // console.log("Authorization check successful", response);
         }
       } catch (error) {
         setIsAuthorized(false);
-        console.error("Authorization check failed", error);
+        // console.error("Authorization check failed", error);
       }
     };
     checkAuthorization();
-  }, [navigate]); 
+  }, [navigate]);
 
   const handleLogout = () => {
     document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
@@ -39,16 +39,14 @@ const Navbar = () => {
   const isCreateBookingPage =
     location.pathname === "/user/bookings/create_booking";
 
-  // const hasCurrentUser = true;
-
   return (
-    <div className="navbar m-0 bg-base-100 underline shadow">
+    <div className="navbar m-0 p-0.5 bg-accent shadow">
       <div className="navbar-start">
-        <div className="flex flex-col ">
+        <div className="flex flex-col">
           <div>
             {isAuthorized && (
               <Link to="/admin">
-                <sub className="flex text-xs hover:underline">
+                <sub className="flex text-xs mb-3 mt-0 text-secondary hover:underline">
                   <AdminIcon className="mr-2" />
                   Admin Dashboard
                 </sub>
@@ -59,74 +57,109 @@ const Navbar = () => {
             <img
               src={logoImage}
               alt="Logo"
-              className="cursor-pointer"
-              style={{ width: "90px", height: "auto" }}
+              style={{ width: "75px", height: "auto", marginLeft: "20px" }}
             />
           </figure>
         </div>
       </div>
       <div className="navbar-center">
-        <ul className="menu menu-horizontal text-sm px-1 my-1 rounded-box bg-base-100">
+        <ul className="menu menu-horizontal text-sm text-secondary shadow-md shadow-secondary px-1 my-1 rounded-box">
           {isDashboardPage && (
             <>
               <li>
-                <Link to="my_dashboard">Dashboard</Link>
+                <Link
+                  to="my_dashboard"
+                  className="hover:bg-neutral hover:text-black rounded-full"
+                >
+                  Dashboard
+                </Link>
               </li>
               <li>
-                <Link to="flight_search">Flights</Link>
+                <Link
+                  to="flight_search"
+                  className="hover:bg-neutral hover:text-black rounded-full"
+                >
+                  Flights
+                </Link>
               </li>
               <li>
-                <Link to="bookings">Bookings</Link>
+                <Link
+                  to="bookings"
+                  className="hover:bg-neutral hover:text-black rounded-full"
+                >
+                  Bookings
+                </Link>
               </li>
             </>
           )}
           {isFlightsPage && (
             <>
               <li>
-                <Link to="flight_search">Flights</Link>
+                <Link
+                  to="flight_search"
+                  className="hover:bg-neutral hover:text-black rounded-full"
+                >
+                  Flights
+                </Link>
               </li>
               <li>
-                <Link to="bookings">Bookings</Link>
+                <Link
+                  to="bookings"
+                  className="hover:bg-neutral hover:text-black rounded-full"
+                >
+                  Bookings
+                </Link>
               </li>
               <li>
-                <Link to="my_dashboard">Dashboard</Link>
+                <Link
+                  to="my_dashboard"
+                  className="hover:bg-neutral hover:text-black rounded-full"
+                >
+                  Dashboard
+                </Link>
               </li>
             </>
           )}
           {(isBookingsPage || isCreateBookingPage) && (
             <>
               <li>
-                <Link to="bookings">Bookings</Link>
+                <Link
+                  to="bookings"
+                  className="hover:bg-neutral hover:text-black rounded-full"
+                >
+                  Bookings
+                </Link>
               </li>
               <li>
-                <Link to="my_dashboard">Dashboard</Link>
+                <Link
+                  to="my_dashboard"
+                  className="hover:bg-neutral hover:text-black rounded-full"
+                >
+                  Dashboard
+                </Link>
               </li>
               <li>
-                <Link to="flight_search">Flights</Link>
+                <Link
+                  to="flight_search"
+                  className="hover:bg-neutral hover:text-black rounded-full"
+                >
+                  Flights
+                </Link>
               </li>
             </>
           )}
         </ul>
       </div>
       <div className="navbar-end">
-        {/* {hasCurrentUser ? ( */}
         <button
           type="button"
           value="Logout"
           name="Logout"
           onClick={handleLogout}
-          className="btn btn-ghost text-sm rounded-box bg-base-100"
+          className="btn btn-ghost text-sm text-white hover:bg-error rounded-full"
         >
           Logout
         </button>
-        {/* // ) : (
-        //   <Link
-        //     to="/"
-        //     className="btn btn-ghost text-sm rounded-box bg-base-100"
-        //   >
-        //     Home
-        //   </Link>
-        )} */}
       </div>
     </div>
   );

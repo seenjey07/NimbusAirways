@@ -22,16 +22,6 @@ const AboutUs = () => {
             </figure>
           </div>
           <div className="flex-none gap-2">
-            <div className="form-control">
-              <input
-                type="text"
-                placeholder="Enter a city"
-                className="input input-bordered bg-white text-sm w-20 md:w-auto"
-              />
-            </div>
-            <div>
-              <button className="btn btn-info">Search</button>
-            </div>
             <div className="dropdown dropdown-end">
               <div tabIndex={0} role="button" className="btn btn-primary ">
                 <div className="w-10 rounded-full text-white">Menu</div>

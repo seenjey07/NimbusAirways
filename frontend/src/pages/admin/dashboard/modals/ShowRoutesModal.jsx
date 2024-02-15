@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { adminIndexRoutesApi } from "../../../../lib/admin/adminusersapi"
+import { adminIndexRoutesApi } from "../../../../lib/admin/adminusersapi";
 
 // eslint-disable-next-line react/prop-types
 const ShowRoutesModal = () => {
@@ -29,7 +29,9 @@ const ShowRoutesModal = () => {
 
   return (
     <div className="overflow-x-auto bg-accent text-secondary">
-      <h2 className="flex justify-center text-2xl font-bold my-2">CURRENT ROUTES</h2>
+      <h2 className="flex justify-center text-2xl font-bold my-2">
+        CURRENT ROUTES
+      </h2>
       <table className="table table-xs">
         <thead>
           <tr className="text-secondary">
@@ -53,13 +55,13 @@ const ShowRoutesModal = () => {
                 <span className="italic">{route.destination_code}</span>
               </td>
 
-
               <td>{route.origin_name}</td>
 
-              
-
               <td>{route.destination_name}</td>
-              <td>{route.price}</td>
+
+              <td>₱ {route.price}</td>
+              <td>{route.is_available.toString()}</td>
+
             </tr>
           ))}
         </tbody>
@@ -67,5 +69,5 @@ const ShowRoutesModal = () => {
     </div>
   );
 };
-  
-  export default ShowRoutesModal;
+
+export default ShowRoutesModal;

@@ -34,7 +34,7 @@ function App() {
             element={<UserDashboardRoutes addAlert={addAlert} />}
           />
           <Route path="login" element={<Login addAlert={addAlert} />} />
-          <Route path="signup" element={<Registration />} />
+          <Route path="signup" element={<Registration addAlert={addAlert} />} />
           <Route path="/" element={<Home addAlert={addAlert} />} />
           <Route path="/about_us" element={<AboutUs />} />
           <Route path="/contact_us" element={<ContactUs />} />

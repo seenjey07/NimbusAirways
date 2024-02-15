@@ -6,7 +6,6 @@ import { adminIndexFlightsApi } from "../../../lib/admin/adminusersapi";
 import {
   CreateFlightIcon,
   CreateRouteIcon,
-  ShowRouteIcon,
   GenerateFlightIcon,
   DataTableIcon,
 } from "../../../components/icons/icons";
@@ -14,6 +13,7 @@ import format from "date-fns/format";
 import CreateFlightsModal from "./modals/CreateFlightsModal";
 import CreateRoutesModal from "./modals/CreateRoutesModal";
 import ShowRoutesModal from "./modals/ShowRoutesModal";
+import Loading from "../../../components/Loading";
 import GenerateFlightsModal from "./modals/GenerateFlightsModal";
 import Loading from "../../../components/Loading";
 import FlightsTableModal from "./modals/FlightsTableModal";
@@ -75,6 +75,7 @@ const AdminFlightsAndRoutes = ({ addAlert }) => {
         </div>
       </dialog>
 
+
       <dialog id="GenerateFlights" className="modal">
         <div className="modal-box bg-accent">
           <form method="dialog">
@@ -86,6 +87,7 @@ const AdminFlightsAndRoutes = ({ addAlert }) => {
         </div>
       </dialog>
 
+
       <dialog id="CreateRoutes" className="modal">
         <div className="modal-box bg-accent">
           <form method="dialog">
@@ -96,6 +98,7 @@ const AdminFlightsAndRoutes = ({ addAlert }) => {
           <CreateRoutesModal addAlert={addAlert} />
         </div>
       </dialog>
+
 
       <dialog id="ShowRoutes" className="modal">
         <div className="modal-box w-11/12 max-w-5xl bg-accent">
@@ -119,7 +122,16 @@ const AdminFlightsAndRoutes = ({ addAlert }) => {
         </div>
       </dialog>
 
-
+      <dialog id="ShowRoutes" className="modal">
+        <div className="modal-box w-11/12 max-w-5xl bg-accent">
+          <form method="dialog">
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-secondary">
+              ✕
+            </button>
+          </form>
+          <ShowRoutesModal />
+        </div>
+      </dialog>
 
       <dialog id="FlightDetails" className="modal">
         <div className="modal-box bg-white">
@@ -203,8 +215,10 @@ const AdminFlightsAndRoutes = ({ addAlert }) => {
                     <td>{selectedEvent.aircraft.seat_capacity}</td>
                   </tr>
                   <tr>
-                    <th className="text-right"> Base Price:</th>
-                    <td>{selectedEvent.route.price}</td>
+
+                    <th className="text-right">Base Price:</th>
+                    <td>₱ {selectedEvent.route.price}</td>
+
                   </tr>
                 </tbody>
               </table>
@@ -215,7 +229,11 @@ const AdminFlightsAndRoutes = ({ addAlert }) => {
 
       <div>
         <div className="mt-2 flex">
+
+          <div className="flex">
+
           <div className="join ml-2 bg-accent">
+
             <button
               className="btn btn-accent text-secondary self-center ml-3 px-6"
               onClick={() =>
@@ -225,6 +243,7 @@ const AdminFlightsAndRoutes = ({ addAlert }) => {
               <CreateFlightIcon className="w-6 h-6" />
               Create Flight
             </button>
+
             <div className="divider divider-horizontal divider-secondary"></div>
             <button
               className="btn join-item btn-accent text-secondary self-center"
@@ -243,6 +262,7 @@ const AdminFlightsAndRoutes = ({ addAlert }) => {
               <DataTableIcon className="w-6 h-6" />
               Flights Table
             </button>
+
           </div>
 
           <div className="join ml-2 bg-accent">

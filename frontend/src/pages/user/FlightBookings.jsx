@@ -3,22 +3,24 @@ import { useState } from "react";
 import { showCurrentFlightApi } from "../../lib/flightsapi";
 import { createUserBookingApi } from "../../lib/bookingsapi";
 import { useEffect } from "react";
-import PassengerForm from "../../components/PassengerForm"
+import PassengerForm from "../../components/PassengerForm";
 import FlightDetails from "../../components/FlightDetails";
 import { useNavigate } from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
 const FlightBookings = ({ addAlert }) => {
   const [flight, setFlight] = useState({});
-  const flight_id = localStorage.getItem('selected_flight_id');
-  const passenger = localStorage.getItem('total');
-  const passengersArray = Array.from({ length: parseInt(passenger) }, (_, index) => index + 1);
+  const flight_id = localStorage.getItem("selected_flight_id");
+  const passenger = localStorage.getItem("total");
+  const passengersArray = Array.from(
+    { length: parseInt(passenger) },
+    (_, index) => index + 1
+  );
   const [departureDate, setDepartureDate] = useState("");
   const [arrivalDate, setArrivalDate] = useState("");
   const [loadingFlight, setLoadingFlight] = useState(true);
-  const [seatData, setSeatData] = useState([])
+  const [seatData, setSeatData] = useState([]);
   const navigate = useNavigate();
-  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,30 +51,50 @@ const FlightBookings = ({ addAlert }) => {
     baggageQuantity: 0,
   };
 
-  const [passengerStates, setPassengerStates] = useState(Array.from({ length: parseInt(passenger) }, () => ({ ...initialPassengerState })));
-  const [seatDataArray, setSeatDataArray] = useState(Array.from({ length: passenger }, () => ""));
+  const [passengerStates, setPassengerStates] = useState(
+    Array.from({ length: parseInt(passenger) }, () => ({
+      ...initialPassengerState,
+    }))
+  );
+  const [seatDataArray, setSeatDataArray] = useState(
+    Array.from({ length: passenger }, () => "")
+  );
   const handleFormSubmit = async (passengerFormDataArray) => {
     console.log("Passenger Form Data Array:", passengerFormDataArray);
 
     if (seatDataArray.some((seatData) => seatData === "")) {
-      addAlert("error", "Please fill select seats or fill out passenger fields.");
+      addAlert(
+        "error",
+        "Please fill out selected seat/s or fill out passenger fields."
+      );
       return;
     }
-  
-    if (passengerFormDataArray.some((formData) => Object.values(formData).some((value) => value === ""))) {
-      addAlert("error", "Please fill out all required fields for all passengers.");
+
+    if (
+      passengerFormDataArray.some((formData) =>
+        Object.values(formData).some((value) => value === "")
+      )
+    ) {
+      addAlert(
+        "error",
+        "Please fill out all required fields for all passengers."
+      );
       return;
     }
-  
-    const seats = seatDataArray.map((seatData) => (
-      seatData ? {
-        seat_number: seatData.slice(1),
-        seat_letter: seatData.charAt(0),
-        is_available: false,
-      } : null
-    )).filter(Boolean);
+
+    const seats = seatDataArray
+      .map((seatData) =>
+        seatData
+          ? {
+              seat_number: seatData.slice(1),
+              seat_letter: seatData.charAt(0),
+              is_available: false,
+            }
+          : null
+      )
+      .filter(Boolean);
     console.log("Seats", seats);
-  
+
     const bookingData = {
       booking: {
         flight_id: flight_id,
@@ -89,7 +111,7 @@ const FlightBookings = ({ addAlert }) => {
       })),
       seats: seats,
     };
-  
+
     try {
       await createUserBookingApi(bookingData);
       addAlert("success", "Booking created successfully");
@@ -97,14 +119,15 @@ const FlightBookings = ({ addAlert }) => {
       localStorage.removeItem('updatedSeatDataArray');
       localStorage.removeItem('selected_flight_id');
       localStorage.removeItem('total');
+
     } catch (error) {
       addAlert("error", error.message || "Error creating booking");
     }
   };
 
   const handleSeatSelect = (seatData, passengerNumber) => {
-    console.log("passenger number:", passengerNumber)
-    console.log("seat data:", seatData)
+    console.log("passenger number:", passengerNumber);
+    console.log("seat data:", seatData);
 
     const parsedPassengerNumber = parseInt(passengerNumber, 10);
 
@@ -112,16 +135,22 @@ const FlightBookings = ({ addAlert }) => {
       setSeatDataArray((prevSeatDataArray) => {
         const updatedSeatDataArray = [...prevSeatDataArray];
         updatedSeatDataArray[parsedPassengerNumber - 1] = seatData;
+
         console.log('Updated SeatDataArray:', updatedSeatDataArray);
         localStorage.setItem('updatedSeatDataArray', JSON.stringify(updatedSeatDataArray))
+
         return updatedSeatDataArray;
       });
     } else {
-      console.error('Invalid passenger number:', passengerNumber);
+      console.error("Invalid passenger number:", passengerNumber);
     }
-};
+  };
 
-  const handlePassengerFormInputChange = (passengerNumber, fieldName, value) => {
+  const handlePassengerFormInputChange = (
+    passengerNumber,
+    fieldName,
+    value
+  ) => {
     console.log("Passenger Number:", passengerNumber);
     console.log("Field Name:", fieldName);
     console.log("Value:", value);
@@ -135,11 +164,10 @@ const FlightBookings = ({ addAlert }) => {
         }
         return prevState;
       });
-  
+
       return updatedPassengerStates;
     });
   };
-
 
   return (
     <>      
@@ -171,6 +199,8 @@ const FlightBookings = ({ addAlert }) => {
                   </div>
                 ))}
               </div>
+            ))}
+          </div>
 
               <div className="card z-1 lg:card-side bg-purple-200 shadow-xl mt-4">
                 {passengersArray.slice(4, 8).map((passengerNumber) => (
@@ -225,34 +255,43 @@ const FlightBookings = ({ addAlert }) => {
                   </div>
                 ))}
               </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-5 card-actions">
+          <div className="drawer drawer-end">
+            <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
+            <div className="drawer-content flex justify-center">
+              <label
+                htmlFor="my-drawer-4"
+                className="drawer-button btn btn-primary"
+              >
+                Flight Details
+              </label>
             </div>
-            
-            <div className="mt-5 card-actions">
-              <div className="drawer drawer-end">
-                <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
-                <div className="drawer-content flex justify-center">
-                  <label htmlFor="my-drawer-4" className="drawer-button btn btn-primary">Flight Details</label>
-                </div> 
-                <div className="drawer-side z-20">
-                  <label htmlFor="my-drawer-4" aria-label="close sidebar" className="drawer-overlay"></label>
-                  <div className="menu p-4 w-80 min-h-full bg-white text-base-content">
-                    <FlightDetails 
-                    flight={flight} 
-                    departureDate={departureDate} 
-                    arrivalDate={arrivalDate} 
-                    handleFormSubmit={handleFormSubmit} 
-                    passengerStates={passengerStates} 
-                    passenger={passenger} 
-                    seatDataArray={seatDataArray} 
-                    addAlert={addAlert}
-                    />
-                  </div>
-                </div>
+            <div className="drawer-side z-20">
+              <label
+                htmlFor="my-drawer-4"
+                aria-label="close sidebar"
+                className="drawer-overlay"
+              ></label>
+              <div className="menu p-4 w-80 min-h-full bg-white text-base-content">
+                <FlightDetails
+                  flight={flight}
+                  departureDate={departureDate}
+                  arrivalDate={arrivalDate}
+                  handleFormSubmit={handleFormSubmit}
+                  passengerStates={passengerStates}
+                  passenger={passenger}
+                  seatDataArray={seatDataArray}
+                  addAlert={addAlert}
+                />
               </div>
             </div>
-          </div>     
-        
-
+          </div>
+        </div>
+      </div>
     </>
   );
 };
