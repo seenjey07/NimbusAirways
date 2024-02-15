@@ -48,15 +48,12 @@ const AdminNavBar = () => {
               </li>
 
               <li>
-                <Link to="meals">
-                  <a>Meals</a>
-                </Link>
-              </li>
-              <li>
                 <a>Bookings</a>
                 <ul className="p-2">
                   <li>
-                    <a>Booking History</a>
+                    <Link to="bookings">
+                      <a>Booking History</a>
+                    </Link>
                   </li>
                   <li>
                     <a>Payment History</a>
@@ -102,23 +99,21 @@ const AdminNavBar = () => {
               </Link>
             </li>
 
-            <li>
-              <Link to="meals">
-                <a className="hover:text-white p-2 rounded-full">Meals</a>
-              </Link>
-            </li>
 
             <li>
               <details>
+                
                 <summary className="hover:text-white p-4 rounded-full">
                   Bookings
                 </summary>
                 <ul className="p-2 bg-accent shadow-md text-xs w-content text-center z-10">
-                  <li>
-                    <a className="hover:text-white p-2 rounded-full">
-                      Booking History
-                    </a>
-                  </li>
+                  <Link to="bookings">
+                    <li>
+                        <a className="hover:text-white p-2 rounded-full">
+                          Booking History
+                        </a>
+                    </li>
+                  </Link>
                   <li>
                     <a className="hover:text-white p-2 rounded-full">
                       Payment History
