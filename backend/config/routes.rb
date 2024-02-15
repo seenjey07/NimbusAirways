@@ -27,6 +27,8 @@ Rails.application.routes.draw do
     put 'api/bookings/:id', to: 'bookings#update'
     delete 'api/bookings/:id', to: 'bookings#destroy'
 
+    get '/flights/:flight_id/seats', to: 'flights#index_seats'
+
 
     # resources :bookings, only: [:show, :create, :update, :destroy], path: 'api/bookings'
 ########################### END OF USER ROUTES #################################
