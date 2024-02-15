@@ -44,6 +44,7 @@ Rails.application.routes.draw do
 
   get '/admin/flights', to: 'admins_flight#index'
   post '/admin/flights', to: 'admins_flight#create'
+  post '/admin/genflights', to: 'admins_flight#generate_flights'
 
   get '/admin/seats', to: 'admins#index_seats'
 
