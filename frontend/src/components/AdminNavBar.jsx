@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AdminIcon } from "./icons/icons";
 
 const AdminNavBar = () => {
+
   const navigate = useNavigate();
   return (
     <>

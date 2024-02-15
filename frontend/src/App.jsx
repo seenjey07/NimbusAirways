@@ -10,6 +10,7 @@ import AboutUs from "./pages/home/AboutUs";
 import ContactUs from "./pages/home/ContactUs";
 import UserDashboardRoutes from "./layouts/router/UserDashboardRoutes";
 import FlightsSearchComponent from "./pages/user/FlightsSearch";
+import GenerateFlightsModal from "./pages/admin/dashboard/modals/GenerateFlightsModal";
 function App() {
   // eslint-disable-next-line no-unused-vars
 
@@ -41,6 +42,7 @@ function App() {
             path="flight_search"
             element={<FlightsSearchComponent addAlert={addAlert} />}
           />
+          <Route path="test" element={<GenerateFlightsModal />} />
         </Routes>
       </BrowserRouter>
     </>

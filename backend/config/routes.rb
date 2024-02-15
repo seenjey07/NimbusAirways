@@ -27,6 +27,8 @@ Rails.application.routes.draw do
     put 'api/bookings/:id', to: 'bookings#update'
     delete 'api/bookings/:id', to: 'bookings#destroy'
 
+    get '/flights/:flight_id/seats', to: 'flights#index_seats'
+
 
     # resources :bookings, only: [:show, :create, :update, :destroy], path: 'api/bookings'
 ########################### END OF USER ROUTES #################################
@@ -42,6 +44,7 @@ Rails.application.routes.draw do
 
   get '/admin/flights', to: 'admins_flight#index'
   post '/admin/flights', to: 'admins_flight#create'
+  post '/admin/genflights', to: 'admins_flight#generate_flights'
 
   get '/admin/seats', to: 'admins#index_seats'
 
@@ -53,6 +56,7 @@ Rails.application.routes.draw do
   post '/admin/routes', to: 'admins_route#create'
 
   get '/admin/bookings', to: 'admins#index_bookings'
+  get '/admin/bookings/:id', to: 'admins_booking#index'
 
   get '/admin/aircrafts', to: 'admins_aircraft#index'
   post '/admin/aircrafts', to: 'admins_aircraft#create'

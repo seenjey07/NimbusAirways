@@ -46,7 +46,9 @@ const FlightDetails = ({
     }
   };
 
+
   // Helper function to find all duplicate seats
+
   const findDuplicateSeats = (seats) => {
     const seatSet = new Set();
     const duplicateSeats = [];
@@ -120,7 +122,6 @@ const FlightDetails = ({
           </tr>
           <tr>
             <td className="font-bold text-right">Price</td>
-            <td className="flex ml-3">
               ₱ {(flight.price * passenger).toFixed(2)}
             </td>
           </tr>
