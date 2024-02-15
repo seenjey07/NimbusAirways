@@ -16,6 +16,17 @@ class FlightsController < ApplicationController
     end
   end
 
+  def index_seats
+    flight = Flight.find(params[:flight_id])
+
+    if flight
+      seats = Seat.where(flight_id: flight.id)
+      render json: { seats: seats.collect { |seat| render_seat_json(seat) } }
+    else
+      render json: { error: "Flight not found" }, status: :not_found
+    end
+  end
+
   def indexed_flights
     today = Date.today
     start_date = today + 7
@@ -81,4 +92,11 @@ class FlightsController < ApplicationController
     }
   end
 
+  def render_seat_json(seat)
+    {
+      seat_number: seat.seat_number,
+      seat_letter: seat.seat_letter,
+      is_available: seat.is_available
+    }
+  end
 end
