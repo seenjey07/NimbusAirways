@@ -97,7 +97,7 @@ const AdminFlightsAndRoutes = ({ addAlert }) => {
               ✕
             </button>
           </form>
-          <ShowRoutesModal />
+          <ShowRoutesModal addAlert={addAlert}/>
         </div>
       </dialog>
 
