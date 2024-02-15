@@ -1,6 +1,6 @@
 class AdminsFlightController < ApplicationController
-  # before_action :authenticate_user!
-  # before_action :require_admin
+  before_action :authenticate_user!
+  before_action :require_admin
 
   def index
     @flights = Flight.includes(:route, :aircraft).all

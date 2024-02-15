@@ -51,7 +51,7 @@ const BookingsComponent = () => {
   };
 
   const handleCreateBooking = () => {
-    navigate("/bookings/create_booking");
+    navigate("/user/flight_search");
   };
 
   // const handleCreateBooking = async () => {

@@ -55,7 +55,6 @@ class FlightsController < ApplicationController
     end
 
     search_date = DateTime.parse(departure_date).to_date
-
     flights = Flight.joins(:route).where(routes: { origin_location: origin_location, destination_location: destination_location })
                       .where('DATE(departure_date) = ?', search_date)
 

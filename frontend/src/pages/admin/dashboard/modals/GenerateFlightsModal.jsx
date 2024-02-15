@@ -88,8 +88,6 @@ const GenerateFlightsModal = ({addAlert}) => {
     }
   };
 
-  console.log("hi formData", formData)
-
   return (
     <div className="text-white flex flex-col justify-center">
       <h2 className="justify-center flex text-2xl font-bold">Generate Flights</h2>

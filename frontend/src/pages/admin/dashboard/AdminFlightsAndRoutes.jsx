@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import moment from "moment";
@@ -8,6 +8,7 @@ import {
   CreateRouteIcon,
   ShowRouteIcon,
   GenerateFlightIcon,
+  DataTableIcon,
 } from "../../../components/icons/icons";
 import format from "date-fns/format";
 import CreateFlightsModal from "./modals/CreateFlightsModal";
@@ -15,6 +16,7 @@ import CreateRoutesModal from "./modals/CreateRoutesModal";
 import ShowRoutesModal from "./modals/ShowRoutesModal";
 import GenerateFlightsModal from "./modals/GenerateFlightsModal";
 import Loading from "../../../components/Loading";
+import FlightsTableModal from "./modals/FlightsTableModal";
 
 // eslint-disable-next-line react/prop-types
 const AdminFlightsAndRoutes = ({ addAlert }) => {
@@ -22,6 +24,7 @@ const AdminFlightsAndRoutes = ({ addAlert }) => {
   const [events, setEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [flightsTable, setFlightsTable] = useState([])
 
   useEffect(() => {
     const fetchFlights = async () => {
@@ -34,16 +37,20 @@ const AdminFlightsAndRoutes = ({ addAlert }) => {
           end: new Date(flight.arrival_date),
           flightDetails: flight,
         }));
+  
         setEvents(formattedEvents);
+        setFlightsTable(flightsData);
       } catch (error) {
         console.error("Error fetching flights:", error);
       } finally {
         setLoading(false);
       }
     };
-
+  
     fetchFlights();
   }, []);
+  
+  const memoizedFlightsData = useMemo(() => flightsTable, [loading]);
 
   const openDetailsModal = () => {
     const modal = document.getElementById("FlightDetails");
@@ -100,6 +107,19 @@ const AdminFlightsAndRoutes = ({ addAlert }) => {
           <ShowRoutesModal addAlert={addAlert}/>
         </div>
       </dialog>
+
+      <dialog id="FlightsTable" className="modal">
+        <div className="modal-box w-11/12 max-w-5xl bg-white">
+          <form method="dialog">
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2  text-black">
+              ✕
+            </button>
+          </form>
+          <FlightsTableModal addAlert={addAlert} flightsData={memoizedFlightsData} />
+        </div>
+      </dialog>
+
+
 
       <dialog id="FlightDetails" className="modal">
         <div className="modal-box bg-white">
@@ -214,6 +234,14 @@ const AdminFlightsAndRoutes = ({ addAlert }) => {
             >
               <GenerateFlightIcon className="w-6 h-6" />
               Generate Flights
+            </button>
+            <div className="divider divider-horizontal divider-secondary"></div>
+            <button
+              className="btn join-item btn-accent text-secondary self-center"
+              onClick={() => document.getElementById("FlightsTable").showModal()}
+            >
+              <DataTableIcon className="w-6 h-6" />
+              Flights Table
             </button>
           </div>
 

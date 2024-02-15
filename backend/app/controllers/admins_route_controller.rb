@@ -1,6 +1,6 @@
 class AdminsRouteController < ApplicationController
-  # before_action :authenticate_user!
-  # before_action :require_admin
+  before_action :authenticate_user!
+  before_action :require_admin
   def index
     @routes = Route.all
     render json: @routes
