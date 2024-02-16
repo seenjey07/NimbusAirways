@@ -14,7 +14,7 @@ Devise.setup do |config|
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  # config.secret_key = 'ab9c5b5c9d2d0feb7f1df0be08094921770597e135799420e1104ffeadab51f69bff6d988937aa5fa2ce1978e4b46b0b1d7ec8726678b8340ea5e780769dc40e'
+  # config.secret_key = '8d8c50e579835fb1fe4963ffe7ff025d930cfbf131d0fcb2d1443196c0c888c45b44b013752a632b5fa2843c88f20363aa33cfe486c2783531a01635d4474689'
 
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
@@ -24,7 +24,7 @@ Devise.setup do |config|
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'
+  config.mailer_sender = 'nimbusairways@gmail.com'
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
@@ -126,7 +126,7 @@ Devise.setup do |config|
   config.stretches = Rails.env.test? ? 1 : 12
 
   # Set up a pepper to generate the hashed password.
-  # config.pepper = '22019aa59a57957546014505d9ae1541b08e19e8e680f91451fdfa8a253f542e112f42bc5244fdb0914326058fa3cd6c86a8a0df4fa337fd1facf297dc13fe6e'
+  # config.pepper = '9b77ea57d34f618840ac66cd055f04dcccda133afb3bd093dda3af8077e67a23deb5463c03767b0d9717b403ef9c952e3861226cf8deb312cfa5f975d3613923'
 
   # Send a notification to the original email when the user's email is changed.
   # config.send_email_changed_notification = false
@@ -219,7 +219,7 @@ Devise.setup do |config|
   # ==> Configuration for :recoverable
   #
   # Defines which key will be used when recovering the password for an account
-  # config.reset_password_keys = [:email]
+  config.reset_password_keys = [:email]
 
   # Time interval you can reset your password with a reset password key.
   # Don't put a too small interval or your users won't have the time to
@@ -309,15 +309,15 @@ Devise.setup do |config|
 
   # When set to false, does not sign a user in automatically after their password is
   # changed. Defaults to true, so a user is signed in automatically after changing a password.
-  # config.sign_in_after_change_password = true
-  config.jwt do |jwt|
-    jwt.secret = Rails.application.credentials.fetch(:secret_key_base)
-    jwt.dispatch_requests = [
-      ['POST', %r{^/login$}]
-    ]
-    jwt.revocation_requests = [
-      ['DELETE', %r{^/logout$}]
-    ]
-    jwt.expiration_time = 120.minutes.to_i
+  # config.sign_in_after_change_password = true  config.jwt do |jwt|
+    config.jwt do |jwt|
+      jwt.secret = Rails.application.credentials.fetch(:secret_key_base)
+      jwt.dispatch_requests = [
+        ['POST', %r{^/login$}]
+      ]
+      jwt.revocation_requests = [
+        ['DELETE', %r{^/logout$}]
+      ]
+      jwt.expiration_time = 120.minutes.to_i
+    end
   end
-end

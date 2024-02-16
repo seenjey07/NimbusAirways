@@ -11,6 +11,7 @@ import ContactUs from "./pages/home/ContactUs";
 import UserDashboardRoutes from "./layouts/router/UserDashboardRoutes";
 import FlightsSearchComponent from "./pages/user/FlightsSearch";
 import GenerateFlightsModal from "./pages/admin/dashboard/modals/GenerateFlightsModal";
+import ResetPasswordForm from "./pages/home/ResetPassword";
 function App() {
   // eslint-disable-next-line no-unused-vars
 
@@ -43,6 +44,11 @@ function App() {
             element={<FlightsSearchComponent addAlert={addAlert} />}
           />
           <Route path="test" element={<GenerateFlightsModal />} />
+          <Route
+            path="password/edit/*"
+            element={<ResetPasswordForm />}
+            addAlert={addAlert}
+          />
         </Routes>
       </BrowserRouter>
     </>

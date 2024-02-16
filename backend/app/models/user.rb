@@ -3,7 +3,7 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable,
+         :recoverable, :rememberable, :validatable, :confirmable,
          :jwt_authenticatable, jwt_revocation_strategy: self
 
   has_many :bookings
@@ -20,6 +20,23 @@ class User < ApplicationRecord
 
   after_create :assign_default_role, :set_travel_fund
 
+  def generate_password_token!
+    self.reset_password_token = SecureRandom.urlsafe_base64
+    self.reset_password_sent_at = Time.now.utc
+    save!
+  end
+
+
+   def password_token_valid?
+    (self.reset_password_sent_at + 4.hours) > Time.now.utc
+   end
+
+   def reset_password!(password)
+    self.reset_password_token = nil
+    self.password = password
+    save!
+   end
+
   private
 
   def assign_default_role
@@ -29,5 +46,9 @@ class User < ApplicationRecord
   def set_travel_fund
     update_column(:travel_fund, 0)
   end
+
+  def generate_token
+    SecureRandom.hex(10)
+   end
 
 end
