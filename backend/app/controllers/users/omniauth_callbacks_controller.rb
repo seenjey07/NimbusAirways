@@ -27,4 +27,14 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   # def after_omniauth_failure_path_for(scope)
   #   super(scope)
   # end
+
+  def github
+    @user = User.from_omniauth(request.env['omniauth.auth'])
+
+    if @user.persisted?
+      render json: { user: @user, message: 'Successfully authenticated with GitHub' }
+    else
+      render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
 end
