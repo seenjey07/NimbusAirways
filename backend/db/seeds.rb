@@ -8,39 +8,39 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 # Seed data for bookings table
-require 'json'
-puts "Importing Routes data..."
-json_data = File.read(Rails.root.join('data/routesdata.json'))
-routesdata = JSON.parse(json_data)
-routesdata.each do |route|
-  Route.create(route)
-end
-puts "Routes Data successfuly imported"
+# require 'json'
+# puts "Importing Routes data..."
+# json_data = File.read(Rails.root.join('data/routesdata.json'))
+# routesdata = JSON.parse(json_data)
+# routesdata.each do |route|
+#   Route.create(route)
+# end
+# puts "Routes Data successfuly imported"
 
-require 'json'
-puts "Importing Aircraft data..."
-json_data = File.read(Rails.root.join('data/aircraftsdata.json'))
-aircraftsdata = JSON.parse(json_data)
-aircraftsdata.each do |aircraft|
-  Aircraft.create(aircraft)
-end
-puts "Aircraft Data successfuly imported"
+# require 'json'
+# puts "Importing Aircraft data..."
+# json_data = File.read(Rails.root.join('data/aircraftsdata.json'))
+# aircraftsdata = JSON.parse(json_data)
+# aircraftsdata.each do |aircraft|
+#   Aircraft.create(aircraft)
+# end
+# puts "Aircraft Data successfuly imported"
 
-puts "Importing Users data"
-json_data = File.read(Rails.root.join('data/usersdata.json'))
-usersdata = JSON.parse(json_data)
-usersdata.each do |user|
-  User.create(user)
-end
-puts "Users Data successfuly imported"
+# puts "Importing Users data"
+# json_data = File.read(Rails.root.join('data/usersdata.json'))
+# usersdata = JSON.parse(json_data)
+# usersdata.each do |user|
+#   User.create(user)
+# end
+# puts "Users Data successfuly imported"
 
-puts "Importing all flights from February to March 2024 kapit lang WSL... Kape muna..."
-json_data = File.read(Rails.root.join('data/febmarflightsdata.json'))
-flightsdata = JSON.parse(json_data)
-flightsdata.each do |flight|
-  Flight.create(flight)
-end
-puts "Flight Data successfuly imported"
+# puts "Importing all flights from February to March 2024 kapit lang WSL... Kape muna..."
+# json_data = File.read(Rails.root.join('data/febmarflightsdata.json'))
+# flightsdata = JSON.parse(json_data)
+# flightsdata.each do |flight|
+#   Flight.create(flight)
+# end
+# puts "Flight Data successfuly imported"
 
 
 
@@ -427,15 +427,30 @@ puts "Flight Data successfuly imported"
 
 # ################################################END OF FLIGHT GENERATION HERE ################################################
 
+# User.create!(
+#   first_name: "Super",
+#   last_name: "Admin",
+#   email: "admin@nimbusairways.com",
+#   password: "password123",
+#   role: "superadmin",
+#   birth_date: Date.new(1980, 1, 1),
+#   phone_number: "1234567890",
+#   gender: "Male",
+#   travel_fund: 0.00
+# )
+# puts "SuperAdmin successfully created!"
+
 User.create!(
   first_name: "Super",
   last_name: "Admin",
-  email: "admin@nimbusairways.com",
-  password: "password123",
+  email: "1@test.com",
+  password: "123456",
   role: "superadmin",
   birth_date: Date.new(1980, 1, 1),
-  phone_number: "1234567890",
+  phone_number: "1541234120",
   gender: "Male",
-  travel_fund: 0.00
+  travel_fund: 0.00,
+  confirmed_at: Time.now
 )
-puts "SuperAdmin successfully created!"
+
+puts "SuperAdmin successfully created with confirmed_at set to today!"

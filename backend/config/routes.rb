@@ -2,13 +2,22 @@ Rails.application.routes.draw do
   devise_for :users, path: '', path_names: {
     sign_in: 'login',
     sign_out: 'logout',
-    registration: 'signup'
+    registration: 'signup',
+    password: 'password'
   },
   controllers: {
     sessions: 'users/sessions',
-    registrations: 'users/registrations'
+    registrations: 'users/registrations',
+    confirmations: 'users/confirmations',
+    passwords: 'users/passwords'
   }
 ########################### USER ROUTES #########################################
+    # post 'password/forgot', to: 'users/passwords#forgot'
+
+  devise_scope :user do
+    post 'password/reset', to: 'users/passwords#reset'
+  end
+
     get 'api/routes', to: 'routes#index'
 
     get 'api/flights', to: 'flights#index'
