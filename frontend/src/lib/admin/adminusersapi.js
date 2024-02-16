@@ -163,3 +163,12 @@ export const adminGenerateFlightsApi = async (formData) => {
     return Promise.reject(error);
   }
 };
+
+export const adminConfirmEmailApi = async (id) => {
+  try {
+    const response = await axios.post(`${backendBaseUrl}/admin/users/${id}/confirm`);
+    return response.data;
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};

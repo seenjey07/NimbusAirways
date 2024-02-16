@@ -1,7 +1,7 @@
 class AdminsUserController < ApplicationController
   before_action :authenticate_user!
   before_action :require_admin
-  before_action :set_user, only: [:show, :update, :destroy]
+  before_action :set_user, only: [:show, :update, :destroy, :confirm_email]
 
   def index
     @users = User.all
@@ -9,7 +9,7 @@ class AdminsUserController < ApplicationController
   end
 
   def show
-    render json: @user
+    render json: @user.as_json.merge(confirmed_at: @user.confirmed_at)
   end
 
   def create
@@ -41,6 +41,16 @@ end
     @user.destroy
     render json: { message: 'User was successfully deleted.' }
   end
+
+  def confirm_email
+    if @user.update(confirmed_at: Time.now)
+      render json: @user, status: :ok
+    else
+      render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
+
 
   private
 

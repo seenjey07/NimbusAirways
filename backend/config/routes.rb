@@ -47,6 +47,7 @@ Rails.application.routes.draw do
   get '/admin/users/:id', to: 'admins_user#show'
   delete '/admin/users/:id', to: 'admins_user#destroy'
   post '/admin/users', to: 'admins_user#create'
+  post '/admin/users/:id/confirm', to: 'admins_user#confirm_email'
   put '/admin/users/:id', to: 'admins_user#update'
   get '/admin', to: 'admins#check_authorization'
 
