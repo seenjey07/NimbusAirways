@@ -46,8 +46,8 @@ function App() {
           <Route path="test" element={<GenerateFlightsModal />} />
           <Route
             path="password/edit/*"
-            element={<ResetPasswordForm />}
-            addAlert={addAlert}
+            element={<ResetPasswordForm addAlert={addAlert} />}
+            
           />
         </Routes>
       </BrowserRouter>

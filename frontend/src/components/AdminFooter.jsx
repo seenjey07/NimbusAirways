@@ -31,14 +31,14 @@ const AdminFooter = () => {
             className="link link-hover font-sans text-[9px]"
             href="https://github.com/andradajus"
           >
-            Justin Andrada
+            Justin Marcus Andrada
           </a>
           |
           <a
             className="link link-hover font-sans text-[9px]"
             href="https://github.com/seenjey07"
           >
-            Christine Rosales
+            Christine Joy Rosales
           </a>
         </div>
       </div>
