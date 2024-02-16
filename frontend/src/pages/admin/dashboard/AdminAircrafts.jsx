@@ -46,9 +46,7 @@ const AdminAircrafts = ({addAlert}) => {
                 <CreateAircraftModal addAlert={addAlert}  setIsCreateModalOpen={setIsCreateModalOpen} isCreateModalOpen={isCreateModalOpen} />
             </div>
         </dialog>
-
-        
-        
+ 
         <div>
             <div className="mt-4 flex overflow-auto">
                 <div className="flex">
