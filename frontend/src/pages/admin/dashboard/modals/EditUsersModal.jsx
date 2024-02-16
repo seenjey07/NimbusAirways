@@ -1,4 +1,4 @@
-import { adminUpdateUserApi, adminShowUserApi } from "../../../../lib/admin/adminusersapi"
+import { adminUpdateUserApi, adminShowUserApi, adminConfirmEmailApi } from "../../../../lib/admin/adminusersapi"
 import { useState, useEffect } from "react";
 // eslint-disable-next-line react/prop-types
 const EditUsersModal = ({addAlert, selectedUserId, isEditModalOpen, setIsEditModalOpen} ) => {
@@ -12,32 +12,33 @@ const EditUsersModal = ({addAlert, selectedUserId, isEditModalOpen, setIsEditMod
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [role, setRole] = useState('');
+  const [confirmed, setConfirmed] = useState('');
 
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await adminShowUserApi(selectedUserId);
-        setFirstName(response.first_name || '');
-        setMiddleName(response.middle_name || '');
-        setLastName(response.last_name || '');
-        setBirthDate(response.birth_date || '');
-        setPhoneNumber(response.phone_number || '');
-        setEmail(response.email || '');
-        setGender(response.gender || '');
-        setRole(response.role || '');
-
-        console.log("User Data:", response);
-        console.log("ID Check", selectedUserId);
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-      }
-    };
-
     if (isEditModalOpen) {
       fetchUserData();
     }
   }, [isEditModalOpen, selectedUserId]);
+
+  const fetchUserData = async () => {
+    try {
+      const response = await adminShowUserApi(selectedUserId);
+      setFirstName(response.first_name || '');
+      setMiddleName(response.middle_name || '');
+      setLastName(response.last_name || '');
+      setBirthDate(response.birth_date || '');
+      setPhoneNumber(response.phone_number || '');
+      setEmail(response.email || '');
+      setGender(response.gender || '');
+      setRole(response.role || '');
+      setConfirmed(response.confirmed_at || '');
+      console.log("User Data:", response);
+      console.log("ID Check", selectedUserId);
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -67,6 +68,18 @@ const EditUsersModal = ({addAlert, selectedUserId, isEditModalOpen, setIsEditMod
     }
   };
 
+  const handleConfirmEmail = async (event) => {
+    event.preventDefault();
+      try {
+        const response = await adminConfirmEmailApi(selectedUserId);
+        addAlert('success', 'Email Confirmation successful');
+        fetchUserData()
+        console.log('Email Confirmation successful:', response);
+    } catch (error) {
+      addAlert('error', error.response?.data?.errors || 'Error updating user');
+      console.error('Error updating user:', error);
+    }
+  };
     return (
     <>     
         <form className="card-body" onSubmit={handleSubmit}>
@@ -230,7 +243,19 @@ const EditUsersModal = ({addAlert, selectedUserId, isEditModalOpen, setIsEditMod
               <option value="Admin">Admin</option>
             </select>
           </label>
+          <div className="flex flex-col justify-center  ml-5">
+            <span className="text-secondary text-xs text-center">Override Email Confirmation</span>
+            <button 
+            className="btn btn-primary"
+            onClick={handleConfirmEmail}
+            disabled={confirmed !== "" ? true : false}
+            >
+              Confirm Email
+            </button>
+          </div>
         </div>
+
+
 
         <div className="card-actions justify-center mt-12">
           <button className="btn btn-secondary" type="submit">
