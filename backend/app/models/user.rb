@@ -2,9 +2,10 @@ class User < ApplicationRecord
   include Devise::JWT::RevocationStrategies::JTIMatcher
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable, :confirmable,
-         :jwt_authenticatable, jwt_revocation_strategy: self
+  devise :database_authenticatable, :registerable, :omniauthable,
+
+          :recoverable, :rememberable, :validatable, :confirmable,
+          :jwt_authenticatable, jwt_revocation_strategy: self
 
   has_many :bookings
   has_many :passengers
@@ -20,6 +21,17 @@ class User < ApplicationRecord
 
   after_create :assign_default_role, :set_travel_fund
 
+  def self.from_omniauth(access_token)
+    data = access_token.info
+    user = User.where(email: data['email']).first
+     unless user
+        user = User.create(
+           email: data['email'],
+           password: Devise.friendly_token[0,20]
+        )
+    end
+    user
+  end
   def generate_password_token!
     self.reset_password_token = SecureRandom.urlsafe_base64
     self.reset_password_sent_at = Time.now.utc

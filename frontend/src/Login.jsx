@@ -1,16 +1,36 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import LoginImage from "./assets/LoginImage.jpg";
 import axios from "axios";
 import ForgotPasswordModal from "./components/ForgotPasswordModal";
+import LoginOAuth2 from '@okteto/react-oauth2-login';
+import { v4 as uuidv4 } from 'uuid';
+
 
 // eslint-disable-next-line react/prop-types
 const Login = ({ addAlert }) => {
   const backendBaseUrl = import.meta.env.VITE_BACKEND_BASE_URL;
+  const gitHubClient = import.meta.env.VITE_GITHUB_CLIENT_ID 
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [state, setState] = useState();
+  const [token, setToken] = useState()
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const generateState = () => {
+      const newState = uuidv4();
+      const csrfToken = document.querySelector(
+        'meta[name="csrf-token"]'
+      ).content;
+      setToken(csrfToken);
+      setState(newState);
+
+      return newState;
+    };
+    generateState();
+  }, []); 
+  
   const handleLogin = async (event) => {
     event.preventDefault();
     const user = {
@@ -56,11 +76,12 @@ const Login = ({ addAlert }) => {
       const axiosConfig = {
         headers: {
           "X-CSRF-Token": csrfToken,
+          "Content-Type": "application/json",
         },
       };
 
-      const response = await axios.get(
-        `${backendBaseUrl}/auth/github/callback`,
+      const response = await axios.post(
+        `https://github.com/login/oauth/authorize`,
         axiosConfig
       );
 
@@ -189,19 +210,27 @@ const Login = ({ addAlert }) => {
                 />
                 <span>Login with Google</span>
               </button>
-
-              <button
-                onClick={handleLoginWithGithub}
-                className="btn btn-secondary"
+              <LoginOAuth2
+              provider="github"
+              clientId={gitHubClient}
+              X-CSRF-Token={token}
+              state={state}
+              authorizeUri="https://github.com/login/oauth/authorize"
+              onSuccess={handleLoginWithGithub}
               >
-                <img
-                  className="w-6 h-6"
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Octicons-mark-github.svg/600px-Octicons-mark-github.svg.png"
-                  loading="lazy"
-                  alt="google logo"
-                />
-                <span>Login with Github</span>
-              </button>
+                <button
+                  // onSuccess={handleLoginWithGithub}
+                  className="btn btn-secondary w-full"
+                >
+                  <img
+                    className="w-6 h-6"
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Octicons-mark-github.svg/600px-Octicons-mark-github.svg.png"
+                    loading="lazy"
+                    alt="google logo"
+                  />
+                  <span>Login with Github</span>
+                </button>
+              </LoginOAuth2>
             </div>
             <div className="flex justify-center mb-3">
               <label className="label">
