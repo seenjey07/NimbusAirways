@@ -70,7 +70,9 @@ Rails.application.routes.draw do
   get '/admin/bookings/:id', to: 'admins_booking#index'
 
   get '/admin/aircrafts', to: 'admins_aircraft#index'
+  get '/admin/aircrafts/:id/flights', to: 'admins_aircraft#index_flights_by_aircraft'
   post '/admin/aircrafts', to: 'admins_aircraft#create'
+
   delete '/admin/aircrafts/:id', to: 'admins_aircraft#destroy'
 
   get '/admin/passengers', to: 'admins#index_passengers'

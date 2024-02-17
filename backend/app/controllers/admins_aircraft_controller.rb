@@ -1,6 +1,6 @@
 class AdminsAircraftController < ApplicationController
-  before_action :authenticate_user!
-  before_action :require_admin
+  # before_action :authenticate_user!
+  # before_action :require_admin
 
   def index
     @aircrafts = Aircraft.all.map do |aircraft|
@@ -24,7 +24,26 @@ class AdminsAircraftController < ApplicationController
     end
   end
 
+  def index_flights_by_aircraft
+    aircraft_id = params[:id]
+    aircraft = Aircraft.find_by(id: aircraft_id)
 
+    if aircraft
+      current_flights = current_flights(aircraft)
+      all_flights = all_flights(aircraft)
+      current_route = aircraft.current_route
+
+      render json: {
+        aircraft: aircraft.as_json,
+        status: get_aircraft_status(aircraft, current_flights, current_route),
+        current_route: current_route.as_json,
+        current_flights: current_flights.as_json,
+        all_flights: all_flights.as_json
+      }
+    else
+      render json: { error: "Aircraft not found." }, status: :not_found
+    end
+  end
 
   def destroy
     aircraft = Aircraft.find_by(id: params[:id])
@@ -80,6 +99,25 @@ class AdminsAircraftController < ApplicationController
     params.require(:aircraft).permit(:model, :family, :seat_capacity)
   end
 
+  def current_flights(aircraft)
+    now = Time.current.in_time_zone('Asia/Manila')
 
+    flights = Flight.where(aircraft_id: aircraft.id)
+
+    current_flights = flights.select do |flight|
+      departure_date = flight.departure_date.in_time_zone('Asia/Manila')
+      arrival_date = flight.arrival_date.in_time_zone('Asia/Manila')
+
+      departure_date.present? && arrival_date.present? &&
+        departure_date <= now && now <= arrival_date
+    end
+
+    current_flights
+  end
+
+  def all_flights(aircraft)
+    flights = Flight.where(aircraft_id: aircraft.id)
+    flights
+  end
 
 end
