@@ -5,7 +5,7 @@ import SeatLayoutATR72 from "../../../components/SeatLayoutATR72";
 import SeatLayoutA320neo from "../../../components/SeatLayoutA320neo";
 import Loading from "../../../components/Loading"
 // eslint-disable-next-line react/prop-types
-const SeatSelection = ({onSeatSelect}) => {
+const SeatSelection = ({onSeatSelect, modalFlag}) => {
   const [selectedSeat, setSelectedSeat] = useState(null);
   const [aircraft, setAircraft] = useState(null);
   const flight_id = localStorage.getItem('selected_flight_id');
@@ -36,7 +36,7 @@ const SeatSelection = ({onSeatSelect}) => {
     };
 
     fetchData();
-  }, [flight_id, aircraft?.model]);
+  }, [modalFlag,flight_id, aircraft?.model]);
 
   if (loading) {
     return <Loading />;
@@ -77,31 +77,36 @@ const SeatSelection = ({onSeatSelect}) => {
             </div>
 
             <div>
-            {aircraft?.model === "A220-100" && (
-              <>
-                <span className="flex justify-center font-bold">WINDOW</span>
-                <SeatLayoutA220_100 selectedSeat={selectedSeat} onSeatClick={handleSeatClick} />
-                <span className="flex justify-center font-bold">WINDOW</span>
-              </>
-            )}
+              {loading ? (
+                <Loading /> 
+              ) : (
+                <>
+                  {aircraft?.model === "A220-100" && (
+                    <>
+                      <span className="flex justify-center font-bold">WINDOW</span>
+                      <SeatLayoutA220_100 selectedSeat={selectedSeat} onSeatClick={handleSeatClick} />
+                      <span className="flex justify-center font-bold">WINDOW</span>
+                    </>
+                  )}
 
-            {aircraft?.model === "ATR 72-600" && (
-              <>
-                <span className="flex justify-center font-bold">WINDOW</span>
-                <SeatLayoutATR72 selectedSeat={selectedSeat} onSeatClick={handleSeatClick} />
-                <span className="flex justify-center font-bold">WINDOW</span>
-              </>
-            )}
+                  {aircraft?.model === "ATR 72-600" && (
+                    <>
+                      <span className="flex justify-center font-bold">WINDOW</span>
+                      <SeatLayoutATR72 selectedSeat={selectedSeat} onSeatClick={handleSeatClick} />
+                      <span className="flex justify-center font-bold">WINDOW</span>
+                    </>
+                  )}
 
-              {aircraft?.model === "A320neo" && (
-              <>
-                <span className="flex justify-center font-bold">WINDOW</span>
-                <SeatLayoutA320neo selectedSeat={selectedSeat} onSeatClick={handleSeatClick} />
-                <span className="flex justify-center font-bold">WINDOW</span>
-              </>
-            )}
-          </div>
-
+                  {aircraft?.model === "A320neo" && (
+                    <>
+                      <span className="flex justify-center font-bold">WINDOW</span>
+                      <SeatLayoutA320neo selectedSeat={selectedSeat} onSeatClick={handleSeatClick} />
+                      <span className="flex justify-center font-bold">WINDOW</span>
+                    </>
+                  )}
+                </>
+              )}
+            </div>
 
 
         </div>

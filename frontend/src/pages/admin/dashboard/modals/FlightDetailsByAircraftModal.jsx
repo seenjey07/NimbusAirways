@@ -2,6 +2,8 @@ import { adminFlightDetailsByAircraftApi } from "../../../../lib/admin/adminuser
 import { useState, useEffect } from "react";
 import Loading from "../../../../components/Loading"
 import { format } from "date-fns";
+import SeatSelection from "../../../../pages/user/Dashboard/SeatSelection"
+import { SeatIcon } from "../../../../components/icons/icons"
 // eslint-disable-next-line react/prop-types
 const FlightDetailsByAircraftModal = ({aircraftId}) => {
     const [flightData, setFlightData] = useState({
@@ -14,7 +16,8 @@ const FlightDetailsByAircraftModal = ({aircraftId}) => {
     const [isLoading, setIsLoading] = useState(true)
     const [searchQuery, setSearchQuery] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
-    const flightsPerPage = 10;
+    const flightsPerPage = 6;
+    const [modalFlag, setModalFlag] = useState(false)
     
     useEffect(() => {
         const fetchFlights = async () => {
@@ -37,6 +40,20 @@ const FlightDetailsByAircraftModal = ({aircraftId}) => {
         };
         fetchFlights();
       }, [aircraftId]);
+
+      const handleSeatModalClose = () => {
+        document.getElementById('seat').close()
+        localStorage.removeItem('updatedSeatDataArray');
+        localStorage.removeItem('selected_flight_id');
+        localStorage.removeItem('total');
+        setModalFlag(false)
+      }
+
+      const handleSeatModalOpen = (flight_id) => {
+        localStorage.setItem("selected_flight_id", flight_id);
+        document.getElementById('seat').showModal();
+        setModalFlag(true)
+      };
 
     const filteredFlights = flightData.all_flights.filter((flight) =>
     flight.flight_number.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -89,7 +106,17 @@ const FlightDetailsByAircraftModal = ({aircraftId}) => {
                                 <td>{flight.flight_number}</td>
                                 <td>{format(new Date(flight.departure_date), 'MMMM dd, yyyy hh:mm a')}</td>
                                 <td>{format(new Date(flight.arrival_date), 'MMMM dd, yyyy hh:mm a')}</td>
-                                <td>{flight.available_seats}</td>
+                                
+                                <td 
+                                className="cursor-pointer hover:secondary"
+                                onClick={() => handleSeatModalOpen(flight.id)}
+                                >
+                                
+                                <button className="btn btn-primary">
+                                <SeatIcon className="w-5 h-5" />
+                                {flight.available_seats}
+                                </button>
+                                </td>
                             </tr>
                             ))}
                         </tbody>
@@ -120,6 +147,18 @@ const FlightDetailsByAircraftModal = ({aircraftId}) => {
                     </div>
                 </div>
             )}
+            <dialog id="seat" className="modal">
+            <div className="modal-box w-11/12 max-w-7xl bg-white">
+                <SeatSelection modalFlag={modalFlag} />
+            </div>
+            <form method="dialog" className="modal-backdrop">
+                <button
+                onClick={handleSeatModalClose}
+                >close</button>
+            </form>
+            </dialog>
+            
+            
         </>
     )
 }
