@@ -45,11 +45,11 @@ class AdminsAircraftController < ApplicationController
   end
 
   def get_aircraft_status(aircraft, flights, current_route)
-    now = Time.current
+    now = Time.current.in_time_zone('Asia/Manila')
 
     current_flight = flights.find do |flight|
-      departure_date = flight["departure_date"]
-      arrival_date = flight["arrival_date"]
+      departure_date = flight["departure_date"].in_time_zone('Asia/Manila')
+      arrival_date = flight["arrival_date"].in_time_zone('Asia/Manila')
 
       if departure_date.present? && arrival_date.present?
         departure_date <= now && now <= arrival_date
@@ -58,26 +58,23 @@ class AdminsAircraftController < ApplicationController
       end
     end
 
-    if current_flight.nil?
-      return "inactive"
-    end
+    return "inactive" if current_flight.nil?
+    return "on air" if now >= current_flight["departure_date"] - 10.minutes && now <= current_flight["arrival_date"] - 10.minutes
+    return "taking off" if now >= current_flight["departure_date"] && now <= current_flight["departure_date"] + 10.minutes
+    return "landing" if now >= current_flight["arrival_date"] - 10.minutes && now <= current_flight["arrival_date"]
 
-    if current_flight["departure_date"] <= now && now <= current_flight["arrival_date"]
-      return "on air"
-    end
+    next_flight = flights.select { |flight| flight["departure_date"] > current_flight["arrival_date"] }
+                        .min_by { |flight| flight["departure_date"] }
 
-    arrival_date_with_buffer = current_flight["arrival_date"] + 20.minutes
-    if now <= arrival_date_with_buffer
-      return "idle"
-    end
+    puts "Current Flight Arrival: #{current_flight["arrival_date"]}" if current_flight
+    puts "Next Flight Departure: #{next_flight["departure_date"]}" if next_flight
 
-    landing_window_start = current_flight["arrival_date"] - 10.minutes
-    if now >= landing_window_start
-      return "landing"
-    end
+    return "boarding" if next_flight && now <= next_flight["departure_date"] - 10.minutes
+    return "idle" if current_flight && next_flight && now >= current_flight["arrival_date"] + 11.minutes && now <= next_flight["departure_date"] - 2.hours
 
-    return "inactive"
+    "inactive"
   end
+
 
   def aircraft_params
     params.require(:aircraft).permit(:model, :family, :seat_capacity)

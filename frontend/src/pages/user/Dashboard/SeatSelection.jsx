@@ -44,7 +44,7 @@ const SeatSelection = ({onSeatSelect}) => {
 
   return (
     <>
-      <h1 className="flex justify-center text-3xl font-semibold mb-8">Seat Selection</h1>
+      <h1 className="flex justify-center text-3xl font-semibold mb-8">Seat Selection for {aircraft?.model}</h1>
       <div className="bg-white flex justify-center">
           <div className="flex">
             <div>
