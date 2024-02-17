@@ -55,11 +55,14 @@ class FlightsController < ApplicationController
     end
 
     search_date = DateTime.parse(departure_date).to_date
-    flights = Flight.joins(:route).where(routes: { origin_location: origin_location, destination_location: destination_location })
-                      .where('DATE(departure_date) = ?', search_date)
+    flights = Flight.joins(:route)
+                    .where(routes: { origin_location: origin_location, destination_location: destination_location })
+                    .where("DATE(departure_date AT TIME ZONE 'UTC' AT TIME ZONE 'Asia/Manila') = ?", search_date)
+                    .where('flights.available_seats >= ?', 10)
 
-    render json: { flights: flights.collect { |flight| render_json(flight) } }
+    render json: { flights: flights.collect { |flight| render_json(flight) if flight.available_seats >= 10 } }
   end
+
 
   private
 
@@ -71,9 +74,12 @@ class FlightsController < ApplicationController
       arrival_date: flight.arrival_date,
       origin_location: flight.route.origin_location,
       destination_location: flight.route.destination_location,
+      available_seats: flight.available_seats,
       price: flight.route.price
     }
   end
+
+
 
   def render_json_with_aircraft(flight)
     {
