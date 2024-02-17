@@ -2,12 +2,14 @@ import { adminIndexAircraftsApi } from "../../../lib/admin/adminusersapi";
 import { useEffect, useState } from "react";
 import { CreateFlightIcon, CreateRouteIcon, Elipsis, AircraftDetailsIcon, FlightDetailsIcon, UpdateAircraftIcon } from "../../../components/icons/icons"
 import CreateAircraftModal from "./modals/CreateAircraftModal";
+import FlightDetailsByAircraftModal from "./modals/FlightDetailsByAircraftModal";
 import Loading from "../../../components/Loading"
 // eslint-disable-next-line react/prop-types
 const AdminAircrafts = ({addAlert}) => {
     const [aircrafts, setAircrafts] = useState([])
     const [loading, setLoading] = useState(true);
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+    const [aircraftId, setSelectedAircraftId] = useState()
 
     const fetchAircraftsData = async () => {
         try {
@@ -32,6 +34,11 @@ const AdminAircrafts = ({addAlert}) => {
     setIsCreateModalOpen(true)
     }
 
+    const showFlightsDetailModal = (aircraftId) => {
+    document.getElementById('FlightDetails').showModal()
+    setSelectedAircraftId(aircraftId)
+    }
+
     return (
     <>  
         <dialog id="CreateAircraft" className="modal">
@@ -44,6 +51,20 @@ const AdminAircrafts = ({addAlert}) => {
                 </button> 
             </form>
                 <CreateAircraftModal addAlert={addAlert}  setIsCreateModalOpen={setIsCreateModalOpen} isCreateModalOpen={isCreateModalOpen} />
+            </div>
+        </dialog>
+
+        <dialog id="FlightDetails" className="modal">
+            <div className="modal-box w-11/12 max-w-5xl bg-white">
+            <span className="flex justify-center text-2xl font-bold">Flight Details</span>
+            <form method="dialog">
+                <button 
+                className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-secondary"
+                >
+                ✕
+                </button> 
+            </form>
+                <FlightDetailsByAircraftModal addAlert={addAlert} aircraftId={aircraftId} />
             </div>
         </dialog>
  
@@ -125,7 +146,10 @@ const AdminAircrafts = ({addAlert}) => {
                                                 </div>
                                             </div>
                                             <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-accent text-secondary rounded-box w-52">
-                                                <li>   
+                                                <li
+                                                className="cursor-pointer"
+                                                onClick={() => showFlightsDetailModal(aircraft.id)}
+                                                >   
                                                     <a>
                                                         <FlightDetailsIcon />
                                                         Flight Details
