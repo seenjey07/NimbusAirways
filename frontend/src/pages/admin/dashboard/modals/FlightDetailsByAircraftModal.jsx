@@ -1,53 +1,123 @@
 import { adminFlightDetailsByAircraftApi } from "../../../../lib/admin/adminusersapi"
 import { useState, useEffect } from "react";
 import Loading from "../../../../components/Loading"
+import { format } from "date-fns";
 // eslint-disable-next-line react/prop-types
 const FlightDetailsByAircraftModal = ({aircraftId}) => {
-    const [flightData, setFlightData] = useState([]);
+    const [flightData, setFlightData] = useState({
+        aircraft: {},
+        status: "",
+        current_route: {},
+        current_flights: [],
+        all_flights: [],
+      });
     const [isLoading, setIsLoading] = useState(true)
+    const [searchQuery, setSearchQuery] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const flightsPerPage = 10;
     
     useEffect(() => {
-    const fetchRoutes = async () => {
-        try {
-        const response = await adminFlightDetailsByAircraftApi(aircraftId);
-        setFlightData(response);
-        setIsLoading(false);
-        console.log("hi flights modal", response);
-        } catch (error) {
-        console.error("Error fetching routes:", error);
-        }
-    };
+        const fetchFlights = async () => {
+          try {
+            const response = await adminFlightDetailsByAircraftApi(aircraftId);
+            setFlightData((prevFlightData) => ({
+              ...prevFlightData,
+              all_flights: response.all_flights,
+              current_route: response.current_route,
+              current_flights: response.current_flights,
+              aircraft: response.aircraft
+            }));
+            setIsLoading(false);
+            console.log("hi flights modal", response);
+            console.log("hi flights modal routes", response.current_route);
+          } catch (error) {
+            setIsLoading(false);
+            console.error("Error fetching flights:", error);
+          }
+        };
+        fetchFlights();
+      }, [aircraftId]);
 
-    fetchRoutes();
-    }, [aircraftId]);
+    const filteredFlights = flightData.all_flights.filter((flight) =>
+    flight.flight_number.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    flight.departure_date.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    flight.arrival_date.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
+    const indexOfLastFlight = currentPage * flightsPerPage;
+    const indexOfFirstFlight = indexOfLastFlight - flightsPerPage;
+    const currentFlights = filteredFlights.slice(indexOfFirstFlight, indexOfLastFlight);
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+    console.log('Flight data set by array', flightData)
     return (
         <>
             {isLoading ? (
                 <Loading />
-                ) : (
+            ) : (
                 <div className="overflow-x-auto bg-white">
-                <table className="table table-zebra">
-                    <thead>
-                    <tr>
-                        <th className="text-white font-bold">No.</th>
-                        <th className="text-white font-bold">Flight Number</th>
-                        <th className="text-white font-bold">Departure</th>
-                        <th className="text-white font-bold">Arrival</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {flightData.all_flights.map((flight, index) => (
-                        <tr key={index}>
-                        <th>{index + 1}</th>
-                        <td>{flight.flight_number}</td>
-                        <td>{flight.departure_date}</td>
-                        <td>{flight.arrival_date}</td>
-                        <td>{flight.route_id}</td>
-                        </tr>
-                    ))}
-                    </tbody>
-                </table>
+                    <div className="flex justify-between">
+                        <div className="flex">
+                        <input
+                            type="text"
+                            placeholder="Search by flight number or date"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="m-2 p-2 border border-gray-300 rounded placeholder:text-sm"
+                        />
+                        </div>
+                        <div className="flex text-black mt-6 text-xl">
+                        {flightData.current_route.destination_location} to {flightData.current_route.origin_location} | {flightData.current_route.origin_location} to {flightData.current_route.destination_location}
+                        </div>
+                    </div>
+
+                    {currentFlights.length > 0 ? (
+                        <table className="table table-zebra">
+                        <thead>
+                            <tr>
+                            <th className="text-black font-bold">No.</th>
+                            <th className="text-black font-bold">Flight Number</th>
+                            <th className="text-black font-bold">Departure</th>
+                            <th className="text-black font-bold">Arrival</th>
+                            <th className="text-black font-bold">Seats</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {currentFlights.map((flight, index) => (
+                            <tr key={index}>
+                                <th>{index + 1}</th>
+                                <td>{flight.flight_number}</td>
+                                <td>{format(new Date(flight.departure_date), 'MMMM dd, yyyy hh:mm a')}</td>
+                                <td>{format(new Date(flight.arrival_date), 'MMMM dd, yyyy hh:mm a')}</td>
+                                <td>{flight.available_seats}</td>
+                            </tr>
+                            ))}
+                        </tbody>
+                        </table>
+                    ) : (
+                        <p className="flex justify-center">No Flights Found</p>
+                    )}
+                    <div className="flex justify-center mt-2">
+                        <div className="join">
+                            {currentPage > 1 && (
+                            <button
+                                className="join-item btn btn-accent "
+                                onClick={() => paginate(currentPage - 1)}
+                            >
+                                «
+                            </button>
+                            )}
+                            <button className="join-item btn">{currentPage}</button>
+                            {currentPage < Math.ceil(filteredFlights.length / flightsPerPage) && (
+                            <button
+                                className="join-item btn btn-accent"
+                                onClick={() => paginate(currentPage + 1)}
+                            >
+                                »
+                            </button>
+                            )}
+                        </div>
+                    </div>
                 </div>
             )}
         </>
