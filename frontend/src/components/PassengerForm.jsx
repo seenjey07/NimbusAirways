@@ -62,7 +62,9 @@ const PassengerForm = ({ formFields, addAlert, handleSeatSelect, onInputChange, 
     <div className="flex place-items-center justify-center mt-4 ">
       <Drawer >
         <DrawerTrigger asChild>
+          <div>
           <button className="btn btn-primary">Open Seat Selection</button>
+          </div>
         </DrawerTrigger>
         <DrawerContent className="bg-white">
           <div>

@@ -109,6 +109,8 @@ const AdminAircrafts = ({addAlert}) => {
                                     className={`text-center text-xs font-bold rounded-lg hover:bg-slate-200 ${
                                         aircraft.status === 'inactive' ? 'bg-gray-500' : 
                                         aircraft.status === 'on air' ? 'bg-green-500' : 
+                                        aircraft.status === 'taking off' ? 'bg-purple-500' : 
+                                        aircraft.status === 'boarding' ? 'bg-blue-500' : 
                                         aircraft.status === 'idle' ? 'bg-yellow-500' : 
                                         aircraft.status === 'landing' ? 'bg-red-500' : ''
                                     }`}

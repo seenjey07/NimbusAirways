@@ -5,12 +5,15 @@ import axios from "axios";
 import ForgotPasswordModal from "./components/ForgotPasswordModal";
 import LoginOAuth2 from '@okteto/react-oauth2-login';
 import { v4 as uuidv4 } from 'uuid';
-
+import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
+import { csrfToken } from "./lib/utils"
 
 // eslint-disable-next-line react/prop-types
 const Login = ({ addAlert }) => {
   const backendBaseUrl = import.meta.env.VITE_BACKEND_BASE_URL;
   const gitHubClient = import.meta.env.VITE_GITHUB_CLIENT_ID 
+  const googleClient = import.meta.env.VITE_GOOGLE_CLIENT_ID 
+  const googleSecret = import.meta.env.VITE_GOOGLE_SECRET
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [state, setState] = useState();
@@ -54,7 +57,7 @@ const Login = ({ addAlert }) => {
       );
       const token = res.headers.authorization;
       const user_id = res.data.data;
-
+      console.log("login response", res);
       console.log("user_id", user_id);
       console.log("token", token);
       document.cookie = `token=${token};path=/`;
@@ -70,9 +73,6 @@ const Login = ({ addAlert }) => {
 
   const handleLoginWithGithub = async () => {
     try {
-      const csrfToken = document.querySelector(
-        'meta[name="csrf-token"]'
-      ).content;
       const axiosConfig = {
         headers: {
           "X-CSRF-Token": csrfToken,
@@ -85,9 +85,9 @@ const Login = ({ addAlert }) => {
         axiosConfig
       );
 
-      const githubOAuthUrl = response.data.githubLoginUrl;
+      const githubOAuthUrl = response
       console.log("GitHub OAuth URL:", githubOAuthUrl);
-      console.log("Github login", response.data);
+      console.log("Github login", response);
       window.location.href = githubOAuthUrl;
     } catch (error) {
       addAlert("error", "Login failed. Please try again");
@@ -112,6 +112,60 @@ const Login = ({ addAlert }) => {
 
   const handleSignUp = () => {
     navigate("/signup");
+  };
+
+  const handleSuccess = (response) => {
+    console.log('Google login successful:', response);
+    fetchEmail(response.credential);
+  };
+
+  // const sendToAnotherEndpoint = (email) => {
+
+  //   console.log('Sending email to another endpoint:', email);
+  //   axios.post(`'https://example.com/your/endpoint'`, { email })
+  //     .then((response) => {
+  //       console.log('Response from another endpoint:', response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error posting to another endpoint:', error);
+  //     });
+  // };
+
+  const fetchEmail = (accessToken) => {
+    console.log(accessToken, "AT on fetch")
+    axios.post("https://www.googleapis.com/oauth2/v4/token", 
+    {
+      "code": "Bearer" + " " + accessToken,
+      "client_id": googleClient,
+      "client_secret": googleSecret,
+      "redirect_uri": `${backendBaseUrl}/auth/google_oauth2/callback`,
+      "grant_type": "authorization_code",
+    }
+    )
+      .then(response => {
+        console.log('Login successful, backend response:', response);
+      })
+      .catch(error => {
+        console.error('Error exchanging authorization code:', error);
+      });
+  };
+
+
+  // const handleSuccess = (credentialResponse) => {
+  //   console.log(credentialResponse, "I AM RESPONSE FROM GOOGLE")
+  //   const authorizationCode = credentialResponse;
+  //   axios.post(`${backendBaseUrl}/auth/google_oauth2/callback`, { code: authorizationCode })
+  //     .then(response => {
+  //       console.log('Login successful, backend response:', response.data);
+  //     })
+  //     .catch(error => {
+  //       console.error('Error exchanging authorization code:', error);
+  //     });
+  // };
+
+
+  const handleError = (errorResponse) => {
+    console.error('Google login failed', errorResponse);
   };
 
   return (
@@ -195,21 +249,14 @@ const Login = ({ addAlert }) => {
                 </label>
               </div>
               <div className="form-control mt-6">
+
+
+
                 <button className="btn btn-secondary" onClick={handleLogin}>
                   Login
                 </button>
               </div>
               <div className="divider divider-secondary text-secondary">OR</div>
-
-              <button className="btn btn-secondary">
-                <img
-                  className="w-6 h-6"
-                  src="https://www.svgrepo.com/show/475656/google-color.svg"
-                  loading="lazy"
-                  alt="google logo"
-                />
-                <span>Login with Google</span>
-              </button>
               <LoginOAuth2
               provider="github"
               clientId={gitHubClient}
@@ -220,7 +267,7 @@ const Login = ({ addAlert }) => {
               >
                 <button
                   // onSuccess={handleLoginWithGithub}
-                  className="btn btn-secondary w-full"
+                  className="btn bg-white w-full"
                 >
                   <img
                     className="w-6 h-6"
@@ -231,6 +278,26 @@ const Login = ({ addAlert }) => {
                   <span>Login with Github</span>
                 </button>
               </LoginOAuth2>
+              
+              <GoogleOAuthProvider clientId={googleClient}>
+                <div className=" flex justify-center w-full">
+                  <GoogleLogin
+                  onSuccess={handleSuccess}
+                  onError={handleError}
+                  >
+                  {/* <button className="btn btn-secondary">
+                    <img
+                      className="w-6 h-6"
+                      src="https://www.svgrepo.com/show/475656/google-color.svg"
+                      loading="lazy"
+                      alt="google logo"
+                    />
+                    <span>Login with Google</span>
+                  </button> */}
+                  </GoogleLogin>
+                </div>
+              </GoogleOAuthProvider>
+
             </div>
             <div className="flex justify-center mb-3">
               <label className="label">

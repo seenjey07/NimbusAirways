@@ -91,8 +91,15 @@ const SeatLayoutA220_100 = ({ onSeatClick, selectedSeat }) => {
                         : null
                     }
                   >
-                    {!reservedSeats.includes(`${rowLetter}${index + 1}`) &&
-                      seatNumber}
+                    {!reservedSeats.includes(`${rowLetter}${index + 1}`) && (
+                      <div className="relative">
+                        <div
+                          className="absolute inset-0 bg-seat-icon bg-cover opacity-50"
+                          style={{ backgroundImage: 'url(https://api.iconify.design/material-symbols:airline-seat-recline-normal-sharp.svg)' }}
+                        />
+                        <div className="relative z-10 font-bold">{seatNumber}</div>
+                      </div>
+                    )}
                   </td>
                 );
               })}
