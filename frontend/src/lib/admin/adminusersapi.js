@@ -172,3 +172,12 @@ export const adminConfirmEmailApi = async (id) => {
     return Promise.reject(error);
   }
 };
+
+export const adminFlightDetailsByAircraftApi = async (id) => {
+  try {
+    const response = await axios.get(`${backendBaseUrl}/admin/aircrafts/${id}/flights`);
+    return response.data;
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
