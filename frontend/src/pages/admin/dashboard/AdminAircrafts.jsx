@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { CreateFlightIcon, CreateRouteIcon, Elipsis, AircraftDetailsIcon, FlightDetailsIcon, UpdateAircraftIcon } from "../../../components/icons/icons"
 import CreateAircraftModal from "./modals/CreateAircraftModal";
 import FlightDetailsByAircraftModal from "./modals/FlightDetailsByAircraftModal";
+import AircraftDetailsModal from "./modals/AircraftDetailsModal";
 import Loading from "../../../components/Loading"
 // eslint-disable-next-line react/prop-types
 const AdminAircrafts = ({addAlert}) => {
@@ -39,6 +40,11 @@ const AdminAircrafts = ({addAlert}) => {
     setSelectedAircraftId(aircraftId)
     }
 
+    const showAircraftDetailsModal = (aircraftId) => {
+    document.getElementById('AircraftDetails').showModal()
+    setSelectedAircraftId(aircraftId)
+    }
+
     return (
     <>  
         <dialog id="CreateAircraft" className="modal">
@@ -65,6 +71,20 @@ const AdminAircrafts = ({addAlert}) => {
                 </button> 
             </form>
                 <FlightDetailsByAircraftModal addAlert={addAlert} aircraftId={aircraftId} />
+            </div>
+        </dialog>
+
+        <dialog id="AircraftDetails" className="modal">
+            <div className="modal-box w-11/12 max-w-5xl bg-white">
+            <span className="flex justify-center text-2xl font-bold">Aircraft Details</span>
+            <form method="dialog">
+                <button 
+                className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-secondary"
+                >
+                ✕
+                </button> 
+            </form>
+                <AircraftDetailsModal aircraftId={aircraftId} />
             </div>
         </dialog>
  
@@ -155,12 +175,17 @@ const AdminAircrafts = ({addAlert}) => {
                                                         Flight Details
                                                     </a>
                                                 </li>
-                                                <li>
+
+                                                <li
+                                                className="cursor-pointer"
+                                                onClick={() => showAircraftDetailsModal(aircraft.id)}
+                                                >
                                                     <a>
                                                         <AircraftDetailsIcon />
                                                         Aircraft Details
                                                     </a>
                                                 </li>
+
                                                 <li>
                                                     <a>
                                                         <UpdateAircraftIcon />

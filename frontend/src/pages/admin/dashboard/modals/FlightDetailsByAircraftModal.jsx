@@ -84,7 +84,13 @@ const FlightDetailsByAircraftModal = ({aircraftId}) => {
                         />
                         </div>
                         <div className="flex text-black mt-6 text-xl">
-                        {flightData.current_route.destination_location} to {flightData.current_route.origin_location} | {flightData.current_route.origin_location} to {flightData.current_route.destination_location}
+                        {flightData.current_route ? (
+                            <>
+                            {flightData.current_route.destination_location} to {flightData.current_route.origin_location} | {flightData.current_route.origin_location} to {flightData.current_route.destination_location}
+                            </>
+                        ) : (
+                            "Not Assigned"
+                        )}
                         </div>
                     </div>
 
