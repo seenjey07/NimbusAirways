@@ -1,7 +1,7 @@
 import UserNavBar from "../components/UserNavBar";
-import Footer from ".././pages/home/footer";
 import { useEffect } from "react";
 import axios from "axios";
+import Footer from "../pages/home/footer";
 
 // eslint-disable-next-line react/prop-types
 const UserDashboardLayout = ({ addAlert, children }) => {
@@ -17,9 +17,10 @@ const UserDashboardLayout = ({ addAlert, children }) => {
   }, [addAlert]);
 
   return (
-    <div className="grid grid-rows-[auto_1fr_auto] h-screen bg-primary">
+
+    <div className="grid grid-rows-[auto_1fr_auto] w-full h-screen bg-white">
       <UserNavBar />
-      <main className="flex-grow">{children}</main>
+      <main className="flex-grow h-auto">{children}</main>
       <Footer />
     </div>
   );
