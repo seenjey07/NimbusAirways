@@ -173,8 +173,8 @@ export const aircraftOptions = [
   },
   {
     location: "Boracay",
-    ad: "Discover the cultural richness of Kalibo. Known for the colorful Ati-Atihan Festival, Kalibo offers a blend of lively celebrations, historical sites, and warm local hospitality.",
-    url: "https://gttp.imgix.net/392981/x/0/12-best-aklan-tourist-spots-boracay-island-beaches-nature-parks-7.jpg?auto=compress%2Cformat&ch=Width%2CDPR&dpr=1&ixlib=php-3.3.0&w=883"
+    ad: "Escape to Paradise: Immerse yourself in the pristine beauty of Boracay, where powdery white sands meet turquoise waters. Discover a tropical oasis with vibrant nightlife, water adventures, and breathtaking sunsets. Your unforgettable island retreat begins in Boracay!",
+    url: "https://a.cdn-hotels.com/gdcs/production152/d1031/c11cf3af-ceac-485d-89ad-ab09a8bc97ce.jpg?impolicy=fcrop&w=1600&h=1066&q=medium"
   },
   {
     location: "Laoag",

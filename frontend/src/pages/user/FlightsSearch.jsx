@@ -30,7 +30,6 @@ const FlightsSearchComponent = ({ addAlert }) => {
 
   useEffect(() => {
     localStorage.removeItem("updatedSeatDataArray");
-    
     const fetchData = async () => {
       try {
         const flightsData = await indexedFlightsApi();
