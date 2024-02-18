@@ -19,23 +19,22 @@ import {
 import { useEffect } from "react";
 
 // eslint-disable-next-line react/prop-types
-export function FlightSearchDestination({ destinationOptions, onSelect }) {
+export function FlightSearchDestination({ destinationOptions, onSelect, isBookNowClicked, setIsBookNowClicked }) {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
+  const selectedDestination = localStorage.getItem(
+    "destination_from_homepage");
+  
 
-  console.log("Destination Options", destinationOptions);
   console.log("Value", value);
 
   useEffect(() => {
-    const selectedDestination = localStorage.getItem(
-      "destination_from_homepage"
-    );
-
     if (selectedDestination) {
       setValue(selectedDestination);
       onSelect(selectedDestination);
     }
-  }, [onSelect]);
+    setIsBookNowClicked(false)
+  }, [onSelect, selectedDestination, isBookNowClicked, setIsBookNowClicked]);
 
   const handleSelect = (selectedOption) => {
     setValue(selectedOption);

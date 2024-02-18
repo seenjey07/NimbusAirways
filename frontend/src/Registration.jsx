@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import logoImage from "./assets/logo.png";
 import RegistrationImage from "./assets/RegistrationImage.jpg";
 
+// eslint-disable-next-line react/prop-types
 const Registration = ({ addAlert }) => {
   const navigate = useNavigate();
   const handleSubmit = async (event) => {
