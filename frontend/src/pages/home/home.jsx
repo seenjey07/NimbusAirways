@@ -11,6 +11,7 @@ const Home = ({ addAlert }) => {
   const navigate = useNavigate();
   const [destinationOptions, setDestinationOptions] = useState([]);
   const [destination_location, setDestination_location] = useState("");
+  const [isBookNowClicked, setIsBookNowClicked] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,6 +45,8 @@ const Home = ({ addAlert }) => {
 
     navigate(`/flight_search`);
   };
+  
+  
 
   return (
     <>
@@ -72,6 +75,7 @@ const Home = ({ addAlert }) => {
               destinationOptions={destinationOptions}
               onSelect={handleDestinationSelect}
               setDestination_location={setDestination_location}
+              setIsBookNowClicked={setIsBookNowClicked}
             />
           </label>
           <div>
