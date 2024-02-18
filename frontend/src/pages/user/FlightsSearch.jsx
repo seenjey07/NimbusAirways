@@ -8,6 +8,7 @@ import FlightSearchOrigin from "../../components/flightsearchorigin";
 import FlightSearchDestination from "../../components/flightsearchdestination";
 import format from "date-fns/format";
 import { useNavigate } from "react-router-dom";
+import { AirplaneIcon } from "../../components/icons/icons"
 // eslint-disable-next-line react/prop-types
 const FlightsSearchComponent = ({ addAlert }) => {
   const [origin_location, setOrigin_location] = useState("");
@@ -98,6 +99,19 @@ const FlightsSearchComponent = ({ addAlert }) => {
     navigate("/user/bookings/create_booking");
   };
 
+  const itemsPerPage = 3; 
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const indexOfLastFlight = currentPage * itemsPerPage;
+  const indexOfFirstFlight = indexOfLastFlight - itemsPerPage;
+  const currentFlights = flights.slice(indexOfFirstFlight, indexOfLastFlight);
+
+  const totalPages = Math.ceil(flights.length / itemsPerPage);
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
   return (
     <>
       <div className="flex justify-center gap-5 shadow-xl my-4">
@@ -164,7 +178,7 @@ const FlightsSearchComponent = ({ addAlert }) => {
         </div>
       </div>
 
-      {isInitialLoad && initialLoadFlights.length >= 0 && (
+      {/* {isInitialLoad && initialLoadFlights.length >= 0 && (
         <div className="overflow-x-auto mt-4">
           <table className="table table-zebra table-pin-cols text-center">
             <thead>
@@ -201,62 +215,94 @@ const FlightsSearchComponent = ({ addAlert }) => {
             </tbody>
           </table>
         </div>
-      )}
+      )} */}
 
-      {!isInitialLoad && flights.length >= 1 && (
-        <div className="overflow-x-auto mt-4">
-          <table className="table table-zebra table-pin-cols text-center">
-            <thead>
-              <tr className="font-bold text-center">
-                <th>Flight Number</th>
-                <th>Origin Location</th>
-                <th>Destination Location</th>
-                <th>Departure Date</th>
-                <th>Arrival Date</th>
-                <th>Price</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {flights
-                .sort((a, b) =>
-                  a.departure_date && b.departure_date
-                    ? a.departure_date.localeCompare(b.departure_date)
-                    : 0
-                )
-                .map((flight) => (
-                  <tr className="hover" key={flight.flight_number}>
-                    <td>{flight.flight_number}</td>
-                    <td>{flight.origin_location}</td>
-                    <td>{flight.destination_location}</td>
-
-                    <td>
-                      {format(
-                        new Date(flight.departure_date),
-                        "MMMM dd, yyyy hh:mm a"
-                      )}
-                    </td>
-                    <td>
-                      {format(
-                        new Date(flight.arrival_date),
-                        "MMMM dd, yyyy hh:mm a"
-                      )}
-                    </td>
-                    <td>₱ {flight.price}</td>
-                    <td>
-                      <button
-                        className="btn btn-accent"
-                        onClick={() => handleSelect(flight.flight_id)}
-                      >
-                        Select
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
+    {!isInitialLoad && flights.length >= 1 && (    
+    <div className="mt-5 rounded-md w-full flex justify-around gap-5">
+      <div className="flex flex-col">
+        <div className="flex flex-col gap-3">
+          {currentFlights
+          .sort((a, b) =>
+            a.departure_date && b.departure_date
+              ? a.departure_date.localeCompare(b.departure_date)
+              : 0
+          )
+          .map((flight) => (
+          <div key={flight.flight_number} className="flex gap-2 sm:gap-12 md:gap-24 lg:gap-36 xl:gap-44 p-5 px-7 rounded-lg shadow-md border border-accent bg-white">
+            <div>
+              <div className="flex flex-col space-y-2">
+                  <span className="flex justify-center">
+                    {format(new Date(flight.departure_date), "hh:mm a")}
+                  </span>
+                  <span className="flex justify-center font-bold">{flight.origin_location}</span>
+                  <span className="italic text-sm flex justify-center">{flight.origin_code}</span>
+              </div>
+            </div>
+            <div className="flex flex-col justify-center space-y-4">
+                <div className="flex justify-center"></div>
+                <div className="flex justify-center text-sm italic">FROM</div>
+                <div className="flex justify-center"></div>
+              </div>
+            <div>
+              <div className="flex flex-col justify-center space-y-4">
+                <div className="flex justify-center italic text-sm">
+                  {format(new Date(flight.departure_date), "MMMM dd, yyyy")}
+                </div>
+                <div className="flex justify-center"><AirplaneIcon /></div>
+                <div className="flex justify-center">{flight.flight_number}</div>
+              </div>
+            </div>
+            <div className="flex flex-col justify-center space-y-4">
+                <div className="flex justify-center"></div>
+                <div className="flex justify-center text-sm italic">TO</div>
+                <div className="flex justify-center"></div>
+              </div>
+            <div className="flex flex-col space-y-2">
+                  <span className="flex justify-center">
+                    {format(new Date(flight.arrival_date), "hh:mm a")}
+                  </span>
+                  <span className="flex justify-center font-bold">
+                    {flight.destination_location}
+                  </span>
+                  <span className="italic text-sm flex justify-center">
+                  {flight.destination_code}
+                  </span>
+              </div>
+            <div>
+              <div className="flex flex-col space-y-4 ">
+                <div className="flex"></div>
+                <div className="flex">
+                  <button 
+                  className="btn btn-accent"
+                  onClick={() => handleSelect(flight.flight_id)}
+                  >
+                    Select
+                  </button>
+                </div>
+                <div className="flex"></div>
+              </div>
+            </div>
+          </div>
+          ))}
         </div>
-      )}
+        <div className="flex justify-center mt-1">
+          <div className="join ">
+            {Array.from({ length: totalPages }).map((_, index) => (
+              <button
+                key={index}
+                className={`btn join-item${
+                  currentPage === index + 1 ? 'active' : ''
+                }`}
+                onClick={() => handlePageChange(index + 1)}
+              >
+                {index + 1}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+    )}
     </>
   );
 };

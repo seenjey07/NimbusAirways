@@ -17,6 +17,7 @@ const UserDashboardLayout = ({ addAlert, children }) => {
   }, [addAlert]);
 
   return (
+
     <div className="grid grid-rows-[auto_1fr_auto] w-full h-screen bg-white">
       <UserNavBar />
       <main className="flex-grow h-auto">{children}</main>

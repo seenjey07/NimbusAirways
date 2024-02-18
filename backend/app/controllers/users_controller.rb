@@ -1,15 +1,19 @@
 class UsersController < ApplicationController
-
   before_action :authenticate_user!, only: [:show, :update, :check_authorization]
 
 
   def check_authorization
-    if current_user.nil?
+    if current_user.nil? || !current_user.confirmed?
       render json: { message: 'Unauthorized' }, status: :unauthorized
     else
-      render json: { message: 'Authorized' }
+      response_data = {
+        message: 'Authorized',
+        confirmed_at: current_user.confirmed_at
+      }
+      render json: response_data
     end
   end
+
 
 
   def index

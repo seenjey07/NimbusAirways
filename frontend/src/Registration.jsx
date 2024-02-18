@@ -17,7 +17,7 @@ const Registration = ({ addAlert }) => {
       console.error(result.response.data.status.message);
     } else if (result.data) {
       console.log("Registration successful", result.data);
-      addAlert("success", "Registration successful. Redirecting to login.");
+      addAlert("success", "Registration successful. An Email Confimation has been sent to your email address.");
       navigate("/login");
     } else {
       console.error("Registration failed");
@@ -145,7 +145,7 @@ const Registration = ({ addAlert }) => {
                 name="gender"
                 required
               >
-                <option disabled>Select</option>
+                <option disabled selected>Select</option>
 
                 <option>Male</option>
                 <option>Female</option>

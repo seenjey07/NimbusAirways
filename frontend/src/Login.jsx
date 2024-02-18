@@ -56,12 +56,7 @@ const Login = ({ addAlert }) => {
         axiosConfig
       );
       const token = res.headers.authorization;
-      const user_id = res.data.data;
-      console.log("login response", res);
-      console.log("user_id", user_id);
-      console.log("token", token);
       document.cookie = `token=${token};path=/`;
-      document.cookie = `user_id=${user_id};path=/`;
       addAlert("success", "Login successful");
       navigate("../user/my_dashboard");
       return res;

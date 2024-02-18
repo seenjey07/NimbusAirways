@@ -19,6 +19,7 @@ class AdminsUserController < ApplicationController
     render json: { errors: ['User already exists with this email.'] }, status: :unprocessable_entity
   else
     @user = User.new(user_params)
+    @user.confirmed_at = Time.now
 
     if @user.save
       render json: @user, status: :created
@@ -60,6 +61,10 @@ end
 
   def update_user_params
     params.require(:user).permit(:first_name, :middle_name, :last_name, :phone_number, :birth_date, :gender, :email, :role)
+  end
+
+  def user_params
+    params.require(:user).permit(:first_name, :middle_name, :last_name, :birth_date, :phone_number, :gender, :email, :password, :new_password)
   end
 
   def require_admin
