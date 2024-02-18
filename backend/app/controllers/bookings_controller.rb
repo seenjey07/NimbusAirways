@@ -2,6 +2,7 @@ class BookingsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_booking, only: [:show, :update, :destroy]
 
+
   def index
     @bookings = current_user.bookings
 
@@ -30,8 +31,8 @@ class BookingsController < ApplicationController
 
       if @booking.save
         create_passengers
-
         update_booking_after_save
+        BookingMailer.booking_confirmation(@booking).deliver_now
         render json: @booking, status: :created
       else
         render json: { errors: @booking.errors.full_messages }, status: :unprocessable_entity
