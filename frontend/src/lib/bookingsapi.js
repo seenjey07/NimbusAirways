@@ -5,7 +5,11 @@ axios.defaults.headers.common["Authorization"] = token;
 
 export const indexBookingsApi = async () => {
   try {
-    const response = await axios.get(`${backendBaseUrl}/api/bookings/index`);
+    const response = await axios.get(
+      `${backendBaseUrl}/api/bookings/index`,
+      {}
+    );
+    console.log("indexBookingsApi response:", response);
     return response;
   } catch (error) {
     console.log("indexBookingsApi error:", error);
@@ -27,7 +31,7 @@ export const createBookingApi = async () => {
 export const showBookingApi = async (booking_reference) => {
   try {
     const response = await axios.get(
-      `${backendBaseUrl}/api/bookings/${booking_reference}`
+      `${backendBaseUrl}/api/bookings/show?booking_reference=${booking_reference}`
     );
     console.log("showBookingApi response:", response);
     return response;

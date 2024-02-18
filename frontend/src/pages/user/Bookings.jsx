@@ -5,20 +5,15 @@ import {
   showBookingApi,
   updateBookingApi,
 } from "../../lib/bookingsapi";
-
 import { AirplaneIcon } from "../../components/icons/icons";
 import format from "date-fns/format";
-
-const OpenBookingDetailsButton = ({ onOpenBookingDetails }) => {
-  return <button onClick={onOpenBookingDetails}>Show</button>;
-};
-
-const UpdateBookingButton = ({ onUpdateBooking }) => {
-  return <button onClick={onUpdateBooking}>Update</button>;
-};
+import ShowBookingModal from "../../pages/admin/dashboard/modals/ShowBookingModal";
+import Loading from "../../components/Loading";
 
 const BookingsComponent = ({ addAlert }) => {
   const [bookings, setBookings] = useState([]);
+  const [bookingData, setBookingData] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,8 +21,10 @@ const BookingsComponent = ({ addAlert }) => {
       try {
         const res = await indexBookingsApi();
         setBookings(res.data);
+        setLoading(false);
       } catch (error) {
         console.error("Error retrieving bookings:", error);
+        setLoading(false);
         addAlert("error", "Error retrieving your bookings. Please try again.");
       }
     };
@@ -35,72 +32,63 @@ const BookingsComponent = ({ addAlert }) => {
     fetchBookings();
   }, []);
 
-  const handleOpenBookingDetails = async (booking_reference) => {
-    try {
-      const res = await showBookingApi(booking_reference);
-      console.log("Show Booking API response:", res);
-      navigate(`/bookings/${booking_reference}`);
-    } catch (error) {
-      console.error("Error showing booking details:", error);
-    }
+  const BookingDetailsButton = ({ onOpenBookingDetails }) => {
+    return <button onClick={onOpenBookingDetails}>Show</button>;
+  };
+
+  const UpdateBookingButton = ({ onUpdateBooking }) => {
+    return <button onClick={onUpdateBooking}>Update</button>;
   };
 
   const handleCreateBooking = () => {
     navigate("/user/flight_search");
   };
 
-  // const handleCreateBooking = async () => {
-  //   try {
-  //     const bookingData = {
-  //       is_confirmed: bookings.is_confirmed,
-  //       confirmation_date: bookings.confirmation_date,
-  //       booking_reference: bookings.booking_reference,
-  //     };
-  //     console.log("Create Booking API data:", bookingData);
-
-  //     const res = await createBookingApi();
-  //     console.log("Create Booking API response:", res);
-  //     alert("Booking created successfully");
-  //   } catch (error) {
-  //     console.error("Error creating booking:", error);
-  //     throw error;
-  //   }
-  // };
-
-  const handleUpdateBooking = async (booking_reference) => {
+  const handleOpenBookingDetails = async (booking_reference) => {
     try {
-      const updatedData = { booking_params };
+      const res = await showBookingApi(booking_reference);
+      setBookingData(res);
+      console.log("Show Booking API response:", res);
+      document.getElementById("bookings").showModal();
+    } catch (error) {
+      console.error("Error showing booking details:", error);
+    }
+  };
+
+  const handleUpdateBooking = async (booking_reference, updatedData) => {
+    try {
       const res = await updateBookingApi(booking_reference, updatedData);
       console.log("Update Booking API response:", res);
       addAlert("success", "Booking updated successfully.");
+      setBookingData(updatedData);
     } catch (error) {
       console.error("Error updating booking:", error);
     }
   };
 
-  const itemsPerPage = 4;
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const indexOfLastBooking = currentPage * itemsPerPage;
-  const indexOfFirstBooking = indexOfLastBooking - itemsPerPage;
-  const currentBookings = bookings.slice(
-    indexOfFirstBooking,
-    indexOfLastBooking
-  );
-
-  const totalPages = Math.ceil(bookings.length / itemsPerPage);
-
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
-
   return (
     <div className="w-full">
-      {Array.isArray(bookings) && bookings.length > 0 ? (
+      <dialog id="bookings" className="modal">
+        <div className="modal-box w-12/12 max-w-7xl bg-white">
+          <ShowBookingModal
+            bookingData={bookingData}
+            setBookingData={setBookingData}
+          />
+        </div>
+        <form method="dialog" className="modal-backdrop">
+          <button onClick={() => document.getElementById("bookings").close()}>
+            close
+          </button>
+        </form>
+      </dialog>
+
+      {loading ? (
+        <Loading />
+      ) : Array.isArray(bookings) && bookings.length > 0 ? (
         <div className="m-5 rounded-md flex justify-around gap-5 h-auto">
           <div className="flex flex-col">
             <div className="flex flex-col gap-3">
-              {currentBookings
+              {bookings
                 .sort((a, b) =>
                   a.departure_date && b.departure_date
                     ? a.departure_date.localeCompare(b.departure_date)
@@ -173,9 +161,9 @@ const BookingsComponent = ({ addAlert }) => {
                       <div className="flex flex-col space-y-4">
                         <div className="flex"></div>
                         <div className="flex">
-                          <div className="link text-sm p-1 text-center">
-                            <a className="link link-hover hover:underline hover:text-accent">
-                              <OpenBookingDetailsButton
+                          <div className="text-sm p-1 text-center">
+                            <a className="hover:underline hover:text-blue">
+                              <BookingDetailsButton
                                 onOpenBookingDetails={() =>
                                   handleOpenBookingDetails(
                                     booking.booking_reference
@@ -183,10 +171,13 @@ const BookingsComponent = ({ addAlert }) => {
                                 }
                               />
                             </a>
-                            <a className="link link-hover hover:underline">
+                            <a className="hover:underline hover:text-blue">
                               <UpdateBookingButton
                                 onUpdateBooking={() =>
-                                  handleUpdateBooking(booking.booking_reference)
+                                  handleUpdateBooking(
+                                    booking.booking_reference,
+                                    updatedData
+                                  )
                                 }
                               />
                             </a>
@@ -216,24 +207,6 @@ const BookingsComponent = ({ addAlert }) => {
                 </button>
               </div>
             </div>
-          </div>
-        </div>
-      )}
-
-      {bookings.length > itemsPerPage && (
-        <div className="flex justify-center mt-1">
-          <div className="join ">
-            {Array.from({ length: totalPages }).map((_, index) => (
-              <button
-                key={index}
-                className={`btn join-item${
-                  currentPage === index + 1 ? "active" : ""
-                }`}
-                onClick={() => handlePageChange(index + 1)}
-              >
-                {index + 1}
-              </button>
-            ))}
           </div>
         </div>
       )}
