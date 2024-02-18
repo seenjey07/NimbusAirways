@@ -1,5 +1,4 @@
 import UserNavBar from "../components/UserNavBar";
-import Footer from ".././pages/home/footer";
 import { useEffect } from "react";
 import axios from "axios";
 
@@ -19,8 +18,7 @@ const UserDashboardLayout = ({ addAlert, children }) => {
   return (
     <div className="grid grid-rows-[auto_1fr_auto] h-screen">
       <UserNavBar />
-      <main className="flex-grow">{children}</main>
-      <Footer />
+      <main className="flex-grow">{children}</main>\
     </div>
   );
 };

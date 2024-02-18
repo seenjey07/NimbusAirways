@@ -3,6 +3,7 @@ import travelClips from "../../../assets/TravelClips.mp4";
 import UserProfileForm from "./UserProfileForm";
 import { showCurrentUserApi } from "../../../lib/usersapi";
 import { id } from "date-fns/locale";
+import Footer from "../../../pages/home/footer";
 
 // eslint-disable-next-line react/prop-types
 const UserDashboard = ({ addAlert }) => {
@@ -82,6 +83,9 @@ const UserDashboard = ({ addAlert }) => {
             />
           </div>
         </div>
+      </div>
+      <div className="w-full bottom-0 fixed">
+        <Footer />
       </div>
     </>
   );
