@@ -1,12 +1,11 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   indexBookingsApi,
   showBookingApi,
   updateBookingApi,
-  destroyBookingApi,
 } from "../../lib/bookingsapi";
+import format from "date-fns/format";
 
 const OpenBookingDetailsButton = ({ onOpenBookingDetails }) => {
   return <button onClick={onOpenBookingDetails}>Show</button>;
@@ -16,13 +15,8 @@ const UpdateBookingButton = ({ onUpdateBooking }) => {
   return <button onClick={onUpdateBooking}>Update</button>;
 };
 
-const DeleteBookingButton = ({ onDeleteBooking }) => {
-  return <button onClick={onDeleteBooking}>Delete</button>;
-};
-
-const BookingsComponent = () => {
+const BookingsComponent = ({ addAlert }) => {
   const [bookings, setBookings] = useState([]);
-  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,9 +25,9 @@ const BookingsComponent = () => {
         const res = await indexBookingsApi();
         console.log("User Bookings API response:", res.data);
         setBookings(res.data);
-        setError(null);
       } catch (error) {
         console.error("Error retrieving bookings:", error);
+        addAlert("error", "Error retrieving your bookings. Please try again.");
       }
     };
 
@@ -77,109 +71,93 @@ const BookingsComponent = () => {
       const updatedData = { booking_params };
       const res = await updateBookingApi(booking_reference, updatedData);
       console.log("Update Booking API response:", res);
-      alert("Booking updated successfully");
+      addAlert("success", "Booking updated successfully.");
     } catch (error) {
       console.error("Error updating booking:", error);
     }
   };
 
-  const handleDeleteBooking = async (booking_reference) => {
-    try {
-      const res = await destroyBookingApi(booking_reference);
-      console.log("Delete Booking API response:", res);
-      alert("Booking deleted successfully");
-    } catch (error) {
-      console.error("Error deleting booking:", error);
-    }
-  };
-
   return (
-    <>
-      <div>
-        {Array.isArray(bookings) && bookings.length > 0 ? (
-          <div className="overflow-x-auto">
-            <table className="table table-zebra table-pin-cols">
-              <thead>
-                <tr>
-                  <th>Booking Reference</th>
-                  <th>Origin Location</th>
-                  <th>Destination Location</th>
-                  <th>Departure Date</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {bookings.map((booking) => (
-                  <tr className="hover" key={booking.id}>
-                    <td>{booking.booking_reference}</td>
-                    <td>{booking.origin_location}</td>
-                    <td>{booking.destination_location}</td>
-                    <td>{booking.date_of_departure}</td>
-                    <td className="dropdown dropdown-hover">
-                      <div tabindex="0" role="button" className="btn m-1">
-                        Options
-                      </div>
-                      <ul
-                        tabindex="0"
-                        className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
-                      >
-                        <li className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg">
-                          <OpenBookingDetailsButton
-                            onOpenBookingDetails={() =>
-                              handleOpenBookingDetails(
-                                booking.booking_reference
-                              )
-                            }
-                          />
-                        </li>
-                        <li className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg">
-                          <UpdateBookingButton
-                            onUpdateBooking={() =>
-                              handleUpdateBooking(booking.booking_reference)
-                            }
-                          />
-                        </li>
-                        <li className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg">
-                          <DeleteBookingButton
-                            onDeleteBooking={() =>
-                              handleDeleteBooking(booking.booking_reference)
-                            }
-                          />
-                        </li>
-                      </ul>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        ) : (
-          <div className="mt-10 flex items-start justify-center h-screen">
-            <div className="card w-96 glass shadow-xl place-content-center">
-              <div className="card-body items-center text-center">
-                <h2 className="card-title">
-                  You currently have no bookings. Plan your next trip with us!
-                </h2>
-                <div className="label-text-alt link link-hover">
-                  <button
-                    onClick={handleCreateBooking}
-                    className="btn btn-warning"
+    <div className="overflow-x-auto mt-1 w-full">
+      {Array.isArray(bookings) && bookings.length > 0 ? (
+        <table className="table table-zebra table-pin-cols text-center">
+          <thead>
+            <tr className="font-bold text-black">
+              <th>Booking Reference</th>
+              <th>Departure Location</th>
+              <th>Departure Date</th>
+              <th>Destination Location</th>
+              <th>Arrival Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody className="text-center text-xs">
+            {bookings.map((booking) => (
+              <tr className="hover" key={booking.id}>
+                <td>{booking.booking_reference}</td>
+                <td>{booking.origin_location}</td>
+                <td>
+                  {format(
+                    new Date(booking.departure_date),
+                    "MMMM dd, yyyy, hh:mm a"
+                  )}
+                </td>
+                <td>{booking.destination_location}</td>
+                <td>
+                  {console.log("Arrival Date:", booking.arrival_date)}
+                  {format(
+                    new Date(booking.arrival_date),
+                    "MMMM dd, yyyy, hh:mm a"
+                  )}
+                </td>
+                <td className="dropdown dropdown-hover">
+                  <div tabindex="0" role="button" className="btn text-xs m-1">
+                    Options
+                  </div>
+                  <ul
+                    tabindex="0"
+                    className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-content"
                   >
-                    Create
-                  </button>
-                </div>
+                    <li className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg">
+                      <OpenBookingDetailsButton
+                        onOpenBookingDetails={() =>
+                          handleOpenBookingDetails(booking.booking_reference)
+                        }
+                      />
+                    </li>
+                    <li className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg">
+                      <UpdateBookingButton
+                        onUpdateBooking={() =>
+                          handleUpdateBooking(booking.booking_reference)
+                        }
+                      />
+                    </li>
+                  </ul>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <div className="mt-10 flex items-start justify-center h-screen">
+          <div className="card w-96 glass shadow-xl place-content-center">
+            <div className="card-body items-center text-center">
+              <h2 className="card-title">
+                You currently have no bookings. Plan your next trip with us!
+              </h2>
+              <div className="label-text-alt link link-hover">
+                <button
+                  onClick={handleCreateBooking}
+                  className="btn btn-warning"
+                >
+                  Create
+                </button>
               </div>
             </div>
           </div>
-        )}
-
-        {error && (
-          <div role="alert" className="alert alert-error">
-            <span className="text-red-500">{error}</span>
-          </div>
-        )}
-      </div>
-    </>
+        </div>
+      )}
+    </div>
   );
 };
 

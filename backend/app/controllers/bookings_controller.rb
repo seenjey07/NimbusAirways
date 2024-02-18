@@ -56,7 +56,7 @@ class BookingsController < ApplicationController
 
       if seat.save
         passenger.update(seat: seat)
-        puts "Passenger and Seat saved successfully: #{passenger.inspect}, #{seat.inspect}"
+        puts "Passenger and seat saved successfully: #{passenger.inspect}, #{seat.inspect}"
       else
         puts "Error saving passenger: #{passenger.errors.full_messages.join(', ')}"
       end
@@ -118,6 +118,7 @@ class BookingsController < ApplicationController
     @booking.flight.update(available_seats: @booking.flight.available_seats - @booking.total_passengers)
     @booking.save
   end
+
   def formatted_bookings(bookings)
     bookings.map do |booking|
       {
@@ -131,8 +132,10 @@ class BookingsController < ApplicationController
         updated_at: booking.updated_at,
         origin_location: booking.flight.route.origin_location,
         destination_location: booking.flight.route.destination_location,
-        departure_date: booking.flight.departure_date
+        departure_date: booking.flight.departure_date,
+        arrival_date: booking.flight.arrival_date
       }
     end
   end
+
 end

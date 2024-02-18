@@ -22,7 +22,7 @@ const FlightsSearchComponent = ({ addAlert }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    localStorage.removeItem('updatedSeatDataArray');
+    localStorage.removeItem("updatedSeatDataArray");
     const fetchData = async () => {
       try {
         const flightsData = await indexedFlightsApi();
@@ -168,7 +168,7 @@ const FlightsSearchComponent = ({ addAlert }) => {
         <div className="overflow-x-auto mt-4">
           <table className="table table-zebra table-pin-cols text-center">
             <thead>
-              <tr className="text-black">
+              <tr className="font-bold text-black">
                 <th>Flight Number</th>
                 <th>Origin Location</th>
                 <th>Departure Date</th>
@@ -205,9 +205,9 @@ const FlightsSearchComponent = ({ addAlert }) => {
 
       {!isInitialLoad && flights.length >= 1 && (
         <div className="overflow-x-auto mt-4">
-          <table className="table table-zebra table-pin-cols">
+          <table className="table table-zebra table-pin-cols text-center">
             <thead>
-              <tr className="font-bold">
+              <tr className="font-bold text-center">
                 <th>Flight Number</th>
                 <th>Origin Location</th>
                 <th>Destination Location</th>
