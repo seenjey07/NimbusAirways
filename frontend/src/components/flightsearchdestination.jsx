@@ -33,7 +33,7 @@ export function FlightSearchDestination({ destinationOptions, onSelect, isBookNo
       setValue(selectedDestination);
       onSelect(selectedDestination);
     }
-    setIsBookNowClicked(false)
+    setIsBookNowClicked(false);
   }, [onSelect, selectedDestination, isBookNowClicked, setIsBookNowClicked]);
 
   const handleSelect = (selectedOption) => {
