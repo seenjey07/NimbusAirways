@@ -13,9 +13,9 @@ const FlightBookingsLayout = ({ children }) => {
     initiateAuthorization();
   }, []);
   return (
-    <>
-      <div>{children}</div>
-    </>
+    <div className="grid grid-rows-[auto_1fr_auto] w-full h-screen bg-white">
+      <main className="flex-grow h-auto">{children}</main>
+    </div>
   );
 };
 
