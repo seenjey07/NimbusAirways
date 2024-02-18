@@ -111,6 +111,7 @@ const FlightsSearchComponent = ({ addAlert }) => {
     console.log("Flight ID:", flight_id);
     localStorage.setItem("selected_flight_id", flight_id);
     localStorage.setItem("total", passengers);
+    localStorage.removeItem("destination_from_homepage");
     navigate("/user/bookings/create_booking");
   };
 
@@ -264,7 +265,7 @@ const FlightsSearchComponent = ({ addAlert }) => {
         </div>
 
         <div className="flex justify-around mt-3">
-        {locationAdData.slice(3,6).map((locationInfo, index) => (
+        {locationAdData.slice(6,9).map((locationInfo, index) => (
           <div key={index} className="card card-compact w-96 bg-white shadow-xl">
             <figure>
               <img src={getImageForLocation(locationInfo.url)} alt={locationInfo.name} />
