@@ -210,7 +210,7 @@ const FlightsSearchComponent = ({ addAlert }) => {
       {isInitialLoad && initialLoadFlights.length >= 0 && (
         <>
           <div className="flex justify-around">
-          {locationAdData.slice(0,4).map((locationInfo, index) => (
+          {locationAdData.slice(0,3).map((locationInfo, index) => (
             <div key={index} className="card card-compact w-96 bg-white shadow-xl">
               <figure>
                 <img src={getImageForLocation(locationInfo.url)} alt={locationInfo.name} />
@@ -221,7 +221,12 @@ const FlightsSearchComponent = ({ addAlert }) => {
                 <div className="card-actions justify-center">
                 <button
                   className="btn btn-primary"
-                  onClick={() => {handleBookNow(locationInfo.location)}}
+                  onClick={() => {handleBookNow(locationInfo.location)
+                    window.scrollTo({
+                      top: 0,
+                      behavior: "smooth"
+                  });
+                  }}
                 >
                     Book Now
                   </button>
@@ -232,7 +237,7 @@ const FlightsSearchComponent = ({ addAlert }) => {
           </div>
 
         <div className="flex justify-around mt-3">
-        {locationAdData.slice(4,8).map((locationInfo, index) => (
+        {locationAdData.slice(3,6).map((locationInfo, index) => (
           <div key={index} className="card card-compact w-96 bg-white shadow-xl">
             <figure>
               <img src={getImageForLocation(locationInfo.url)} alt={locationInfo.name} />
@@ -243,7 +248,39 @@ const FlightsSearchComponent = ({ addAlert }) => {
               <div className="card-actions justify-center">
               <button
                   className="btn btn-primary"
-                  onClick={() => {handleBookNow(locationInfo.location)}}
+                  onClick={() => {handleBookNow(locationInfo.location)
+                    window.scrollTo({
+                      top: 0,
+                      behavior: "smooth"
+                  });
+                  }}
+                >
+                    Book Now
+                  </button>
+              </div>
+            </div>
+          </div>
+        ))}
+        </div>
+
+        <div className="flex justify-around mt-3">
+        {locationAdData.slice(3,6).map((locationInfo, index) => (
+          <div key={index} className="card card-compact w-96 bg-white shadow-xl">
+            <figure>
+              <img src={getImageForLocation(locationInfo.url)} alt={locationInfo.name} />
+            </figure>
+            <div className="card-body">
+              <h2 className="card-title">{locationInfo.location.toUpperCase()}</h2>
+              <p>{locationInfo.ad}</p>
+              <div className="card-actions justify-center">
+              <button
+                  className="btn btn-primary"
+                  onClick={() => {handleBookNow(locationInfo.location)
+                    window.scrollTo({
+                      top: 0,
+                      behavior: "smooth"
+                  });
+                  }}
                 >
                     Book Now
                   </button>
