@@ -8,9 +8,12 @@ import FlightSearchOrigin from "../../components/flightsearchorigin";
 import FlightSearchDestination from "../../components/flightsearchdestination";
 import format from "date-fns/format";
 import { useNavigate } from "react-router-dom";
-import { AirplaneIcon } from "../../components/icons/icons";
+import { AirplaneIcon } from "../../components/icons/icons"
+import { locationData } from "../../assets/Datas"
+import Loading from "../../components/Loading"
 // eslint-disable-next-line react/prop-types
 const FlightsSearchComponent = ({ addAlert }) => {
+  const [locationAdData, setLocationAdData] = useState([]);
   const [origin_location, setOrigin_location] = useState("");
   const [destination_location, setDestination_location] = useState("");
   const [departure_date, setDeparture_date] = useState("");
@@ -20,6 +23,9 @@ const FlightsSearchComponent = ({ addAlert }) => {
   const [originOptions, setOriginOptions] = useState([]);
   const [destinationOptions, setDestinationOptions] = useState([]);
   const [passengers, setPassengers] = useState("");
+  const [mount, setMount] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isBookNowClicked, setIsBookNowClicked] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,7 +35,6 @@ const FlightsSearchComponent = ({ addAlert }) => {
         const flightsData = await indexedFlightsApi();
         const routesData = await indexedRoutesApi();
         setInitialLoadFlights(flightsData);
-        setIsInitialLoad(true);
         const uniqueOriginLocations = Array.from(
           new Set(routesData.map((route) => route.origin_location))
         );
@@ -38,14 +43,26 @@ const FlightsSearchComponent = ({ addAlert }) => {
           new Set(routesData.map((route) => route.destination_location))
         );
         setDestinationOptions(uniqueDestinationLocations);
+  
+        const lowercasedDestinationOptions = destinationOptions.map(dest => dest.trim().toLowerCase());
+        const filteredLocations = locationData.filter((location) => {
+          const lowerCaseLocation = location.location.trim().toLowerCase();
+          const included = lowercasedDestinationOptions.includes(lowerCaseLocation);
+          return included;
+        });
+        const randomizedLocations = filteredLocations.sort(() => Math.random() - 0.5);
+        setLocationAdData(randomizedLocations);
+        setMount(true)
+        setIsLoading(false); 
       } catch (error) {
         console.error("Error fetching initial flight information:", error);
         addAlert("Error fetching flights. Please try again.");
+        setIsLoading(false); 
       }
     };
-
+  
     fetchData();
-  }, []);
+  }, [mount]);
 
   const handleSearch = async (event) => {
     event.preventDefault();
@@ -112,6 +129,17 @@ const FlightsSearchComponent = ({ addAlert }) => {
     setCurrentPage(pageNumber);
   };
 
+  console.log("LocationAdData: ", locationAdData);
+
+  const getImageForLocation = (url) => {
+    return `${url}`;
+  }
+
+  const handleBookNow = (destination) => {
+    localStorage.setItem("destination_from_homepage", destination);
+    setIsBookNowClicked(true)
+  }
+
   return (
     <>
       <div className="flex justify-center gap-5 shadow-xl my-4">
@@ -151,6 +179,8 @@ const FlightsSearchComponent = ({ addAlert }) => {
             <FlightSearchDestination
               destinationOptions={destinationOptions}
               onSelect={handleDestinationSelect}
+              isBookNowClicked={isBookNowClicked}
+              setIsBookNowClicked={setIsBookNowClicked}
             />
           </label>
 
@@ -178,44 +208,62 @@ const FlightsSearchComponent = ({ addAlert }) => {
         </div>
       </div>
 
-      {/* {isInitialLoad && initialLoadFlights.length >= 0 && (
-        <div className="overflow-x-auto mt-4">
-          <table className="table table-zebra table-pin-cols text-center">
-            <thead>
-              <tr className="font-bold text-black">
-                <th>Flight Number</th>
-                <th>Origin Location</th>
-                <th>Departure Date</th>
-                <th>Departure Location</th>
-                <th>Arrival Date</th>
-                <th>Price</th>
-              </tr>
-            </thead>
-            <tbody className="text-center">
-              {initialLoadFlights.map((flight) => (
-                <tr className="hover" key={flight.flight_number}>
-                  <td>{flight.flights.flight_number}</td>
-                  <td>{flight.routes.origin_location}</td>
-                  <td>
-                    {format(
-                      new Date(flight.flights.departure_date),
-                      "MMMM dd, yyyy hh:mm a"
-                    )}
-                  </td>
-                  <td>{flight.routes.destination_location}</td>
-                  <td>
-                    {format(
-                      new Date(flight.flights.arrival_date),
-                      "MMMM dd, yyyy hh:mm a"
-                    )}
-                  </td>
-                  <td>₱ {flight.routes.price}</td>
-                </tr>
+
+      {isLoading ? (
+        <Loading /> 
+      ) : (
+        initialLoadFlights.length >= 0 && (
+          <>
+            <div className="flex justify-around">
+              {locationAdData.slice(0, 4).map((locationInfo, index) => (
+                <div key={index} className="card card-compact w-96 bg-white shadow-xl">
+                  <figure>
+                    <img src={getImageForLocation(locationInfo.url)} alt={locationInfo.name} />
+                  </figure>
+                  <div className="card-body">
+                    <h2 className="card-title">{locationInfo.location.toUpperCase()}</h2>
+                    <p>{locationInfo.ad}</p>
+                    <div className="card-actions justify-center">
+                      <button
+                        className="btn btn-primary"
+                        onClick={() => {
+                          handleBookNow(locationInfo.location);
+                        }}
+                      >
+                        Book Now
+                      </button>
+                    </div>
+                  </div>
+                </div>
               ))}
-            </tbody>
-          </table>
-        </div>
-      )} */}
+            </div>
+
+            <div className="flex justify-around mt-3">
+              {locationAdData.slice(4, 8).map((locationInfo, index) => (
+                <div key={index} className="card card-compact w-96 bg-white shadow-xl">
+                  <figure>
+                    <img src={getImageForLocation(locationInfo.url)} alt={locationInfo.name} />
+                  </figure>
+                  <div className="card-body">
+                    <h2 className="card-title">{locationInfo.location.toUpperCase()}</h2>
+                    <p>{locationInfo.ad}</p>
+                    <div className="card-actions justify-center">
+                      <button
+                        className="btn btn-primary"
+                        onClick={() => {
+                          handleBookNow(locationInfo.location);
+                        }}
+                      >
+                        Book Now
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
+        )
+      )}
 
       {!isInitialLoad && flights.length >= 1 && (
         <div className="mt-5 rounded-md w-full flex justify-around gap-5">
