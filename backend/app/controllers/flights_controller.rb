@@ -74,6 +74,8 @@ class FlightsController < ApplicationController
       arrival_date: flight.arrival_date,
       origin_location: flight.route.origin_location,
       destination_location: flight.route.destination_location,
+      origin_code: flight.route.origin_code,
+      destination_code: flight.route.destination_code,
       available_seats: flight.available_seats,
       price: flight.route.price
     }
