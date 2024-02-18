@@ -164,7 +164,7 @@ const FlightsSearchComponent = ({ addAlert }) => {
         </div>
       </div>
 
-      {isInitialLoad && initialLoadFlights.length >= 0 && (
+      {/* {isInitialLoad && initialLoadFlights.length >= 0 && (
         <div className="overflow-x-auto mt-4">
           <table className="table table-zebra table-pin-cols text-center">
             <thead>
@@ -201,7 +201,7 @@ const FlightsSearchComponent = ({ addAlert }) => {
             </tbody>
           </table>
         </div>
-      )}
+      )} */}
 
       {!isInitialLoad && flights.length >= 1 && (
         <div className="overflow-x-auto mt-4">
@@ -257,6 +257,18 @@ const FlightsSearchComponent = ({ addAlert }) => {
           </table>
         </div>
       )}
+
+      <div className="join bg-red-200 rounded-md w-full flex justify-around">
+        <div className="join-item">
+          <div className="flex flex-col">
+              <span>10:30 AM</span>
+              <span className="italic text-sm flex justify-center">MPH</span>
+
+          </div>
+        </div>
+        <div className="join-item">GITNA ARROW</div>
+        <div className="join-item">DITO ARRIVAL</div>
+      </div>
     </>
   );
 };
