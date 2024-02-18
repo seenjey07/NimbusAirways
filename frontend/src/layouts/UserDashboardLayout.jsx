@@ -10,15 +10,13 @@ const UserDashboardLayout = ({ addAlert, children }) => {
       const token = document.cookie.split("token=")[1];
       if (token) {
         axios.defaults.headers.common["Authorization"] = token;
-        console.log("User Dashboard Layout: token found");
       }
     };
     initiateAuthorization();
   }, [addAlert]);
 
   return (
-
-    <div className="grid grid-rows-[auto_1fr_auto] w-full h-screen bg-white">
+    <div className="grid grid-rows-[auto_1fr_auto] h-screen bg-white">
       <UserNavBar />
       <main className="flex-grow h-auto">{children}</main>
       <Footer />

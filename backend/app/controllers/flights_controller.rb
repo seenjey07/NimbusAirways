@@ -23,7 +23,7 @@ class FlightsController < ApplicationController
       seats = Seat.where(flight_id: flight.id)
       render json: { seats: seats.collect { |seat| render_seat_json(seat) } }
     else
-      render json: { error: "Flight not found" }, status: :not_found
+      render json: { error: "Flight not found." }, status: :not_found
     end
   end
 

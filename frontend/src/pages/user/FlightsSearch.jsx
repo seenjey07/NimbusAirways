@@ -8,7 +8,7 @@ import FlightSearchOrigin from "../../components/flightsearchorigin";
 import FlightSearchDestination from "../../components/flightsearchdestination";
 import format from "date-fns/format";
 import { useNavigate } from "react-router-dom";
-import { AirplaneIcon } from "../../components/icons/icons"
+import { AirplaneIcon } from "../../components/icons/icons";
 // eslint-disable-next-line react/prop-types
 const FlightsSearchComponent = ({ addAlert }) => {
   const [origin_location, setOrigin_location] = useState("");
@@ -68,7 +68,7 @@ const FlightsSearchComponent = ({ addAlert }) => {
       if (res.length === 0) {
         addAlert(
           "error",
-          "No available flights on that date or location, please try again."
+          "No available flights on that date or location. Please try again."
         );
       } else {
         setFlights(res);
@@ -99,7 +99,7 @@ const FlightsSearchComponent = ({ addAlert }) => {
     navigate("/user/bookings/create_booking");
   };
 
-  const itemsPerPage = 3; 
+  const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
 
   const indexOfLastFlight = currentPage * itemsPerPage;
@@ -217,92 +217,110 @@ const FlightsSearchComponent = ({ addAlert }) => {
         </div>
       )} */}
 
-    {!isInitialLoad && flights.length >= 1 && (    
-    <div className="mt-5 rounded-md w-full flex justify-around gap-5">
-      <div className="flex flex-col">
-        <div className="flex flex-col gap-3">
-          {currentFlights
-          .sort((a, b) =>
-            a.departure_date && b.departure_date
-              ? a.departure_date.localeCompare(b.departure_date)
-              : 0
-          )
-          .map((flight) => (
-          <div key={flight.flight_number} className="flex gap-2 sm:gap-12 md:gap-24 lg:gap-36 xl:gap-44 p-5 px-7 rounded-lg shadow-md border border-accent bg-white">
-            <div>
-              <div className="flex flex-col space-y-2">
-                  <span className="flex justify-center">
-                    {format(new Date(flight.departure_date), "hh:mm a")}
-                  </span>
-                  <span className="flex justify-center font-bold">{flight.origin_location}</span>
-                  <span className="italic text-sm flex justify-center">{flight.origin_code}</span>
-              </div>
-            </div>
-            <div className="flex flex-col justify-center space-y-4">
-                <div className="flex justify-center"></div>
-                <div className="flex justify-center text-sm italic">FROM</div>
-                <div className="flex justify-center"></div>
-              </div>
-            <div>
-              <div className="flex flex-col justify-center space-y-4">
-                <div className="flex justify-center italic text-sm">
-                  {format(new Date(flight.departure_date), "MMMM dd, yyyy")}
-                </div>
-                <div className="flex justify-center"><AirplaneIcon /></div>
-                <div className="flex justify-center">{flight.flight_number}</div>
-              </div>
-            </div>
-            <div className="flex flex-col justify-center space-y-4">
-                <div className="flex justify-center"></div>
-                <div className="flex justify-center text-sm italic">TO</div>
-                <div className="flex justify-center"></div>
-              </div>
-            <div className="flex flex-col space-y-2">
-                  <span className="flex justify-center">
-                    {format(new Date(flight.arrival_date), "hh:mm a")}
-                  </span>
-                  <span className="flex justify-center font-bold">
-                    {flight.destination_location}
-                  </span>
-                  <span className="italic text-sm flex justify-center">
-                  {flight.destination_code}
-                  </span>
-              </div>
-            <div>
-              <div className="flex flex-col space-y-4 ">
-                <div className="flex"></div>
-                <div className="flex">
-                  <button 
-                  className="btn btn-accent"
-                  onClick={() => handleSelect(flight.flight_id)}
+      {!isInitialLoad && flights.length >= 1 && (
+        <div className="mt-5 rounded-md w-full flex justify-around gap-5">
+          <div className="flex flex-col">
+            <div className="flex flex-col gap-3">
+              {currentFlights
+                .sort((a, b) =>
+                  a.departure_date && b.departure_date
+                    ? a.departure_date.localeCompare(b.departure_date)
+                    : 0
+                )
+                .map((flight) => (
+                  <div
+                    key={flight.flight_number}
+                    className="flex gap-2 sm:gap-12 md:gap-24 lg:gap-36 xl:gap-44 p-5 px-7 rounded-lg shadow-md border border-accent bg-white"
                   >
-                    Select
+                    <div>
+                      <div className="flex flex-col space-y-2">
+                        <span className="flex justify-center">
+                          {format(new Date(flight.departure_date), "hh:mm a")}
+                        </span>
+                        <span className="flex justify-center font-bold">
+                          {flight.origin_location}
+                        </span>
+                        <span className="italic text-sm flex justify-center">
+                          {flight.origin_code}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="flex flex-col justify-center space-y-4">
+                      <div className="flex justify-center"></div>
+                      <div className="flex justify-center text-sm italic">
+                        FROM
+                      </div>
+                      <div className="flex justify-center"></div>
+                    </div>
+                    <div>
+                      <div className="flex flex-col justify-center space-y-4">
+                        <div className="flex justify-center italic text-sm">
+                          {format(
+                            new Date(flight.departure_date),
+                            "MMMM dd, yyyy"
+                          )}
+                        </div>
+                        <div className="flex justify-center">
+                          <AirplaneIcon />
+                        </div>
+                        <div className="flex justify-center">
+                          {flight.flight_number}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex flex-col justify-center space-y-4">
+                      <div className="flex justify-center"></div>
+                      <div className="flex justify-center text-sm italic">
+                        TO
+                      </div>
+                      <div className="flex justify-center"></div>
+                    </div>
+                    <div className="flex flex-col space-y-2">
+                      <span className="flex justify-center">
+                        {format(new Date(flight.arrival_date), "hh:mm a")}
+                      </span>
+                      <span className="flex justify-center font-bold">
+                        {flight.destination_location}
+                      </span>
+                      <span className="italic text-sm flex justify-center">
+                        {flight.destination_code}
+                      </span>
+                    </div>
+                    <div>
+                      <div className="flex flex-col space-y-4">
+                        <div className="flex"></div>
+                        <div className="flex">
+                          <button
+                            className="btn btn-neutral hover:bg-primary hover:text-white"
+                            onClick={() => handleSelect(flight.flight_id)}
+                          >
+                            Select
+                          </button>
+                        </div>
+                        <div className="flex"></div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+            </div>
+            <div className="flex justify-center mt-1">
+              <div className="join ">
+                {Array.from({ length: totalPages }).map((_, index) => (
+                  <button
+                    key={index}
+                    className={`btn join-item${
+                      currentPage === index + 1 ? "active" : ""
+                    }`}
+                    onClick={() => handlePageChange(index + 1)}
+                  >
+                    {index + 1}
                   </button>
-                </div>
-                <div className="flex"></div>
+                ))}
               </div>
             </div>
           </div>
-          ))}
         </div>
-        <div className="flex justify-center mt-1">
-          <div className="join ">
-            {Array.from({ length: totalPages }).map((_, index) => (
-              <button
-                key={index}
-                className={`btn join-item${
-                  currentPage === index + 1 ? 'active' : ''
-                }`}
-                onClick={() => handlePageChange(index + 1)}
-              >
-                {index + 1}
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-    )}
+      )}
     </>
   );
 };
