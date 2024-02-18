@@ -178,7 +178,54 @@ const FlightsSearchComponent = ({ addAlert }) => {
         </div>
       </div>
 
-      {/* {isInitialLoad && initialLoadFlights.length >= 0 && (
+      <div className="flex justify-around">
+        <div className="card card-compact w-96 bg-white shadow-xl">
+          <figure><img src="https://media-cdn.tripadvisor.com/media/attractions-splice-spp-720x480/08/b8/24/d5.jpg" alt="Shoes" /></figure>
+          <div className="card-body">
+            <h2 className="card-title">Cebu</h2>
+            <p>If a dog chews shoes whose shoes does he choose?</p>
+            <div className="card-actions justify-end">
+              <button className="btn btn-primary">Buy Now</button>
+            </div>
+          </div>
+        </div>
+        
+        <div className="card card-compact w-96 bg-white shadow-xl">
+          <figure><img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/16/aa/36/d5/siargao-style.jpg?w=1200&h=-1&s=1" alt="Shoes" /></figure>
+          <div className="card-body">
+            <h2 className="card-title">Siargao</h2>
+            <p>If a dog chews shoes whose shoes does he choose?</p>
+            <div className="card-actions justify-end">
+              <button className="btn btn-primary">Buy Now</button>
+            </div>
+          </div>
+        </div>
+
+        <div className="card card-compact w-96 bg-white shadow-xl">
+          <figure><img src="https://travelosyo.com/wp-content/uploads/2017/03/Durian-900x675.jpg" alt="Shoes" /></figure>
+          <div className="card-body">
+            <h2 className="card-title">Davao</h2>
+            <p>If a dog chews shoes whose shoes does he choose?</p>
+            <div className="card-actions justify-end">
+              <button className="btn btn-primary">Buy Now</button>
+            </div>
+          </div>
+        </div>
+
+        <div className="card card-compact w-96 bg-white shadow-xl">
+          <figure><img src="https://a.cdn-hotels.com/gdcs/production40/d169/de19bd48-2be6-4581-9892-e5c590c08492.jpg?impolicy=fcrop&w=1600&h=1066&q=medium" alt="Shoes" /></figure>
+          <div className="card-body">
+            <h2 className="card-title">Puerto Prinsesa</h2>
+            <p>If a dog chews shoes whose shoes does he choose?</p>
+            <div className="card-actions justify-end">
+              <button className="btn btn-accent">Buy Now</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      {isInitialLoad && initialLoadFlights.length >= 0 && (
         <div className="overflow-x-auto mt-4">
           <table className="table table-zebra table-pin-cols text-center">
             <thead>
@@ -215,7 +262,7 @@ const FlightsSearchComponent = ({ addAlert }) => {
             </tbody>
           </table>
         </div>
-      )} */}
+      )}
 
     {!isInitialLoad && flights.length >= 1 && (    
     <div className="mt-5 rounded-md w-full flex justify-around gap-5">

@@ -114,7 +114,7 @@ const FlightBookings = ({ addAlert }) => {
 
     try {
       await createUserBookingApi(bookingData);
-      addAlert("success", "Booking created successfully");
+      addAlert("success", "Booking created successfully. Booking confirmation sent to email.");
       navigate("/user/bookings");
       localStorage.removeItem('updatedSeatDataArray');
       localStorage.removeItem('selected_flight_id');
