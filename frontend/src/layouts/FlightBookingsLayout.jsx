@@ -1,6 +1,8 @@
 // eslint-disable-next-line react/prop-types
 import { useEffect } from "react";
 import axios from "axios";
+import Footer from "../pages/home/footer";
+import NavBar from "../components/UserNavBar";
 // eslint-disable-next-line react/prop-types
 const FlightBookingsLayout = ({ children }) => {
   useEffect(() => {
@@ -13,7 +15,7 @@ const FlightBookingsLayout = ({ children }) => {
     initiateAuthorization();
   }, []);
   return (
-    <div className="grid grid-rows-[auto_1fr_auto] w-full h-screen bg-white">
+    <div>
       <main className="flex-grow h-auto">{children}</main>
     </div>
   );
