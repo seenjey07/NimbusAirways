@@ -10,7 +10,6 @@ import format from "date-fns/format";
 import { useNavigate } from "react-router-dom";
 import { AirplaneIcon } from "../../components/icons/icons"
 import { locationData } from "../../assets/Datas"
-import Loading from "../../components/Loading"
 // eslint-disable-next-line react/prop-types
 const FlightsSearchComponent = ({ addAlert }) => {
   const [locationAdData, setLocationAdData] = useState([]);
@@ -24,7 +23,6 @@ const FlightsSearchComponent = ({ addAlert }) => {
   const [destinationOptions, setDestinationOptions] = useState([]);
   const [passengers, setPassengers] = useState("");
   const [mount, setMount] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
   const [isBookNowClicked, setIsBookNowClicked] = useState(false);
   const navigate = useNavigate();
 
@@ -34,7 +32,9 @@ const FlightsSearchComponent = ({ addAlert }) => {
       try {
         const flightsData = await indexedFlightsApi();
         const routesData = await indexedRoutesApi();
+        
         setInitialLoadFlights(flightsData);
+        setIsInitialLoad(true);
         const uniqueOriginLocations = Array.from(
           new Set(routesData.map((route) => route.origin_location))
         );
@@ -43,7 +43,7 @@ const FlightsSearchComponent = ({ addAlert }) => {
           new Set(routesData.map((route) => route.destination_location))
         );
         setDestinationOptions(uniqueDestinationLocations);
-  
+
         const lowercasedDestinationOptions = destinationOptions.map(dest => dest.trim().toLowerCase());
         const filteredLocations = locationData.filter((location) => {
           const lowerCaseLocation = location.location.trim().toLowerCase();
@@ -53,14 +53,12 @@ const FlightsSearchComponent = ({ addAlert }) => {
         const randomizedLocations = filteredLocations.sort(() => Math.random() - 0.5);
         setLocationAdData(randomizedLocations);
         setMount(true)
-        setIsLoading(false); 
       } catch (error) {
         console.error("Error fetching initial flight information:", error);
         addAlert("Error fetching flights. Please try again.");
-        setIsLoading(false); 
       }
     };
-  
+
     fetchData();
   }, [mount]);
 
@@ -85,7 +83,7 @@ const FlightsSearchComponent = ({ addAlert }) => {
       if (res.length === 0) {
         addAlert(
           "error",
-          "No available flights on that date or location. Please try again."
+          "No available flights on that date or location, please try again."
         );
       } else {
         setFlights(res);
@@ -116,7 +114,7 @@ const FlightsSearchComponent = ({ addAlert }) => {
     navigate("/user/bookings/create_booking");
   };
 
-  const itemsPerPage = 10;
+  const itemsPerPage = 3; 
   const [currentPage, setCurrentPage] = useState(1);
 
   const indexOfLastFlight = currentPage * itemsPerPage;
@@ -209,166 +207,140 @@ const FlightsSearchComponent = ({ addAlert }) => {
       </div>
 
 
-      {isLoading ? (
-        <Loading /> 
-      ) : (
-        initialLoadFlights.length >= 0 && (
-          <>
-            <div className="flex justify-around">
-              {locationAdData.slice(0, 4).map((locationInfo, index) => (
-                <div key={index} className="card card-compact w-96 bg-white shadow-xl">
-                  <figure>
-                    <img src={getImageForLocation(locationInfo.url)} alt={locationInfo.name} />
-                  </figure>
-                  <div className="card-body">
-                    <h2 className="card-title">{locationInfo.location.toUpperCase()}</h2>
-                    <p>{locationInfo.ad}</p>
-                    <div className="card-actions justify-center">
-                      <button
-                        className="btn btn-primary"
-                        onClick={() => {
-                          handleBookNow(locationInfo.location);
-                        }}
-                      >
-                        Book Now
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="flex justify-around mt-3">
-              {locationAdData.slice(4, 8).map((locationInfo, index) => (
-                <div key={index} className="card card-compact w-96 bg-white shadow-xl">
-                  <figure>
-                    <img src={getImageForLocation(locationInfo.url)} alt={locationInfo.name} />
-                  </figure>
-                  <div className="card-body">
-                    <h2 className="card-title">{locationInfo.location.toUpperCase()}</h2>
-                    <p>{locationInfo.ad}</p>
-                    <div className="card-actions justify-center">
-                      <button
-                        className="btn btn-primary"
-                        onClick={() => {
-                          handleBookNow(locationInfo.location);
-                        }}
-                      >
-                        Book Now
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </>
-        )
-      )}
-
-      {!isInitialLoad && flights.length >= 1 && (
-        <div className="mt-5 rounded-md w-full flex justify-around gap-5">
-          <div className="flex flex-col">
-            <div className="flex flex-col gap-3">
-              {currentFlights
-                .sort((a, b) =>
-                  a.departure_date && b.departure_date
-                    ? a.departure_date.localeCompare(b.departure_date)
-                    : 0
-                )
-                .map((flight) => (
-                  <div
-                    key={flight.flight_number}
-                    className="flex gap-2 sm:gap-12 md:gap-24 lg:gap-36 xl:gap-44 p-5 px-7 rounded-lg shadow-md border border-accent bg-white"
-                  >
-                    <div>
-                      <div className="flex flex-col space-y-2">
-                        <span className="flex justify-center">
-                          {format(new Date(flight.departure_date), "hh:mm a")}
-                        </span>
-                        <span className="flex justify-center font-bold">
-                          {flight.origin_location}
-                        </span>
-                        <span className="italic text-sm flex justify-center">
-                          {flight.origin_code}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="flex flex-col justify-center space-y-4">
-                      <div className="flex justify-center"></div>
-                      <div className="flex justify-center text-sm italic">
-                        FROM
-                      </div>
-                      <div className="flex justify-center"></div>
-                    </div>
-                    <div>
-                      <div className="flex flex-col justify-center space-y-4">
-                        <div className="flex justify-center italic text-sm">
-                          {format(
-                            new Date(flight.departure_date),
-                            "MMMM dd, yyyy"
-                          )}
-                        </div>
-                        <div className="flex justify-center">
-                          <AirplaneIcon />
-                        </div>
-                        <div className="flex justify-center">
-                          {flight.flight_number}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex flex-col justify-center space-y-4">
-                      <div className="flex justify-center"></div>
-                      <div className="flex justify-center text-sm italic">
-                        TO
-                      </div>
-                      <div className="flex justify-center"></div>
-                    </div>
-                    <div className="flex flex-col space-y-2">
-                      <span className="flex justify-center">
-                        {format(new Date(flight.arrival_date), "hh:mm a")}
-                      </span>
-                      <span className="flex justify-center font-bold">
-                        {flight.destination_location}
-                      </span>
-                      <span className="italic text-sm flex justify-center">
-                        {flight.destination_code}
-                      </span>
-                    </div>
-                    <div>
-                      <div className="flex flex-col space-y-4">
-                        <div className="flex"></div>
-                        <div className="flex">
-                          <button
-                            className="btn btn-neutral hover:bg-primary hover:text-white"
-                            onClick={() => handleSelect(flight.flight_id)}
-                          >
-                            Select
-                          </button>
-                        </div>
-                        <div className="flex"></div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-            </div>
-            <div className="flex justify-center mt-1">
-              <div className="join ">
-                {Array.from({ length: totalPages }).map((_, index) => (
-                  <button
-                    key={index}
-                    className={`btn join-item${
-                      currentPage === index + 1 ? "active" : ""
-                    }`}
-                    onClick={() => handlePageChange(index + 1)}
-                  >
-                    {index + 1}
+      {isInitialLoad && initialLoadFlights.length >= 0 && (
+        <>
+          <div className="flex justify-around">
+          {locationAdData.slice(0,4).map((locationInfo, index) => (
+            <div key={index} className="card card-compact w-96 bg-white shadow-xl">
+              <figure>
+                <img src={getImageForLocation(locationInfo.url)} alt={locationInfo.name} />
+              </figure>
+              <div className="card-body">
+                <h2 className="card-title">{locationInfo.location.toUpperCase()}</h2>
+                <p>{locationInfo.ad}</p>
+                <div className="card-actions justify-center">
+                <button
+                  className="btn btn-primary"
+                  onClick={() => {handleBookNow(locationInfo.location)}}
+                >
+                    Book Now
                   </button>
-                ))}
+                </div>
+              </div>
+            </div>
+          ))}
+          </div>
+
+        <div className="flex justify-around mt-3">
+        {locationAdData.slice(4,8).map((locationInfo, index) => (
+          <div key={index} className="card card-compact w-96 bg-white shadow-xl">
+            <figure>
+              <img src={getImageForLocation(locationInfo.url)} alt={locationInfo.name} />
+            </figure>
+            <div className="card-body">
+              <h2 className="card-title">{locationInfo.location.toUpperCase()}</h2>
+              <p>{locationInfo.ad}</p>
+              <div className="card-actions justify-center">
+              <button
+                  className="btn btn-primary"
+                  onClick={() => {handleBookNow(locationInfo.location)}}
+                >
+                    Book Now
+                  </button>
               </div>
             </div>
           </div>
+        ))}
         </div>
-      )}
+      </>
+    )}
+
+    {!isInitialLoad && flights.length >= 1 && (    
+    <div className="mt-5 rounded-md w-full flex justify-around gap-5">
+      <div className="flex flex-col">
+        <div className="flex flex-col gap-3">
+          {currentFlights
+          .sort((a, b) =>
+            a.departure_date && b.departure_date
+              ? a.departure_date.localeCompare(b.departure_date)
+              : 0
+          )
+          .map((flight) => (
+          <div key={flight.flight_number} className="flex gap-2 sm:gap-12 md:gap-24 lg:gap-36 xl:gap-44 p-5 px-7 rounded-lg shadow-md border border-accent bg-white">
+            <div>
+              <div className="flex flex-col space-y-2">
+                  <span className="flex justify-center">
+                    {format(new Date(flight.departure_date), "hh:mm a")}
+                  </span>
+                  <span className="flex justify-center font-bold">{flight.origin_location}</span>
+                  <span className="italic text-sm flex justify-center">{flight.origin_code}</span>
+              </div>
+            </div>
+            <div className="flex flex-col justify-center space-y-4">
+                <div className="flex justify-center"></div>
+                <div className="flex justify-center text-sm italic">FROM</div>
+                <div className="flex justify-center"></div>
+              </div>
+            <div>
+              <div className="flex flex-col justify-center space-y-4">
+                <div className="flex justify-center italic text-sm">
+                  {format(new Date(flight.departure_date), "MMMM dd, yyyy")}
+                </div>
+                <div className="flex justify-center"><AirplaneIcon /></div>
+                <div className="flex justify-center">{flight.flight_number}</div>
+              </div>
+            </div>
+            <div className="flex flex-col justify-center space-y-4">
+                <div className="flex justify-center"></div>
+                <div className="flex justify-center text-sm italic">TO</div>
+                <div className="flex justify-center"></div>
+              </div>
+            <div className="flex flex-col space-y-2">
+                  <span className="flex justify-center">
+                    {format(new Date(flight.arrival_date), "hh:mm a")}
+                  </span>
+                  <span className="flex justify-center font-bold">
+                    {flight.destination_location}
+                  </span>
+                  <span className="italic text-sm flex justify-center">
+                  {flight.destination_code}
+                  </span>
+              </div>
+            <div>
+              <div className="flex flex-col space-y-4 ">
+                <div className="flex"></div>
+                <div className="flex">
+                  <button 
+                  className="btn btn-accent"
+                  onClick={() => handleSelect(flight.flight_id)}
+                  >
+                    Select
+                  </button>
+                </div>
+                <div className="flex"></div>
+              </div>
+            </div>
+          </div>
+          ))}
+        </div>
+        <div className="flex justify-center mt-1">
+          <div className="join ">
+            {Array.from({ length: totalPages }).map((_, index) => (
+              <button
+                key={index}
+                className={`btn join-item${
+                  currentPage === index + 1 ? 'active' : ''
+                }`}
+                onClick={() => handlePageChange(index + 1)}
+              >
+                {index + 1}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+    )}
     </>
   );
 };
