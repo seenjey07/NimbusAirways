@@ -46,6 +46,21 @@ const AdminUsers = ({addAlert}) => {
         document.getElementById('EditUsers').showModal();
       };
 
+      const itemsPerPage = 8;
+      const [currentPage, setCurrentPage] = useState(1);
+      const indexOfLastUser = currentPage * itemsPerPage;
+      const indexOfFirstUser = indexOfLastUser - itemsPerPage;
+      const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
+      const totalPages = Math.ceil(filteredUsers.length / itemsPerPage);
+
+      const handleNextPage = () => {
+        setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
+      };
+    
+      const handlePrevPage = () => {
+        setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+      };
+
       useEffect(() => {
         if (!isEditModalOpen) {
           fetchUserData();
@@ -131,14 +146,14 @@ const AdminUsers = ({addAlert}) => {
                   </tr>
                   </thead>
                   <tbody>
-                  {filteredUsers.map((user, index) => (
+                  {currentUsers.map((user, index) => (
                       <tr key={index} className="hover text-center">
                       <td>{user.id}</td>
-                      <td className="font-bold text-left">{`${user.first_name} ${user.middle_name} ${user.last_name}`}</td>
+                      <td className="font-bold text-left text-xs">{`${user.first_name} ${user.middle_name} ${user.last_name}`}</td>
                       <td>{user.birth_date}</td>
                       <td>{user.gender}</td>
-                      <td className="text-left">{user.email}</td>
-                      <td>{user.phone_number}</td>
+                      <td className="text-left text-xs">{user.email}</td>
+                      <td className="text-xs">{user.phone_number}</td>
                       <td>{user.role}</td>
                       <td>
                       
@@ -161,8 +176,24 @@ const AdminUsers = ({addAlert}) => {
                   </tbody>
               </table>
           </div>
-
           
+           <div className="flex justify-center mt-2 mb-2">
+              <button
+                className="btn btn-sm btn-accent text-secondary px-3"
+                onClick={handlePrevPage}
+                disabled={currentPage === 1}
+              >
+                Previous
+              </button>
+              <span className="mx-3">{`Page ${currentPage} of ${totalPages}`}</span>
+              <button
+                className="btn btn-sm btn-accent text-secondary px-3"
+                onClick={handleNextPage}
+                disabled={currentPage === totalPages}
+              >
+                Next
+              </button>
+            </div>
 
         </div>
       </>
