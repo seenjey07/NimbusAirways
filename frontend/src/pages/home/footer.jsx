@@ -1,3 +1,4 @@
+import { DarkGithubIcon, GithubIcon } from "../../components/icons/icons";
 import logoImage from "../../assets/logo-no-text.png";
 
 const Footer = () => {
@@ -27,25 +28,38 @@ const Footer = () => {
           Developed by:
         </p>
         <div className="grid grid-flow-col gap-2">
-          <a
-            className="link link-hover font-sans text-[9px]"
-            href="https://github.com/andradajus"
-          >
-            Justin Marcus Andrada
-          </a>
-          |
-          <a
-            className="link link-hover font-sans text-[9px]"
-            href="https://github.com/seenjey07"
-          >
-            Christine Joy Rosales
-          </a>
+          <div className="flex">
+            <a
+              className="link link-hover font-sans text-[9px]"
+              href="https://github.com/andradajus"
+            >
+              <div className="flex">
+                <GithubIcon className="h-4 w-4 mr-1 hover:opacity-70" />
+                <span>Justin Marcus Andrada</span>
+              </div>
+            </a>
+          </div>
+          <div>|</div>
+          <div className="flex">
+            <a
+              className="link link-hover font-sans text-[9px]"
+              href="https://github.com/seenjey07"
+            >
+              <div className="flex">
+                <GithubIcon className="h-4 w-4 mr-1 hover:opacity-70" />
+                <span>Christine Joy Rosales</span>
+              </div>
+            </a>
+          </div>
         </div>
       </div>
 
       <nav className="footer-center text-center md:text-left">
         <h6 className="footer-title m-0 text-[8pt]">Social</h6>
         <div className="grid grid-flow-col gap-4">
+          <a href="https://github.com/seenjey07/NimbusAirways">
+            <GithubIcon className="text-white h-4 w-4" />
+          </a>
           <a>
             <svg
               xmlns="http://www.w3.org/2000/svg"

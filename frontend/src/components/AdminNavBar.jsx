@@ -2,7 +2,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { AdminIcon } from "./icons/icons";
 
 const AdminNavBar = () => {
-
   const navigate = useNavigate();
   return (
     <>
@@ -99,19 +98,17 @@ const AdminNavBar = () => {
               </Link>
             </li>
 
-
             <li>
               <details>
-                
                 <summary className="hover:text-white p-4 rounded-full">
                   Bookings
                 </summary>
                 <ul className="p-2 bg-accent shadow-md text-xs w-content text-center z-10">
                   <Link to="bookings">
                     <li>
-                        <a className="hover:text-white p-2 rounded-full">
-                          Booking History
-                        </a>
+                      <a className="hover:text-white p-2 rounded-full">
+                        Booking History
+                      </a>
                     </li>
                   </Link>
                   <li>
@@ -164,15 +161,11 @@ const AdminNavBar = () => {
               className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-accent rounded-box w-52"
             >
               <li>
-                <a className="justify-between hover:bg-primary hover:text-white rounded-full">
-                  Profile
-                  <span className="badge">New</span>
-                </a>
-              </li>
-              <li>
-                <a className="hover:bg-primary hover:text-white rounded-full">
-                  Settings
-                </a>
+                <Link to="/user/my_dashboard">
+                  <a className="justify-between hover:bg-primary hover:text-white rounded-full">
+                    Profile
+                  </a>
+                </Link>
               </li>
               <li>
                 <button onClick={() => navigate("/login")}>
