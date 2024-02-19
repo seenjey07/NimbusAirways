@@ -3,12 +3,20 @@ import { useNavigate } from "react-router-dom";
 import logoImage from "./assets/logo.png";
 import RegistrationImage from "./assets/RegistrationImage.jpg";
 import TermAndConditionsModal from "./components/ui/t&amodal";
+import { useState } from "react";
 
 // eslint-disable-next-line react/prop-types
 const Registration = ({ addAlert }) => {
   const navigate = useNavigate();
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    if (!agreedToTerms) {
+      addAlert("error", "Please agree to the terms and conditions before submitting.");
+      return;
+    }
+
     const result = await signUpApi(event);
 
     if (
@@ -70,6 +78,7 @@ const Registration = ({ addAlert }) => {
               <label className="form-control w-full max-w-xs">
                 <div className="label">
                   <span className="label-text">First Name</span>
+                  <span className="label-text text-xs">Required</span>
                 </div>
                 <input
                   type="text"
@@ -95,6 +104,7 @@ const Registration = ({ addAlert }) => {
               <label className="form-control w-full max-w-xs">
                 <div className="label">
                   <span className="label-text">Last Name</span>
+                  <span className="label-text text-xs">Required</span>
                 </div>
                 <input
                   type="text"
@@ -110,6 +120,7 @@ const Registration = ({ addAlert }) => {
               <label className="form-control w-full max-w-xs">
                 <div className="label">
                   <span className="label-text">Birth Date</span>
+                  <span className="label-text text-xs">Required</span>
                 </div>
                 <input
                   type="date"
@@ -123,6 +134,7 @@ const Registration = ({ addAlert }) => {
               <label className="form-control w-full max-w-xs">
                 <div className="label">
                   <span className="label-text">Contact Number</span>
+                  <span className="label-text text-xs">Required</span>
                 </div>
                 <input
                   type="number"
@@ -138,6 +150,7 @@ const Registration = ({ addAlert }) => {
               <label className="form-control w-full max-w-xs">
                 <div className="label">
                   <span className="label-text">Email</span>
+                  <span className="label-text text-xs">Required</span>
                 </div>
                 <input
                   type="email"
@@ -151,6 +164,7 @@ const Registration = ({ addAlert }) => {
               <label className="form-control w-full max-w-xs">
                 <div className="label">
                   <span className="label-text">Gender</span>
+                  <span className="label-text text-xs">Required</span>
                 </div>
 
                 <select
@@ -170,6 +184,7 @@ const Registration = ({ addAlert }) => {
               <label className="form-control w-full max-w-xs">
                 <div className="label">
                   <span className="label-text">Password</span>
+                  <span className="label-text text-xs">Required</span>
                 </div>
                 <input
                   type="password"
@@ -183,6 +198,7 @@ const Registration = ({ addAlert }) => {
               <label className="form-control w-full max-w-xs">
                 <div className="label">
                   <span className="label-text">Confirm Password</span>
+                  <span className="label-text text-xs">Required</span>
                 </div>
                 <input
                   type="password"
@@ -199,6 +215,7 @@ const Registration = ({ addAlert }) => {
                 <input
                   type="checkbox"
                   className="checkbox checkbox-xs mr-2 bg-white"
+                  onChange={(e) => setAgreedToTerms(e.target.checked)}
                 />
                 <div className="label-text">
                   I agree with the
