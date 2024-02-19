@@ -77,6 +77,8 @@ const BookingsComponent = ({ addAlert }) => {
             handleIsUserBookingDetailsModalOpen={
               handleIsUserBookingDetailsModalOpen
             }
+            setIsUserBookingDetailsModalOpen={setIsUserBookingDetailsModalOpen}
+            isUserBookingDetailsModalOpen={isUserBookingDetailsModalOpen}
           />
         </div>
         <form method="dialog" className="modal-backdrop">
