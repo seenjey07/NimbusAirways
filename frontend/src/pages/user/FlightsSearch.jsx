@@ -218,7 +218,7 @@ const FlightsSearchComponent = ({ addAlert }) => {
             {locationAdData.slice(0, 3).map((locationInfo, index) => (
               <div
                 key={index}
-                className="card card-compact w-96 bg-white shadow-xl hover:shadow-primary"
+                className="card card-compact w-96 bg-white shadow-xl hover:shadow-primary duration-300 ease-in-out"
               >
                 <figure>
                   <img
@@ -254,7 +254,7 @@ const FlightsSearchComponent = ({ addAlert }) => {
             {locationAdData.slice(3, 6).map((locationInfo, index) => (
               <div
                 key={index}
-                className="card card-compact w-96 bg-white shadow-xl hover:shadow-primary"
+                className="card card-compact w-96 bg-white shadow-xl hover:shadow-primary duration-300 ease-in-out"
               >
                 <figure>
                   <img
@@ -290,7 +290,7 @@ const FlightsSearchComponent = ({ addAlert }) => {
             {locationAdData.slice(6, 9).map((locationInfo, index) => (
               <div
                 key={index}
-                className="card card-compact w-96 bg-white shadow-xl hover:shadow-primary"
+                className="card card-compact w-96 bg-white shadow-xl hover:shadow-primary duration-300 ease-in-out"
               >
                 <figure>
                   <img

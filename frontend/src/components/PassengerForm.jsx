@@ -62,12 +62,14 @@ const PassengerForm = ({ formFields, addAlert, handleSeatSelect, onInputChange, 
     <div className="flex place-items-center justify-center mt-4 ">
       <Drawer >
         <DrawerTrigger asChild>
-          <div>
+          <div className="tooltip tooltip-secondary tooltip-bottom" data-tip={`Choose seat for Passenger ${passengerNumber}`}>
           <button className="btn btn-primary">Open Seat Selection</button>
+
           </div>
         </DrawerTrigger>
         <DrawerContent className="bg-white">
           <div>
+            <span className="flex justify-center text-lg italic">Currently Choosing Passenger for {passengerNumber}</span>
           <SeatSelection
                 addAlert={addAlert}
                 onSeatSelect={(seatData) => {
