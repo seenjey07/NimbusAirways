@@ -58,7 +58,7 @@ const ForgotPasswordModal = ({ addAlert }) => {
           <button
             type="submit"
             onClick={handleForgotPassword}
-            className="btn btn-primary w-full"
+            className="btn btn-secondary w-full"
           >
             Send Reset Password Instructions
           </button>

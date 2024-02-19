@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { AdminIcon } from "./icons/icons";
+import { AdminIcon, AirplaneIcon, FlightsAndRoutesIcon, UsersIcon } from "./icons/icons";
 
 const AdminNavBar = () => {
   const navigate = useNavigate();
@@ -80,21 +80,34 @@ const AdminNavBar = () => {
           <ul className="menu menu-horizontal px-1">
             <li>
               <Link to="users">
-                <a className="hover:text-white p-2 rounded-full">Users</a>
+                <a className="hover:text-white p-2 rounded-full">
+                  <div className="flex">
+                    <UsersIcon className="h-5 w-5 mr-1" />
+                    <span>Users</span>
+                  </div>
+                </a>
               </Link>
             </li>
 
             <li>
               <Link to="flights">
                 <a className="hover:text-white p-2 rounded-full">
-                  Flights and Routes
+                  <div className="flex">
+                    <FlightsAndRoutesIcon className="h-5 w-5 mr-1" />
+                    <span>Flights and Routes</span>
+                  </div>
                 </a>
               </Link>
             </li>
 
             <li>
               <Link to="aircrafts">
-                <a className="hover:text-white p-2 rounded-full">Aircraft</a>
+                <a className="hover:text-white p-2 rounded-full">
+                  <div className="flex">
+                    <AirplaneIcon className="h-5 w-5 mr-1" />
+                    <span>Aircraft</span>
+                  </div>
+                </a>
               </Link>
             </li>
 

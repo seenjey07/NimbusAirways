@@ -1,4 +1,4 @@
-import { DarkGithubIcon, GithubIcon } from "../../components/icons/icons";
+import { GithubIcon } from "../../components/icons/icons";
 import logoImage from "../../assets/logo-no-text.png";
 
 const Footer = () => {

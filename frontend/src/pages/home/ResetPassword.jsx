@@ -81,7 +81,7 @@ const ResetPasswordForm = ({ addAlert }) => {
                 />
               </label>
               <br />
-              <button type="submit" className="btn btn-primary">
+              <button type="submit" className="btn btn-secondary">
                 Reset Password
               </button>
             </form>
