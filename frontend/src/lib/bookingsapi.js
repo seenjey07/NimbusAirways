@@ -5,11 +5,7 @@ axios.defaults.headers.common["Authorization"] = token;
 
 export const indexBookingsApi = async () => {
   try {
-    const response = await axios.get(
-      `${backendBaseUrl}/api/bookings/index`,
-      {}
-    );
-    console.log("indexBookingsApi response:", response);
+    const response = await axios.get(`${backendBaseUrl}/api/bookings`);
     return response;
   } catch (error) {
     console.log("indexBookingsApi error:", error);
@@ -28,12 +24,9 @@ export const createBookingApi = async () => {
   }
 };
 
-export const showBookingApi = async (booking_reference) => {
+export const showBookingApi = async (id) => {
   try {
-    const response = await axios.get(
-      `${backendBaseUrl}/api/bookings/show?booking_reference=${booking_reference}`
-    );
-    console.log("showBookingApi response:", response);
+    const response = await axios.get(`${backendBaseUrl}/api/bookings/${id}`);
     return response;
   } catch (error) {
     console.log("showBookingApi error:", error);
@@ -41,29 +34,27 @@ export const showBookingApi = async (booking_reference) => {
   }
 };
 
-export const updateBookingApi = async (booking_reference, bookingData) => {
+export const updateBookingApi = async (id, bookingData) => {
   try {
     const response = await axios.put(
-      `${backendBaseUrl}/api/bookings/${booking_reference}`,
+      `${backendBaseUrl}/api/bookings/${id}`,
       bookingData
     );
     console.log("updateBookingApi response:", response);
-    return response;
+    return response.data;
   } catch (error) {
     console.log("updateBookingApi error:", error);
     throw error;
   }
 };
 
-export const destroyBookingApi = async (booking_reference) => {
+export const deleteBookingApi = async (id) => {
   try {
-    const response = await axios.delete(
-      `${backendBaseUrl}/api/bookings/${booking_reference}`
-    );
-    console.log("destroyBookingApi response:", response);
-    return response;
+    const response = await axios.delete(`${backendBaseUrl}/api/bookings/${id}`);
+    console.log("deleteBookingApi response:", response);
+    return response.data;
   } catch (error) {
-    console.log("destroyBookingApi error:", error);
+    console.log("deleteBookingApi error:", error);
     throw error;
   }
 };
