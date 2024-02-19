@@ -31,7 +31,7 @@ Rails.application.routes.draw do
     get 'api/users/:id', to: 'users#show'
     put 'api/users/:id', to: 'users#update'
 
-    get 'api/bookings/index', to: 'bookings#index'
+    get 'api/bookings', to: 'bookings#index'
     get 'api/bookings/:id', to: 'bookings#show'
     post 'api/book', to: 'bookings#create_booking'
     put 'api/bookings/:id', to: 'bookings#update'
@@ -39,8 +39,6 @@ Rails.application.routes.draw do
 
     get '/flights/:flight_id/seats', to: 'flights#index_seats'
 
-
-    # resources :bookings, only: [:show, :create, :update, :destroy], path: 'api/bookings'
 ########################### END OF USER ROUTES #################################
 
 ###########################  ADMIN ROUTES ######################################

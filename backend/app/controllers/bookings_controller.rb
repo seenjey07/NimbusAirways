@@ -12,17 +12,6 @@ class BookingsController < ApplicationController
     end
   end
 
-  def create
-    @booking = current_user.bookings.build(booking_params)
-
-    if @booking.save
-      update_booking_after_save
-      render json: @booking, status: :created
-    else
-      render json: { errors: @booking.errors.full_messages }, status: :unprocessable_entity
-    end
-  end
-
   def create_booking
     ActiveRecord::Base.transaction do
       @booking = current_user.bookings.build(booking_params)
@@ -63,7 +52,6 @@ class BookingsController < ApplicationController
     end
   end
 
-
   def generate_random_booking_reference
     random_number = rand(10_000..99_999)
     random_letters1 = ('A'..'Z').to_a.sample(3).join
@@ -72,10 +60,23 @@ class BookingsController < ApplicationController
     "NA#{random_number}#{random_letters1}#{random_number}#{random_letters2}"
   end
 
-
   def show
-    @booking = current_user.bookings.find_by(booking_reference:params[:booking_reference])
-    render json: @booking
+    @booking = current_user.bookings.find_by(id: params[:id])
+    
+    unless @booking
+      render json: { error: 'Booking not found' }, status: :not_found
+      return
+    end
+
+    @passengers = @booking.passengers.includes(:seat)
+    @flight = @booking.flight
+    @route = Route.find(@flight.route_id) if @flight && @flight.route_id.present?
+    @aircraft = @flight.aircraft
+
+    render json: { booking: @booking.as_json(include: { flight: { include: :aircraft } }), 
+    passengers: @passengers.as_json(include: :flight, include: { seat: {} }), 
+    aircraft: @aircraft,
+     route: @route&.as_json }
   end
 
   def update
@@ -88,23 +89,20 @@ class BookingsController < ApplicationController
   end
 
   def destroy
-    @booking = current_user.bookings.find_by(params[:booking_reference])
+    @booking = current_user.bookings.find_by(id: params[:id])
     @booking.destroy
     head :no_content
   end
 
   private
 
-
   def set_booking
-    @booking = current_user.bookings.find_by(booking_reference: params[:booking_reference])
+    @booking = current_user.bookings.find_by(id: params[:id])
 
     unless @booking
       render json: { error: 'Booking not found' }, status: :not_found
     end
   end
-
-
 
   def booking_params
     params.require(:booking).permit(

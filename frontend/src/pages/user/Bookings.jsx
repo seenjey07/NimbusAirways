@@ -1,19 +1,18 @@
 import { useState, useEffect } from "react";
+import "../../App.css";
 import { useNavigate } from "react-router-dom";
-import {
-  indexBookingsApi,
-  showBookingApi,
-  updateBookingApi,
-} from "../../lib/bookingsapi";
+import { indexBookingsApi, showBookingApi } from "../../lib/bookingsapi";
 import { AirplaneIcon } from "../../components/icons/icons";
 import format from "date-fns/format";
-import ShowBookingModal from "../../pages/admin/dashboard/modals/ShowBookingModal";
 import Loading from "../../components/Loading";
+import UserBookingDetailsModal from "../../pages/admin/dashboard/modals/UserBookingDetailsModal";
 
 const BookingsComponent = ({ addAlert }) => {
   const [bookings, setBookings] = useState([]);
-  const [bookingData, setBookingData] = useState([]);
+  const [bookingData, setBookingData] = useState({});
   const [loading, setLoading] = useState(true);
+  const [isUserBookingDetailsModalOpen, setIsUserBookingDetailsModalOpen] =
+    useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -33,52 +32,54 @@ const BookingsComponent = ({ addAlert }) => {
   }, []);
 
   const BookingDetailsButton = ({ onOpenBookingDetails }) => {
-    return <button onClick={onOpenBookingDetails}>Show</button>;
-  };
-
-  const UpdateBookingButton = ({ onUpdateBooking }) => {
-    return <button onClick={onUpdateBooking}>Update</button>;
+    return (
+      <button
+        className="btn btn-primary flex justify-center"
+        onClick={() => {
+          onOpenBookingDetails();
+          setIsUserBookingDetailsModalOpen(true);
+        }}
+      >
+        Show Details
+      </button>
+    );
   };
 
   const handleCreateBooking = () => {
     navigate("/user/flight_search");
   };
 
-  const handleOpenBookingDetails = async (booking_reference) => {
+  const handleOpenBookingDetails = async (id) => {
+    console.log("handleOpenBookingDetails is called");
     try {
-      const res = await showBookingApi(booking_reference);
-      setBookingData(res);
+      const res = await showBookingApi(id);
       console.log("Show Booking API response:", res);
+      setBookingData(res);
+      setIsUserBookingDetailsModalOpen(true);
       document.getElementById("bookings").showModal();
     } catch (error) {
       console.error("Error showing booking details:", error);
+      addAlert("error", "Error showing booking details. Please try again.");
     }
   };
 
-  const handleUpdateBooking = async (booking_reference, updatedData) => {
-    try {
-      const res = await updateBookingApi(booking_reference, updatedData);
-      console.log("Update Booking API response:", res);
-      addAlert("success", "Booking updated successfully.");
-      setBookingData(updatedData);
-    } catch (error) {
-      console.error("Error updating booking:", error);
-    }
+  const handleIsUserBookingDetailsModalOpen = () => {
+    setIsUserBookingDetailsModalOpen(false);
   };
 
   return (
-    <div className="w-full">
+    <>
       <dialog id="bookings" className="modal">
-        <div className="modal-box w-12/12 max-w-7xl bg-white">
-          <ShowBookingModal
+        <div className="modal-box w-content max-w-5xl h-3/4 bg-white">
+          <UserBookingDetailsModal
             bookingData={bookingData}
-            setBookingData={setBookingData}
+            handleIsUserBookingDetailsModalOpen={
+              handleIsUserBookingDetailsModalOpen
+            }
           />
         </div>
         <form method="dialog" className="modal-backdrop">
-          <button onClick={() => document.getElementById("bookings").close()}>
-            close
-          </button>
+          <button onClick={handleIsUserBookingDetailsModalOpen}>Close</button>
         </form>
       </dialog>
 
@@ -116,7 +117,7 @@ const BookingsComponent = ({ addAlert }) => {
                       </div>
                     </div>
 
-                    <div className="flex flex-col justify-center space-y-4">
+                    <div className="flex flex-col justify-center space-y-3">
                       <div className="flex justify-center"></div>
                       <div className="flex justify-center text-sm italic">
                         FROM
@@ -138,7 +139,7 @@ const BookingsComponent = ({ addAlert }) => {
                       </div>
                     </div>
 
-                    <div className="flex flex-col justify-center space-y-4">
+                    <div className="flex flex-col justify-center space-y-3">
                       <div className="flex justify-center"></div>
                       <div className="flex justify-center text-sm italic">
                         TO
@@ -158,32 +159,15 @@ const BookingsComponent = ({ addAlert }) => {
                       </span>
                     </div>
                     <div>
-                      <div className="flex flex-col space-y-4">
-                        <div className="flex"></div>
-                        <div className="flex">
-                          <div className="text-sm p-1 text-center">
-                            <a className="hover:underline hover:text-blue">
-                              <BookingDetailsButton
-                                onOpenBookingDetails={() =>
-                                  handleOpenBookingDetails(
-                                    booking.booking_reference
-                                  )
-                                }
-                              />
-                            </a>
-                            <a className="hover:underline hover:text-blue">
-                              <UpdateBookingButton
-                                onUpdateBooking={() =>
-                                  handleUpdateBooking(
-                                    booking.booking_reference,
-                                    updatedData
-                                  )
-                                }
-                              />
-                            </a>
-                          </div>
+                      <div className="flex flex-col space-y-3">
+                        <div></div>
+                        <div className="text-sm p-1 text-center">
+                          <BookingDetailsButton
+                            onOpenBookingDetails={() =>
+                              handleOpenBookingDetails(booking.id)
+                            }
+                          />
                         </div>
-                        <div className="flex"></div>
                       </div>
                     </div>
                   </div>
@@ -210,7 +194,7 @@ const BookingsComponent = ({ addAlert }) => {
           </div>
         </div>
       )}
-    </div>
+    </>
 
     // <div className="overflow-x-auto mt-1 w-full">
     // {Array.isArray(bookings) && bookings.length > 0 ?
