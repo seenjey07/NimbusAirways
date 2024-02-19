@@ -8,6 +8,9 @@ const AdminBookings = () => {
     const [bookings, setBookings] = useState([])
     const [loading, setLoading] = useState(true);
     const [bookingData, setBookingData] = useState([])
+    const [currentPage, setCurrentPage] = useState(0);
+    const [searchTerm, setSearchTerm] = useState('');
+    const perPage = 10;
 
     useEffect(() => {
         const fetchData = async () => {
@@ -24,16 +27,25 @@ const AdminBookings = () => {
         fetchData();
       }, []);
 
-      const handleShowBooking = async (id) => {
-        try {
-          const response = await adminShowCurrentBookingApi(id);
-          setBookingData(response)
-          console.log("Bookings Data", bookingData);
-          document.getElementById('bookings').showModal()
-        } catch (error) {
-          console.error("Error fetching bookings:", error);
-        }
-      };
+      const filteredBookings = bookings.filter((booking) =>
+    booking.booking_reference.includes(searchTerm)
+    );
+
+    const totalPages = Math.ceil(filteredBookings.length / perPage);
+
+    const handleNextPage = () => {
+      setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages - 1));
+    };
+
+    const handlePrevPage = () => {
+      setCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
+    };
+
+    const paginatedBookings = filteredBookings.slice(
+      currentPage * perPage,
+      (currentPage + 1) * perPage
+    );
+
 
 
     return (
@@ -49,11 +61,40 @@ const AdminBookings = () => {
             </dialog>
 
              <div>
-                <span className="flex justify-center text-2xl m-2 font-bold">List of Bookings</span>
+                
+                  <div className="flex justify-between mt-3">
+                    <div className="ml-2 join bg-accent">
+                          <button
+                            onClick={handlePrevPage}
+                            disabled={currentPage === 0}
+                            className="join-item btn btn-accent text-secondary"
+                          >
+                            Previous
+                          </button>
+                          <div className="divider divider-horizontal divider-secondary"></div>
+                          <button
+                            onClick={handleNextPage}
+                            disabled={currentPage === totalPages - 1}
+                            className="join-item btn btn-accent text-secondary"
+                          >
+                            Next
+                          </button>
+                    </div>
+                    <span className="flex justify-center text-2xl m-2 font-bold">List of Bookings</span>
+                    <input
+                    type="text"
+                    placeholder="Search by Booking Reference"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="input input-accent bg-accent text-secondary placeholder-secondary placeholder-text-sm mr-3"
+                    />
+                  </div>
+                  
                 <div className="overflow-x-auto z-[-1]">
                     {loading ? (
                     <Loading />
                     ) : (
+                      <>
                     <table className="table">
                         <thead>
                         <tr className="text-center font-bold">
@@ -65,7 +106,7 @@ const AdminBookings = () => {
                         </tr>
                         </thead>
                         <tbody>
-                        {bookings.map((booking, index) => (
+                        {paginatedBookings.map((booking, index) => (
                             <tr key={index}>
                             <th className="text-center">{index + 1}</th>
                             <th className="text-center">{booking.id}</th>
@@ -84,7 +125,8 @@ const AdminBookings = () => {
                         ))}
                         </tbody>
                     </table>
-                    )}
+                  </>
+                )}
                 </div>
             </div>
         </>

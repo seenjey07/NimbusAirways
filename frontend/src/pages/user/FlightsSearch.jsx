@@ -229,6 +229,7 @@ const FlightsSearchComponent = ({ addAlert }) => {
                 <div className="card-body">
                   <h2 className="card-title">
                     {locationInfo.location.toUpperCase()}
+                    <div className="badge badge-secondary">Popular</div>
                   </h2>
                   <p>{locationInfo.ad}</p>
                   <div className="card-actions justify-center">
@@ -240,6 +241,7 @@ const FlightsSearchComponent = ({ addAlert }) => {
                           top: 0,
                           behavior: "smooth",
                         });
+                        addAlert("success", `Destination set to ${locationInfo.location}.`);
                       }}
                     >
                       Book Now
@@ -276,6 +278,7 @@ const FlightsSearchComponent = ({ addAlert }) => {
                           top: 0,
                           behavior: "smooth",
                         });
+                        addAlert("success", `Destination set to ${locationInfo.location}.`);
                       }}
                     >
                       Book Now
@@ -312,6 +315,7 @@ const FlightsSearchComponent = ({ addAlert }) => {
                           top: 0,
                           behavior: "smooth",
                         });
+                        addAlert("success", `Destination set to ${locationInfo.location}.`);
                       }}
                     >
                       Book Now

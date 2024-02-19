@@ -7,6 +7,7 @@ import format from "date-fns/format";
 import Loading from "../../components/Loading";
 import UserBookingDetailsModal from "../../pages/admin/dashboard/modals/UserBookingDetailsModal";
 
+// eslint-disable-next-line react/prop-types
 const BookingsComponent = ({ addAlert }) => {
   const [bookings, setBookings] = useState([]);
   const [bookingData, setBookingData] = useState({});
@@ -30,7 +31,7 @@ const BookingsComponent = ({ addAlert }) => {
 
     fetchBookings();
   }, []);
-
+// eslint-disable-next-line react/prop-types
   const BookingDetailsButton = ({ onOpenBookingDetails }) => {
     return (
       <button
