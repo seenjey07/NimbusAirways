@@ -8,8 +8,8 @@ import FlightSearchOrigin from "../../components/flightsearchorigin";
 import FlightSearchDestination from "../../components/flightsearchdestination";
 import format from "date-fns/format";
 import { useNavigate } from "react-router-dom";
-import { AirplaneIcon } from "../../components/icons/icons"
-import { locationData } from "../../assets/Datas"
+import { AirplaneIcon } from "../../components/icons/icons";
+import { locationData } from "../../assets/Datas";
 // eslint-disable-next-line react/prop-types
 const FlightsSearchComponent = ({ addAlert }) => {
   const [locationAdData, setLocationAdData] = useState([]);
@@ -32,7 +32,7 @@ const FlightsSearchComponent = ({ addAlert }) => {
       try {
         const flightsData = await indexedFlightsApi();
         const routesData = await indexedRoutesApi();
-        
+
         setInitialLoadFlights(flightsData);
         setIsInitialLoad(true);
         const uniqueOriginLocations = Array.from(
@@ -44,15 +44,20 @@ const FlightsSearchComponent = ({ addAlert }) => {
         );
         setDestinationOptions(uniqueDestinationLocations);
 
-        const lowercasedDestinationOptions = destinationOptions.map(dest => dest.trim().toLowerCase());
+        const lowercasedDestinationOptions = destinationOptions.map((dest) =>
+          dest.trim().toLowerCase()
+        );
         const filteredLocations = locationData.filter((location) => {
           const lowerCaseLocation = location.location.trim().toLowerCase();
-          const included = lowercasedDestinationOptions.includes(lowerCaseLocation);
+          const included =
+            lowercasedDestinationOptions.includes(lowerCaseLocation);
           return included;
         });
-        const randomizedLocations = filteredLocations.sort(() => Math.random() - 0.5);
+        const randomizedLocations = filteredLocations.sort(
+          () => Math.random() - 0.5
+        );
         setLocationAdData(randomizedLocations);
-        setMount(true)
+        setMount(true);
       } catch (error) {
         console.error("Error fetching initial flight information:", error);
         addAlert("Error fetching flights. Please try again.");
@@ -115,7 +120,7 @@ const FlightsSearchComponent = ({ addAlert }) => {
     navigate("/user/bookings/create_booking");
   };
 
-  const itemsPerPage = 3; 
+  const itemsPerPage = 3;
   const [currentPage, setCurrentPage] = useState(1);
 
   const indexOfLastFlight = currentPage * itemsPerPage;
@@ -132,12 +137,12 @@ const FlightsSearchComponent = ({ addAlert }) => {
 
   const getImageForLocation = (url) => {
     return `${url}`;
-  }
+  };
 
   const handleBookNow = (destination) => {
     localStorage.setItem("destination_from_homepage", destination);
-    setIsBookNowClicked(true)
-  }
+    setIsBookNowClicked(true);
+  };
 
   return (
     <>
@@ -207,178 +212,226 @@ const FlightsSearchComponent = ({ addAlert }) => {
         </div>
       </div>
 
-
       {isInitialLoad && initialLoadFlights.length >= 0 && (
         <>
           <div className="flex justify-around">
-          {locationAdData.slice(0,3).map((locationInfo, index) => (
-            <div key={index} className="card card-compact w-96 bg-white shadow-xl">
-              <figure>
-                <img src={getImageForLocation(locationInfo.url)} alt={locationInfo.name} />
-              </figure>
-              <div className="card-body">
-                <h2 className="card-title">{locationInfo.location.toUpperCase()}</h2>
-                <p>{locationInfo.ad}</p>
-                <div className="card-actions justify-center">
-                <button
-                  className="btn btn-primary"
-                  onClick={() => {handleBookNow(locationInfo.location)
-                    window.scrollTo({
-                      top: 0,
-                      behavior: "smooth"
-                  });
-                  }}
-                >
-                    Book Now
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
-          </div>
-
-        <div className="flex justify-around mt-3">
-        {locationAdData.slice(3,6).map((locationInfo, index) => (
-          <div key={index} className="card card-compact w-96 bg-white shadow-xl">
-            <figure>
-              <img src={getImageForLocation(locationInfo.url)} alt={locationInfo.name} />
-            </figure>
-            <div className="card-body">
-              <h2 className="card-title">{locationInfo.location.toUpperCase()}</h2>
-              <p>{locationInfo.ad}</p>
-              <div className="card-actions justify-center">
-              <button
-                  className="btn btn-primary"
-                  onClick={() => {handleBookNow(locationInfo.location)
-                    window.scrollTo({
-                      top: 0,
-                      behavior: "smooth"
-                  });
-                  }}
-                >
-                    Book Now
-                  </button>
-              </div>
-            </div>
-          </div>
-        ))}
-        </div>
-
-        <div className="flex justify-around mt-3">
-        {locationAdData.slice(6,9).map((locationInfo, index) => (
-          <div key={index} className="card card-compact w-96 bg-white shadow-xl">
-            <figure>
-              <img src={getImageForLocation(locationInfo.url)} alt={locationInfo.name} />
-            </figure>
-            <div className="card-body">
-              <h2 className="card-title">{locationInfo.location.toUpperCase()}</h2>
-              <p>{locationInfo.ad}</p>
-              <div className="card-actions justify-center">
-              <button
-                  className="btn btn-primary"
-                  onClick={() => {handleBookNow(locationInfo.location)
-                    window.scrollTo({
-                      top: 0,
-                      behavior: "smooth"
-                  });
-                  }}
-                >
-                    Book Now
-                  </button>
-              </div>
-            </div>
-          </div>
-        ))}
-        </div>
-      </>
-    )}
-
-    {!isInitialLoad && flights.length >= 1 && (    
-    <div className="mt-5 rounded-md w-full flex justify-around gap-5">
-      <div className="flex flex-col">
-        <div className="flex flex-col gap-3">
-          {currentFlights
-          .sort((a, b) =>
-            a.departure_date && b.departure_date
-              ? a.departure_date.localeCompare(b.departure_date)
-              : 0
-          )
-          .map((flight) => (
-          <div key={flight.flight_number} className="flex gap-2 sm:gap-12 md:gap-24 lg:gap-36 xl:gap-44 p-5 px-7 rounded-lg shadow-md border border-accent bg-white">
-            <div>
-              <div className="flex flex-col space-y-2">
-                  <span className="flex justify-center">
-                    {format(new Date(flight.departure_date), "hh:mm a")}
-                  </span>
-                  <span className="flex justify-center font-bold">{flight.origin_location}</span>
-                  <span className="italic text-sm flex justify-center">{flight.origin_code}</span>
-              </div>
-            </div>
-            <div className="flex flex-col justify-center space-y-4">
-                <div className="flex justify-center"></div>
-                <div className="flex justify-center text-sm italic">FROM</div>
-                <div className="flex justify-center"></div>
-              </div>
-            <div>
-              <div className="flex flex-col justify-center space-y-4">
-                <div className="flex justify-center italic text-sm">
-                  {format(new Date(flight.departure_date), "MMMM dd, yyyy")}
-                </div>
-                <div className="flex justify-center"><AirplaneIcon /></div>
-                <div className="flex justify-center">{flight.flight_number}</div>
-              </div>
-            </div>
-            <div className="flex flex-col justify-center space-y-4">
-                <div className="flex justify-center"></div>
-                <div className="flex justify-center text-sm italic">TO</div>
-                <div className="flex justify-center"></div>
-              </div>
-            <div className="flex flex-col space-y-2">
-                  <span className="flex justify-center">
-                    {format(new Date(flight.arrival_date), "hh:mm a")}
-                  </span>
-                  <span className="flex justify-center font-bold">
-                    {flight.destination_location}
-                  </span>
-                  <span className="italic text-sm flex justify-center">
-                  {flight.destination_code}
-                  </span>
-              </div>
-            <div>
-              <div className="flex flex-col space-y-4 ">
-                <div className="flex"></div>
-                <div className="flex">
-                  <button 
-                  className="btn btn-accent"
-                  onClick={() => handleSelect(flight.flight_id)}
-                  >
-                    Select
-                  </button>
-                </div>
-                <div className="flex"></div>
-              </div>
-            </div>
-          </div>
-          ))}
-        </div>
-        <div className="flex justify-center mt-1">
-          <div className="join ">
-            {Array.from({ length: totalPages }).map((_, index) => (
-              <button
+            {locationAdData.slice(0, 3).map((locationInfo, index) => (
+              <div
                 key={index}
-                className={`btn join-item${
-                  currentPage === index + 1 ? 'active' : ''
-                }`}
-                onClick={() => handlePageChange(index + 1)}
+                className="card card-compact w-96 bg-white shadow-xl hover:shadow-primary"
               >
-                {index + 1}
-              </button>
+                <figure>
+                  <img
+                    src={getImageForLocation(locationInfo.url)}
+                    alt={locationInfo.name}
+                  />
+                </figure>
+                <div className="card-body">
+                  <h2 className="card-title">
+                    {locationInfo.location.toUpperCase()}
+                  </h2>
+                  <p>{locationInfo.ad}</p>
+                  <div className="card-actions justify-center">
+                    <button
+                      className="btn btn-primary"
+                      onClick={() => {
+                        handleBookNow(locationInfo.location);
+                        window.scrollTo({
+                          top: 0,
+                          behavior: "smooth",
+                        });
+                      }}
+                    >
+                      Book Now
+                    </button>
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
+
+          <div className="flex justify-around mt-3 ">
+            {locationAdData.slice(3, 6).map((locationInfo, index) => (
+              <div
+                key={index}
+                className="card card-compact w-96 bg-white shadow-xl hover:shadow-primary"
+              >
+                <figure>
+                  <img
+                    src={getImageForLocation(locationInfo.url)}
+                    alt={locationInfo.name}
+                  />
+                </figure>
+                <div className="card-body">
+                  <h2 className="card-title">
+                    {locationInfo.location.toUpperCase()}
+                  </h2>
+                  <p>{locationInfo.ad}</p>
+                  <div className="card-actions justify-center">
+                    <button
+                      className="btn btn-primary"
+                      onClick={() => {
+                        handleBookNow(locationInfo.location);
+                        window.scrollTo({
+                          top: 0,
+                          behavior: "smooth",
+                        });
+                      }}
+                    >
+                      Book Now
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="flex justify-around mt-3 mb-3">
+            {locationAdData.slice(6, 9).map((locationInfo, index) => (
+              <div
+                key={index}
+                className="card card-compact w-96 bg-white shadow-xl hover:shadow-primary"
+              >
+                <figure>
+                  <img
+                    src={getImageForLocation(locationInfo.url)}
+                    alt={locationInfo.name}
+                  />
+                </figure>
+                <div className="card-body">
+                  <h2 className="card-title">
+                    {locationInfo.location.toUpperCase()}
+                  </h2>
+                  <p>{locationInfo.ad}</p>
+                  <div className="card-actions justify-center">
+                    <button
+                      className="btn btn-primary"
+                      onClick={() => {
+                        handleBookNow(locationInfo.location);
+                        window.scrollTo({
+                          top: 0,
+                          behavior: "smooth",
+                        });
+                      }}
+                    >
+                      Book Now
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+
+      {!isInitialLoad && flights.length >= 1 && (
+        <div className="mt-5 rounded-md w-full flex justify-around gap-5">
+          <div className="flex flex-col">
+            <div className="flex flex-col gap-3">
+              {currentFlights
+                .sort((a, b) =>
+                  a.departure_date && b.departure_date
+                    ? a.departure_date.localeCompare(b.departure_date)
+                    : 0
+                )
+                .map((flight) => (
+                  <div
+                    key={flight.flight_number}
+                    className="flex gap-2 sm:gap-12 md:gap-24 lg:gap-36 xl:gap-44 p-5 px-7 rounded-lg shadow-md border border-accent bg-white"
+                  >
+                    <div>
+                      <div className="flex flex-col space-y-2">
+                        <span className="flex justify-center">
+                          {format(new Date(flight.departure_date), "hh:mm a")}
+                        </span>
+                        <span className="flex justify-center font-bold">
+                          {flight.origin_location}
+                        </span>
+                        <span className="italic text-sm flex justify-center">
+                          {flight.origin_code}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="flex flex-col justify-center space-y-4">
+                      <div className="flex justify-center"></div>
+                      <div className="flex justify-center text-sm italic">
+                        FROM
+                      </div>
+                      <div className="flex justify-center"></div>
+                    </div>
+                    <div>
+                      <div className="flex flex-col justify-center space-y-4">
+                        <div className="flex justify-center italic text-sm">
+                          {format(
+                            new Date(flight.departure_date),
+                            "MMMM dd, yyyy"
+                          )}
+                        </div>
+                        <div className="flex justify-center">
+                          <AirplaneIcon />
+                        </div>
+                        <div className="flex justify-center">
+                          {flight.flight_number}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex flex-col justify-center space-y-4">
+                      <div className="flex justify-center"></div>
+                      <div className="flex justify-center text-sm italic">
+                        TO
+                      </div>
+                      <div className="flex justify-center"></div>
+                    </div>
+                    <div className="flex flex-col space-y-2">
+                      <span className="flex justify-center">
+                        {format(new Date(flight.arrival_date), "hh:mm a")}
+                      </span>
+                      <span className="flex justify-center font-bold">
+                        {flight.destination_location}
+                      </span>
+                      <span className="italic text-sm flex justify-center">
+                        {flight.destination_code}
+                      </span>
+                    </div>
+                    <div>
+                      <div className="flex flex-col space-y-4 ">
+                        <div className="flex"></div>
+                        <div className="flex flex-col justify-center">
+                          <div className="mb-1">
+                            <span className="text-sm mr-1 mb-1">Php</span>
+                            {parseInt(flight.price).toFixed(2)}
+                          </div>
+                          <button
+                            className="btn btn-accent"
+                            onClick={() => handleSelect(flight.flight_id)}
+                          >
+                            Select
+                          </button>
+                        </div>
+                        <div className="flex"></div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+            </div>
+            <div className="flex justify-center mt-1">
+              <div className="join ">
+                {Array.from({ length: totalPages }).map((_, index) => (
+                  <button
+                    key={index}
+                    className={`btn join-item${
+                      currentPage === index + 1 ? "active" : ""
+                    }`}
+                    onClick={() => handlePageChange(index + 1)}
+                  >
+                    {index + 1}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-    )}
+      )}
     </>
   );
 };
