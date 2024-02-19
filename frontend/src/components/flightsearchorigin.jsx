@@ -32,16 +32,16 @@ export function FlightSearchOrigin({ originOptions, onSelect }) {
           <Button
             role="combobox"
             aria-expanded={open}
-            className="w-[200px] justify-between"
+            className="w-[200px] justify-between text-white font-bold"
           >
             {value ? originOptions.find((data) => data === value) : "Select..."}
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
 
-        <PopoverContent className="bg-primary text-white">
+        <PopoverContent className="bg-primary text-white font-bold">
           <Command>
-            <CommandInput placeholder="Search..." />
+            <CommandInput className="placeholder-white font-bold" placeholder="Search..." />
             <CommandEmpty>No place found.</CommandEmpty>
             <CommandGroup>
               {originOptions.map((data) => (

@@ -10,6 +10,7 @@ import format from "date-fns/format";
 import ShowBookingModal from "../../pages/admin/dashboard/modals/ShowBookingModal";
 import Loading from "../../components/Loading";
 
+// eslint-disable-next-line react/prop-types
 const BookingsComponent = ({ addAlert }) => {
   const [bookings, setBookings] = useState([]);
   const [bookingData, setBookingData] = useState([]);
@@ -31,11 +32,11 @@ const BookingsComponent = ({ addAlert }) => {
 
     fetchBookings();
   }, []);
-
+// eslint-disable-next-line react/prop-types
   const BookingDetailsButton = ({ onOpenBookingDetails }) => {
     return <button onClick={onOpenBookingDetails}>Show</button>;
   };
-
+// eslint-disable-next-line react/prop-types
   const UpdateBookingButton = ({ onUpdateBooking }) => {
     return <button onClick={onUpdateBooking}>Update</button>;
   };

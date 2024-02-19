@@ -55,7 +55,7 @@ export function FlightSearchDestination({ destinationOptions, onSelect, isBookNo
           <Button
             role="combobox"
             aria-expanded={open}
-            className="w-[200px] justify-between"
+            className="w-[200px] justify-between text-white font-bold"
           >
             {value
               ? destinationOptions.find((data) => data === value)
@@ -64,9 +64,9 @@ export function FlightSearchDestination({ destinationOptions, onSelect, isBookNo
           </Button>
         </PopoverTrigger>
 
-        <PopoverContent className="bg-primary text-white">
+        <PopoverContent className="bg-primary text-white font-bold">
           <Command>
-            <CommandInput placeholder="Search..." />
+            <CommandInput className="placeholder-white" placeholder="Search..." />
             <CommandEmpty>No place found.</CommandEmpty>
             <CommandGroup>
               {destinationOptions.map((data) => (
