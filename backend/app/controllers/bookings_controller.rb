@@ -19,8 +19,8 @@ class BookingsController < ApplicationController
 
       if @booking.save
         create_passengers
-
         update_booking_after_save
+        BookingMailer.booking_confirmation(@booking).deliver_now
         render json: @booking, status: :created
       else
         render json: { errors: @booking.errors.full_messages }, status: :unprocessable_entity
@@ -62,7 +62,7 @@ class BookingsController < ApplicationController
 
   def show
     @booking = current_user.bookings.find_by(id: params[:id])
-    
+
     unless @booking
       render json: { error: 'Booking not found' }, status: :not_found
       return
@@ -73,8 +73,8 @@ class BookingsController < ApplicationController
     @route = Route.find(@flight.route_id) if @flight && @flight.route_id.present?
     @aircraft = @flight.aircraft
 
-    render json: { booking: @booking.as_json(include: { flight: { include: :aircraft } }), 
-    passengers: @passengers.as_json(include: :flight, include: { seat: {} }), 
+    render json: { booking: @booking.as_json(include: { flight: { include: :aircraft } }),
+    passengers: @passengers.as_json(include: :flight, include: { seat: {} }),
     aircraft: @aircraft,
      route: @route&.as_json }
   end
