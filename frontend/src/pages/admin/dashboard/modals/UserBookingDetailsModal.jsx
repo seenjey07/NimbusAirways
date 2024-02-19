@@ -2,22 +2,23 @@ import React, { useState, useEffect } from "react";
 import format from "date-fns/format";
 import Loading from "../../../../components/Loading";
 // eslint-disable-next-line react/prop-types
-
-const UserBookingDetailsModal = ({ bookingData }) => {
-  const [data, setData] = useState(null || []);
+const UserBookingDetailsModal = ({ bookingData, isUserBookingDetailsModalOpen, setIsUserBookingDetailsModalOpen }) => {
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     setData(bookingData);
-  }, []);
+    setIsUserBookingDetailsModalOpen(false)
+  }, [isUserBookingDetailsModalOpen]);
 
-  if (!data) {
-    return <Loading />;
-  }
+  
 
   const handleClose = () => {
     document.getElementById("bookings").close();
+    setIsUserBookingDetailsModalOpen(false)
   };
 
+
+  console.log("hi data ", data)
   return (
     <>
       <dialog
