@@ -187,9 +187,28 @@ const FlightDetails = ({
           </div>
 
           <div className="mb-1">
-            <div className="font-bold">Seat Fee</div>
-            <div className="font-bold">Meals</div>
-            <div className="font-bold">Total Fee</div>
+            <table className="w-full">
+              <tbody>
+              <tr>
+                <td className="font-bold text-right">
+                  Baggage Fee
+                </td>
+                <div className="tooltip tooltip-primary cursor-default" data-tip="Current Promo">
+                  <td className="ml-1 badge badge-secondary font-bold">FREE</td>
+                </div>
+              </tr>
+              <tr>
+                <td className="font-bold text-right">Meal Fee</td>
+                <div className="tooltip tooltip-primary cursor-default" data-tip="Current Promo">
+                  <td className="ml-1 badge badge-secondary font-bold">FREE</td>
+                </div>
+              </tr>
+              <tr>
+                <td className="font-bold text-right">Total Fee incl. tax</td>
+                <td className="flex ml-3">₱ {(flight.price * passenger).toFixed(2)}</td>
+              </tr>
+              </tbody>
+            </table>
           </div>
 
           <div className="mt-2">
