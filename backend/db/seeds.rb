@@ -440,17 +440,17 @@ puts "Flight Data successfuly imported"
 # # )
 # # puts "SuperAdmin successfully created!"
 
-User.create!(
-  first_name: "Super",
-  last_name: "Admin",
-  email: "nimbustest@test.com",
-  password: "123456",
-  role: "superadmin",
-  birth_date: Date.new(1980, 1, 1),
-  phone_number: "1549934120",
-  gender: "Male",
-  travel_fund: 0.00,
-  confirmed_at: Time.now
-)
+# User.create!(
+#   first_name: "Super",
+#   last_name: "Admin",
+#   email: "",
+#   password: "",
+#   role: "superadmin",
+#   birth_date: Date.new(1980, 1, 1),
+#   phone_number: "1549934120",
+#   gender: "Male",
+#   travel_fund: 0.00,
+#   confirmed_at: Time.now
+# )
 
-puts "SuperAdmin successfully created with confirmed_at set to today!"
+# puts "SuperAdmin successfully created with confirmed_at set to today!"

@@ -138,7 +138,7 @@ const FlightsSearchComponent = ({ addAlert }) => {
 
   return (
     <>
-      <div className="flex justify-center gap-5 shadow-xl my-4">
+      <div className="flex justify-center gap-5 shadow-xl my-4 bg-white">
         <div className="flex justify-center gap-5">
           <label className="form-control max-w-xs">
             <div className="label">
