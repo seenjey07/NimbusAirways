@@ -443,11 +443,11 @@ puts "Flight Data successfuly imported"
 User.create!(
   first_name: "Super",
   last_name: "Admin",
-  email: "1@test.com",
+  email: "nimbustest@test.com",
   password: "123456",
   role: "superadmin",
   birth_date: Date.new(1980, 1, 1),
-  phone_number: "1541234120",
+  phone_number: "1549934120",
   gender: "Male",
   travel_fund: 0.00,
   confirmed_at: Time.now
