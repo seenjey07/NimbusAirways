@@ -8,68 +8,68 @@
 # #     MovieGenre.find_or_create_by!(name: genre_name)
 # #   end
 # # Seed data for bookings table
-# require 'json'
-# puts "Importing Routes data..."
-# json_data = File.read(Rails.root.join('data/routesdata.json'))
-# routesdata = JSON.parse(json_data)
-# routesdata.each do |route|
-#   Route.create(route)
-# end
-# puts "Routes Data successfuly imported"
+require 'json'
+puts "Importing Routes data..."
+json_data = File.read(Rails.root.join('data/routesdata.json'))
+routesdata = JSON.parse(json_data)
+routesdata.each do |route|
+  Route.create(route)
+end
+puts "Routes Data successfuly imported"
 
-# require 'json'
-# puts "Importing Aircraft data..."
-# json_data = File.read(Rails.root.join('data/aircraftsdata.json'))
-# aircraftsdata = JSON.parse(json_data)
-# aircraftsdata.each do |aircraft|
-#   Aircraft.create(aircraft)
-# end
-# puts "Aircraft Data successfuly imported"
+require 'json'
+puts "Importing Aircraft data..."
+json_data = File.read(Rails.root.join('data/aircraftsdata.json'))
+aircraftsdata = JSON.parse(json_data)
+aircraftsdata.each do |aircraft|
+  Aircraft.create(aircraft)
+end
+puts "Aircraft Data successfuly imported"
 
-# puts "Importing Users data"
-# json_data = File.read(Rails.root.join('data/usersdata.json'))
-# usersdata = JSON.parse(json_data)
-# usersdata.each do |user|
-#   User.create(user)
-# end
-# puts "Users Data successfuly imported"
+puts "Importing Users data"
+json_data = File.read(Rails.root.join('data/usersdata.json'))
+usersdata = JSON.parse(json_data)
+usersdata.each do |user|
+  User.create(user)
+end
+puts "Users Data successfuly imported"
 
-# puts "Importing all flights from February to March 2024 kapit lang WSL... Kape muna..."
-# json_data = File.read(Rails.root.join('data/febmarflightsdata.json'))
-# flightsdata = JSON.parse(json_data)
-# flightsdata.each do |flight|
-#   Flight.create(flight)
-# end
-# puts "Flight Data successfuly imported"
-
-
-
-# # puts "Importing Seats data kapit lang WSL..."
-# # json_data = File.read(Rails.root.join('data/seatsdata_february.json'))
-# # seatsdata = JSON.parse(json_data)
-# # seatsdata.each do |seat|
-# #   Seat.create(seat)
-# # end
-# # puts "February Seats Data successfully imported. Okay na WSL please wag na magtampo"
+puts "Importing all flights from February to March 2024 kapit lang WSL... Kape muna..."
+json_data = File.read(Rails.root.join('data/febmarflightsdata.json'))
+flightsdata = JSON.parse(json_data)
+flightsdata.each do |flight|
+  Flight.create(flight)
+end
+puts "Flight Data successfuly imported"
 
 
-# # json_data = File.read(Rails.root.join('data/flightsdata_february.json'))
-# # flightsdata = JSON.parse(json_data)
-# # flightsdata.each do |flight|
-# #   begin
-# #     Flight.create!(flight)
-# #   rescue ActiveRecord::RecordInvalid => e
-# #     puts "Error creating flight: #{e.message}"
-# #   end
-# # end
 
-# # flightsdata.each do |flight|
-# #   begin
-# #     Flight.create!(flight)
-# #   rescue ActiveRecord::RecordInvalid => e
-# #     puts "Error creating flight: #{e.message}"
-# #   end
-# # end
+puts "Importing Seats data kapit lang WSL..."
+json_data = File.read(Rails.root.join('data/seatsdata_february.json'))
+seatsdata = JSON.parse(json_data)
+seatsdata.each do |seat|
+  Seat.create(seat)
+end
+puts "February Seats Data successfully imported. Okay na WSL please wag na magtampo"
+
+
+json_data = File.read(Rails.root.join('data/flightsdata_february.json'))
+flightsdata = JSON.parse(json_data)
+flightsdata.each do |flight|
+  begin
+    Flight.create!(flight)
+  rescue ActiveRecord::RecordInvalid => e
+    puts "Error creating flight: #{e.message}"
+  end
+end
+
+flightsdata.each do |flight|
+  begin
+    Flight.create!(flight)
+  rescue ActiveRecord::RecordInvalid => e
+    puts "Error creating flight: #{e.message}"
+  end
+end
 
 
 
@@ -440,17 +440,17 @@
 # # )
 # # puts "SuperAdmin successfully created!"
 
-# User.create!(
-#   first_name: "Super",
-#   last_name: "Admin",
-#   email: "nimbustest@test.com",
-#   password: "123456",
-#   role: "superadmin",
-#   birth_date: Date.new(1980, 1, 1),
-#   phone_number: "1549934120",
-#   gender: "Male",
-#   travel_fund: 0.00,
-#   confirmed_at: Time.now
-# )
+User.create!(
+  first_name: "Super",
+  last_name: "Admin",
+  email: "nimbustest@test.com",
+  password: "123456",
+  role: "superadmin",
+  birth_date: Date.new(1980, 1, 1),
+  phone_number: "1549934120",
+  gender: "Male",
+  travel_fund: 0.00,
+  confirmed_at: Time.now
+)
 
-# puts "SuperAdmin successfully created with confirmed_at set to today!"
+puts "SuperAdmin successfully created with confirmed_at set to today!"
