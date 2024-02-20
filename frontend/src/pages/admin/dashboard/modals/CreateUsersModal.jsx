@@ -12,13 +12,11 @@ const CreateUsersModal = ({addAlert}) => {
           });
       
           try {
-            const response = await adminCreateUserApi({ userData });
+            await adminCreateUserApi({ userData });
             addAlert('success', 'User created successfuly!');
-            console.log('User created successfully:', response);
             document.getElementById('CreateUsers').close();
           } catch (error) {
             addAlert('error', error.response.data.errors);
-            console.log('error', error.response.data.errors);
           }
         };
 

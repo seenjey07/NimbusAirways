@@ -1,7 +1,7 @@
+/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react";
 import format from "date-fns/format";
 import Loading from "../../../../components/Loading";
-// eslint-disable-next-line react/prop-types
 const UserBookingDetailsModal = ({
   bookingData,
   isUserBookingDetailsModalOpen,

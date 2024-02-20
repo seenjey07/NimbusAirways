@@ -26,13 +26,11 @@ const FlightBookings = ({ addAlert }) => {
     const fetchData = async () => {
       try {
         const flightsData = await showCurrentFlightApi(flight_id);
-        console.log("Flights data", flightsData);
         setFlight(flightsData);
         setDepartureDate(flightsData.departure_date);
         setArrivalDate(flightsData.arrival_date);
         setLoadingFlight(false);
       } catch (error) {
-        console.error("Error fetching initial flight information:", error);
         addAlert("Error fetching flights. Please try again.");
         setLoadingFlight(false);
       }
@@ -60,8 +58,6 @@ const FlightBookings = ({ addAlert }) => {
     Array.from({ length: passenger }, () => "")
   );
   const handleFormSubmit = async (passengerFormDataArray) => {
-    console.log("Passenger Form Data Array:", passengerFormDataArray);
-
     if (seatDataArray.some((seatData) => seatData === "")) {
       addAlert(
         "error",
@@ -93,7 +89,6 @@ const FlightBookings = ({ addAlert }) => {
           : null
       )
       .filter(Boolean);
-    console.log("Seats", seats);
 
     const bookingData = {
       booking: {
@@ -126,23 +121,17 @@ const FlightBookings = ({ addAlert }) => {
   };
 
   const handleSeatSelect = (seatData, passengerNumber) => {
-    console.log("passenger number:", passengerNumber);
-    console.log("seat data:", seatData);
-
     const parsedPassengerNumber = parseInt(passengerNumber, 10);
-
     if (!isNaN(parsedPassengerNumber)) {
       setSeatDataArray((prevSeatDataArray) => {
         const updatedSeatDataArray = [...prevSeatDataArray];
         updatedSeatDataArray[parsedPassengerNumber - 1] = seatData;
-
-        console.log('Updated SeatDataArray:', updatedSeatDataArray);
         localStorage.setItem('updatedSeatDataArray', JSON.stringify(updatedSeatDataArray))
 
         return updatedSeatDataArray;
       });
     } else {
-      console.error("Invalid passenger number:", passengerNumber);
+      addAlert("Invalid passenger number:", passengerNumber);
     }
   };
 
@@ -151,9 +140,6 @@ const FlightBookings = ({ addAlert }) => {
     fieldName,
     value
   ) => {
-    console.log("Passenger Number:", passengerNumber);
-    console.log("Field Name:", fieldName);
-    console.log("Value:", value);
     setPassengerStates((prevStates) => {
       const updatedPassengerStates = prevStates.map((prevState, index) => {
         if (index + 1 === passengerNumber) {
@@ -191,8 +177,6 @@ const FlightBookings = ({ addAlert }) => {
                     addAlert={addAlert}
                     passengerNumber={passengerNumber} 
                     handleSeatSelect={(seatData, passengerNumber) => {
-                      console.log('Seat Data Passenger Form FB:', seatData);
-                      console.log('Passenger Number:', passengerNumber);
                       handleSeatSelect(passengerNumber, seatData);
                     }}
                     onInputChange={(field, value) => handlePassengerFormInputChange(passengerNumber, field, value)}
@@ -218,8 +202,6 @@ const FlightBookings = ({ addAlert }) => {
                     addAlert={addAlert}
                     passengerNumber={passengerNumber} 
                     handleSeatSelect={(seatData, passengerNumber) => {
-                      console.log('Seat Data Passenger Form FB:', seatData);
-                      console.log('Passenger Number:', passengerNumber);
                       handleSeatSelect(passengerNumber, seatData);
                     }}
                     onInputChange={(field, value) => handlePassengerFormInputChange(passengerNumber, field, value)}
@@ -245,8 +227,6 @@ const FlightBookings = ({ addAlert }) => {
                     addAlert={addAlert}
                     passengerNumber={passengerNumber} 
                     handleSeatSelect={(seatData, passengerNumber) => {
-                      console.log('Seat Data Passenger Form FB:', seatData);
-                      console.log('Passenger Number:', passengerNumber);
                       handleSeatSelect(passengerNumber, seatData);
                     }}
                     onInputChange={(field, value) => handlePassengerFormInputChange(passengerNumber, field, value)}

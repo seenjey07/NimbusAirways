@@ -25,9 +25,6 @@ export function FlightSearchDestination({ destinationOptions, onSelect, isBookNo
   const selectedDestination = localStorage.getItem(
     "destination_from_homepage");
   
-
-  console.log("Value", value);
-
   useEffect(() => {
     if (selectedDestination) {
       setValue(selectedDestination);

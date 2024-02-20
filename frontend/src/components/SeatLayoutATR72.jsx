@@ -15,7 +15,6 @@ const SeatLayoutATR72 = ({ onSeatClick, selectedSeat }) => {
         const response = await indexedSeatsFromFlightsApi(flightId);
         const indexedSeatsArray = response.data.seats;
         setIndexedSeats(indexedSeatsArray);
-        console.log("Indexed seats:", indexedSeatsArray);
       } catch (error) {
         console.error("Error fetching indexed seats:", error);
       }

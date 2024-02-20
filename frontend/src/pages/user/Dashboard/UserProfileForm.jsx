@@ -116,7 +116,6 @@ const UserProfileForm = ({
     if (await validateForm()) {
       try {
         const response = await updateCurrentUserApi(id, userData);
-        console.log("Response:", userData);
         setFormValues((prevValues) => ({
           ...prevValues,
           ...response,
@@ -125,11 +124,9 @@ const UserProfileForm = ({
         // document.getElementById("ConfirmProfileUpdateModal").close();
         // setIsConfirmUpdateModalOpen(false);
       } catch (error) {
-        console.error("Error updating user details:", error);
         addAlert("error", "Error updating user details");
       }
     } else {
-      console.log("Form validation failed");
       addAlert("error", "Form validation failed");
     }
   };

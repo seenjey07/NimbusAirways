@@ -29,7 +29,6 @@ const ForgotPasswordModal = ({ addAlert }) => {
     }
   };
 
-  console.log("forgotpasswrd mail", email);
   return (
     <>
       <h2 className="text-2xl font-bold mb-4 flex justify-center text-white">

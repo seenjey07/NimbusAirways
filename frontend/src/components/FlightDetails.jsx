@@ -32,7 +32,6 @@ const FlightDetails = ({
   }, [seatDataArray, passengerStates]);
 
   const handlePayment = () => {
-    console.log(seatDataArray);
     const duplicateSeats = findDuplicateSeats(seatDataArray);
 
     if (duplicateSeats.length > 0) {

@@ -69,8 +69,6 @@ const GenerateFlightsModal = ({addAlert}) => {
         const routesData = await indexedRoutesApi();
         setAircrafts(aircraftData);
         setRouteOptions(routesData);
-        console.log("hi routes", routesData);
-        console.log("hi aircraft", aircraftData)
       } catch (error) {
         console.error("Error fetching aircrafts:", error);
       }
@@ -80,8 +78,7 @@ const GenerateFlightsModal = ({addAlert}) => {
 
   const generateFlights = async () => {
     try {
-      const response = await adminGenerateFlightsApi(formData);
-      console.log(response);
+      await adminGenerateFlightsApi(formData);
       addAlert('success', 'Flights generated successfully!');
     } catch (error) {
       console.error("Error:", error);

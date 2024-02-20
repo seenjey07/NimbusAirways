@@ -59,7 +59,6 @@ const FlightsSearchComponent = ({ addAlert }) => {
         setLocationAdData(randomizedLocations);
         setMount(true);
       } catch (error) {
-        console.error("Error fetching initial flight information:", error);
         addAlert("Error fetching flights. Please try again.");
       }
     };
@@ -83,7 +82,6 @@ const FlightsSearchComponent = ({ addAlert }) => {
         passengers,
       });
 
-      console.log("Retrieved flight information: ", res);
 
       if (res.length === 0) {
         addAlert(
@@ -96,10 +94,6 @@ const FlightsSearchComponent = ({ addAlert }) => {
         addAlert("success", "Flight search successful!");
       }
     } catch (error) {
-      console.error(
-        "Error retrieving flight information:",
-        error.response.data
-      );
       addAlert("error", error.response.data.error);
     }
   };
@@ -113,7 +107,6 @@ const FlightsSearchComponent = ({ addAlert }) => {
   };
 
   const handleSelect = (flight_id) => {
-    console.log("Flight ID:", flight_id);
     localStorage.setItem("selected_flight_id", flight_id);
     localStorage.setItem("total", passengers);
     localStorage.removeItem("destination_from_homepage");
@@ -133,7 +126,6 @@ const FlightsSearchComponent = ({ addAlert }) => {
     setCurrentPage(pageNumber);
   };
 
-  console.log("LocationAdData: ", locationAdData);
 
   const getImageForLocation = (url) => {
     return `${url}`;

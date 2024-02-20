@@ -32,8 +32,6 @@ const CreateFlightsModal = () => {
         const routesData = await adminIndexRoutesApi();
         setAircrafts(aircraftsData);
         setRoutes(routesData);
-        console.log("Create Flights Modal: Aircraft", aircraftsData);
-        console.log("Create Flights Modal: Routes", routesData);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -60,9 +58,7 @@ const CreateFlightsModal = () => {
     };
 
     try {
-      console.log("API Request Body:", modifiedFlightsData);
-      const apiResponse = await adminCreateFlightsApi(modifiedFlightsData);
-      console.log("API Response:", apiResponse);
+      await adminCreateFlightsApi(modifiedFlightsData);
       document.getElementById("CreateFlights").close();
     } catch (error) {
       console.error("Error making API request:", error);
@@ -250,7 +246,6 @@ const CreateFlightsModal = () => {
           </div>
           <DateTimePicker
             onChange={(date) => {
-              console.log("Departure Date and Time:", date);
               setDepartureDateTime(date);
             }}
             value={departureDateTime}

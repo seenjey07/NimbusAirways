@@ -16,7 +16,6 @@ const AdminAircrafts = ({addAlert}) => {
         try {
             const res = await adminIndexAircraftsApi();
             setAircrafts(res);
-            console.log('Aircrafts', res);
         } catch (error) {
             console.error("Error fetching aircrafts:", error);
         } finally {

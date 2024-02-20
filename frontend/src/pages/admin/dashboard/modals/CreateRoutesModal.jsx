@@ -45,9 +45,7 @@ const CreateRoutesModal = ({ addAlert }) => {
     };
 
     try {
-      const response = await adminCreateRoutesApi(routeData);
-      console.log("Route Created Successfully:", response);
-      console.log("Route Data:", routeData);
+      await adminCreateRoutesApi(routeData);
       addAlert("success", "Route created successfully");
       document.getElementById("CreateRoutes").close();
     } catch (error) {

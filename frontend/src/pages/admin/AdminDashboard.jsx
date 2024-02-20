@@ -20,7 +20,6 @@ const AdminDashboard = () => {
     const getCompanyStats = async () => {
       try {
         const res = await adminCompanyStats();
-        console.log("Company stats", res);
         setStats(res);
       } catch (error) {
         console.error("Error retrieving initial flight information:", error);
