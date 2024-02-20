@@ -44,32 +44,32 @@ puts "Flight Data successfuly imported"
 
 
 
-puts "Importing Seats data kapit lang WSL..."
-json_data = File.read(Rails.root.join('data/seatsdata_february.json'))
-seatsdata = JSON.parse(json_data)
-seatsdata.each do |seat|
-  Seat.create(seat)
-end
-puts "February Seats Data successfully imported. Okay na WSL please wag na magtampo"
+# puts "Importing Seats data kapit lang WSL..."
+# json_data = File.read(Rails.root.join('data/seatsdata_february.json'))
+# seatsdata = JSON.parse(json_data)
+# seatsdata.each do |seat|
+#   Seat.create(seat)
+# end
+# puts "February Seats Data successfully imported. Okay na WSL please wag na magtampo"
 
 
-json_data = File.read(Rails.root.join('data/flightsdata_february.json'))
-flightsdata = JSON.parse(json_data)
-flightsdata.each do |flight|
-  begin
-    Flight.create!(flight)
-  rescue ActiveRecord::RecordInvalid => e
-    puts "Error creating flight: #{e.message}"
-  end
-end
+# json_data = File.read(Rails.root.join('data/flightsdata_february.json'))
+# flightsdata = JSON.parse(json_data)
+# flightsdata.each do |flight|
+#   begin
+#     Flight.create!(flight)
+#   rescue ActiveRecord::RecordInvalid => e
+#     puts "Error creating flight: #{e.message}"
+#   end
+# end
 
-flightsdata.each do |flight|
-  begin
-    Flight.create!(flight)
-  rescue ActiveRecord::RecordInvalid => e
-    puts "Error creating flight: #{e.message}"
-  end
-end
+# flightsdata.each do |flight|
+#   begin
+#     Flight.create!(flight)
+#   rescue ActiveRecord::RecordInvalid => e
+#     puts "Error creating flight: #{e.message}"
+#   end
+# end
 
 
 
