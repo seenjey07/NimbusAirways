@@ -22,6 +22,6 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
   end
 
   def after_confirmation_path_for(resource_name, resource)
-    'http://localhost:5173/login'
+    'https://nimbusairways.vercel.app/login'
   end
 end

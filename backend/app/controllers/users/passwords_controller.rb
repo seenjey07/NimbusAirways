@@ -67,6 +67,6 @@ class Users::PasswordsController < Devise::PasswordsController
 
   # The path used after sending reset password instructions
   def after_sending_reset_password_instructions_path_for(resource_name)
-    'http://localhost:5173/login'
+    'https://nimbusairways.onrender.com/login'
   end
 end

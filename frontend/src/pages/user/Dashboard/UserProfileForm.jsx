@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react";
 import "../../../App.css";
 import {
@@ -6,7 +7,7 @@ import {
 } from "../../../lib/usersapi";
 import ConfirmProfileUpdateModal from "../../../pages/admin/dashboard/modals/ConfirmProfileUpdateModal";
 import { id } from "date-fns/locale";
-// eslint-disable-next-line react/prop-types
+
 
 const UserProfileForm = ({
   addAlert,
@@ -249,6 +250,7 @@ const UserProfileForm = ({
                   className="input input-bordered m-0 p-1 text-sm h-fit w-fit bg-blue-100 max-w-xs"
                   value={formValues.email}
                   onChange={handleChange}
+                  readOnly
                 />
               </div>
             </label>
