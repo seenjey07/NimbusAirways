@@ -1,6 +1,22 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
+  config.action_mailer.default_url_options = { host: 'localhost', port: '3000' }
+
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address:         ENV["SMTP_HOST"],
+    port:            ENV["SMTP_PORT"],
+    # domain:          'example.com',
+    host:            ENV["SMTP_HOST"],
+    user_name:       ENV["SMTP_USERNAME"],
+    password:        ENV["SMTP_PASSWORD"],
+    authentication:  ENV["SMTP_AUTHENTICATION"],
+    enable_starttls: true,
+    # open_timeout:    5,
+    # read_timeout:    5 
+  }
+
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.

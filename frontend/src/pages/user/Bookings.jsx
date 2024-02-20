@@ -31,7 +31,7 @@ const BookingsComponent = ({ addAlert }) => {
 
     fetchBookings();
   }, []);
-// eslint-disable-next-line react/prop-types
+  // eslint-disable-next-line react/prop-types
   const BookingDetailsButton = ({ onOpenBookingDetails }) => {
     return (
       <button
@@ -71,19 +71,14 @@ const BookingsComponent = ({ addAlert }) => {
   return (
     <>
       <dialog id="bookings" className="modal">
-        <div className="modal-box w-content max-w-5xl h-3/4 bg-white">
-          <UserBookingDetailsModal
-            bookingData={bookingData}
-            handleIsUserBookingDetailsModalOpen={
-              handleIsUserBookingDetailsModalOpen
-            }
-            setIsUserBookingDetailsModalOpen={setIsUserBookingDetailsModalOpen}
-            isUserBookingDetailsModalOpen={isUserBookingDetailsModalOpen}
-          />
-        </div>
-        <form method="dialog" className="modal-backdrop">
-          <button onClick={handleIsUserBookingDetailsModalOpen}>Close</button>
-        </form>
+        <UserBookingDetailsModal
+          bookingData={bookingData}
+          handleIsUserBookingDetailsModalOpen={
+            handleIsUserBookingDetailsModalOpen
+          }
+          setIsUserBookingDetailsModalOpen={setIsUserBookingDetailsModalOpen}
+          isUserBookingDetailsModalOpen={isUserBookingDetailsModalOpen}
+        />
       </dialog>
 
       {loading ? (

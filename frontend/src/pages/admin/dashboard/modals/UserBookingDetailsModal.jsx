@@ -2,33 +2,33 @@ import React, { useState, useEffect } from "react";
 import format from "date-fns/format";
 import Loading from "../../../../components/Loading";
 // eslint-disable-next-line react/prop-types
-const UserBookingDetailsModal = ({ bookingData, isUserBookingDetailsModalOpen, setIsUserBookingDetailsModalOpen }) => {
+const UserBookingDetailsModal = ({
+  bookingData,
+  isUserBookingDetailsModalOpen,
+  setIsUserBookingDetailsModalOpen,
+}) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
     setData(bookingData);
-    setIsUserBookingDetailsModalOpen(false)
+    setIsUserBookingDetailsModalOpen(false);
   }, [isUserBookingDetailsModalOpen]);
-
-  
 
   const handleClose = () => {
     document.getElementById("bookings").close();
-    setIsUserBookingDetailsModalOpen(false)
+    setIsUserBookingDetailsModalOpen(false);
   };
 
-
-  console.log("hi data ", data)
   return (
     <>
       <dialog
-        className="card-body h-auto w-auto bg-secondary text-sm rounded-xl"
+        className="card-body h-content w-content bg-secondary text-sm rounded-xl"
         style={{
-          position: "relative",
-          maxWidth: "50%",
-          width: "content",
+          position: "fixed",
+          maxWidth: "45%",
+          maxBlockSize: "100%",
           margin: "auto",
-          padding: "5px",
+          padding: "10px",
         }}
       >
         <h2 className="flex justify-center text-center font-serif text-lg font-bold m-0 p-0">
@@ -39,7 +39,7 @@ const UserBookingDetailsModal = ({ bookingData, isUserBookingDetailsModalOpen, s
         </p>
 
         {data?.data?.booking && data?.data?.booking?.flight && (
-          <div className="justify-center flex border-2">
+          <div className="justify-center flex border-2 rounded">
             <div>
               <p className="justify-center flex underline underline-offset-1 font-bold py-2">
                 Flight Details
@@ -85,7 +85,7 @@ const UserBookingDetailsModal = ({ bookingData, isUserBookingDetailsModalOpen, s
                     </td>
                     <td className="flex ml-3 text-start bg-base-100">
                       {data?.data?.route?.destination_location}
-                      <span className="italic my-3 mx-2 ml-0 text-sm font-bold">
+                      <span className="italic text-sm font-bold">
                         ({data?.data?.route?.destination_code})
                       </span>
                     </td>
@@ -135,7 +135,7 @@ const UserBookingDetailsModal = ({ bookingData, isUserBookingDetailsModalOpen, s
           </div>
         )}
 
-        <div className="flex-1 border-2 border-black p-2 w-full">
+        <div className="flex-1 h-auto rounded w-full">
           <div className="flex">
             {data?.data?.passengers &&
               data?.data?.passengers.slice(0, 5).map((passenger, index) => (
@@ -151,11 +151,11 @@ const UserBookingDetailsModal = ({ bookingData, isUserBookingDetailsModalOpen, s
                   />
                   <label
                     htmlFor={`passenger-${index}`}
-                    className="collapse-title text-md pr-3 font-bold underline underline-offset-2"
+                    className="collapse-title text-md h- pr-3 font-bold underline underline-offset-2"
                   >
                     Passenger {index + 1}
                   </label>
-                  <div className="collapse-content border-2p-2 ">
+                  <div className="collapse-content p-2">
                     <table>
                       <tbody>
                         <tr className="border-2 border-black">
@@ -242,7 +242,7 @@ const UserBookingDetailsModal = ({ bookingData, isUserBookingDetailsModalOpen, s
                   >
                     Passenger {index + 6}
                   </label>
-                  <div className="collapse-content border-2 rounded-lg shadow-lg p-2 ">
+                  <div className="collapse-content border-2 rounded-lg shadow-lg">
                     <table>
                       <tbody>
                         <tr>
@@ -286,7 +286,7 @@ const UserBookingDetailsModal = ({ bookingData, isUserBookingDetailsModalOpen, s
           </div>
         </div>
         <button
-          className="btn btn-error text-sm w-3/5 self-center p-0 m-0 font-bold rounded-full"
+          className="btn btn-error text-sm w-2/5 sm:w-1/5 self-center p-0 m-0 font-bold rounded-full"
           onClick={handleClose}
           type="button"
         >
