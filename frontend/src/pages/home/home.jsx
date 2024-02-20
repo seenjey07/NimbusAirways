@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Footer from "../home/footer";
 import logoImage from "../../assets/logo.png";
-import homepageVideo from "../../assets/HomepageVideo.mp4";
+// import homepageVideo from "../../assets/HomepageVideo.mp4";
 import { Link, useNavigate } from "react-router-dom";
 import FlightSearchDestination from "../../components/flightsearchdestination";
 import { indexedRoutesApi } from "../../lib/flightsapi";
@@ -45,8 +45,6 @@ const Home = ({ addAlert }) => {
 
     navigate(`/flight_search`);
   };
-  
-  
 
   return (
     <>
@@ -118,7 +116,7 @@ const Home = ({ addAlert }) => {
           }}
         >
           <video
-            src={homepageVideo}
+            // src={homepageVideo}
             autoPlay
             loop
             muted

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import travelClips from "../../../assets/TravelClips.mp4";
+// import travelClips from "../../../assets/TravelClips.mp4";
 import UserProfileForm from "./UserProfileForm";
 import { showCurrentUserApi } from "../../../lib/usersapi";
 import { id } from "date-fns/locale";
@@ -70,7 +70,7 @@ const UserDashboard = ({ addAlert }) => {
         <div className="m-2 pt-3 pl-3 lg:w-1/3">
           <div className="grid w-full card p-2 justify-center items-center">
             <video
-              src={travelClips}
+              // src={travelClips}
               autoPlay
               loop
               muted
