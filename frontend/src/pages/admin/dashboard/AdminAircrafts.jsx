@@ -19,17 +19,6 @@ const AdminAircrafts = ({ addAlert }) => {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [aircraftId, setSelectedAircraftId] = useState();
 
-
-//   const fetchAircraftsData = async () => {
-//     try {
-//       const res = await adminIndexAircraftsApi();
-//       setAircrafts(res);
-//       console.log("Aircrafts", res);
-//     } catch (error) {
-//       console.error("Error fetching aircrafts:", error);
-//     } finally {
-//       setLoading(false);
-
     const fetchAircraftsData = async () => {
         try {
             const res = await adminIndexAircraftsApi();
@@ -52,17 +41,6 @@ const AdminAircrafts = ({ addAlert }) => {
     setIsCreateModalOpen(true)
 
     }
-  };
-
-  useEffect(() => {
-    if (!isCreateModalOpen) {
-      fetchAircraftsData();
-    }
-  }, [isCreateModalOpen]);
-
-  const handleCreateClick = () => {
-    document.getElementById("CreateAircraft").showModal();
-    setIsCreateModalOpen(true);
   };
 
   const showFlightsDetailModal = (aircraftId) => {
