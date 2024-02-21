@@ -23,7 +23,6 @@ const BookingsComponent = ({ addAlert }) => {
         setBookings(res.data);
         setLoading(false);
       } catch (error) {
-        console.error("Error retrieving bookings:", error);
         setLoading(false);
         addAlert("error", "Error retrieving your bookings. Please try again.");
       }
@@ -51,15 +50,12 @@ const BookingsComponent = ({ addAlert }) => {
   };
 
   const handleOpenBookingDetails = async (id) => {
-    console.log("handleOpenBookingDetails is called");
     try {
       const res = await showBookingApi(id);
-      console.log("Show Booking API response:", res);
       setBookingData(res);
       setIsUserBookingDetailsModalOpen(true);
       document.getElementById("bookings").showModal();
     } catch (error) {
-      console.error("Error showing booking details:", error);
       addAlert("error", "Error showing booking details. Please try again.");
     }
   };

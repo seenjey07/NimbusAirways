@@ -81,8 +81,6 @@ const Login = ({ addAlert }) => {
       );
 
       const githubOAuthUrl = response
-      console.log("GitHub OAuth URL:", githubOAuthUrl);
-      console.log("Github login", response);
       window.location.href = githubOAuthUrl;
     } catch (error) {
       addAlert("error", "Login failed. Please try again");
@@ -110,7 +108,6 @@ const Login = ({ addAlert }) => {
   };
 
   const handleSuccess = (response) => {
-    console.log('Google login successful:', response);
     fetchEmail(response.credential);
   };
 

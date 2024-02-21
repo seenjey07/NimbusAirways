@@ -22,7 +22,6 @@ const Home = ({ addAlert }) => {
         );
         setDestinationOptions(uniqueDestinationLocations);
       } catch (error) {
-        console.error("Error fetching initial flight information:", error);
         addAlert("error", "Error fetching flights. Please try again.");
       }
     };
@@ -45,8 +44,6 @@ const Home = ({ addAlert }) => {
 
     navigate(`/flight_search`);
   };
-  
-  
 
   return (
     <>

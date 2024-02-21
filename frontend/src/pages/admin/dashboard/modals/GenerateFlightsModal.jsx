@@ -5,7 +5,7 @@ import {
 } from "../../../../lib/admin/adminusersapi";
 import { indexedRoutesApi } from "../../../../lib/flightsapi";
 // eslint-disable-next-line react/prop-types
-const GenerateFlightsModal = ({addAlert}) => {
+const GenerateFlightsModal = ({ addAlert }) => {
   const [formData, setFormData] = useState({
     start_month: "",
     end_month: "",
@@ -30,12 +30,10 @@ const GenerateFlightsModal = ({addAlert}) => {
   const [aircrafts, setAircrafts] = useState([]);
   const [routeOptions, setRouteOptions] = useState([]);
 
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
-
 
   const months = Array.from({ length: 12 }, (_, index) => ({
     value: index + 1,
@@ -69,8 +67,6 @@ const GenerateFlightsModal = ({addAlert}) => {
         const routesData = await indexedRoutesApi();
         setAircrafts(aircraftData);
         setRouteOptions(routesData);
-        console.log("hi routes", routesData);
-        console.log("hi aircraft", aircraftData)
       } catch (error) {
         console.error("Error fetching aircrafts:", error);
       }
@@ -80,8 +76,7 @@ const GenerateFlightsModal = ({addAlert}) => {
 
   const generateFlights = async () => {
     try {
-      const response = await adminGenerateFlightsApi(formData);
-      console.log(response);
+      await adminGenerateFlightsApi(formData);
       addAlert('success', 'Flights generated successfully!');
     } catch (error) {
       console.error("Error:", error);
@@ -90,7 +85,9 @@ const GenerateFlightsModal = ({addAlert}) => {
 
   return (
     <div className="text-white flex flex-col justify-center">
-      <h2 className="justify-center flex text-2xl font-bold">Generate Flights</h2>
+      <h2 className="justify-center flex text-2xl font-bold">
+        Generate Flights
+      </h2>
       <form>
         <div className="flex justify-center gap-5">
           <label>
@@ -103,6 +100,9 @@ const GenerateFlightsModal = ({addAlert}) => {
               value={formData.start_month}
               onChange={handleChange}
             >
+              <option selected disabled>
+                Month
+              </option>
               {months.map((month) => (
                 <option key={month.value} value={month.value}>
                   {month.label}
@@ -121,6 +121,9 @@ const GenerateFlightsModal = ({addAlert}) => {
               value={formData.start_day}
               onChange={handleChange}
             >
+              <option selected disabled>
+                Day
+              </option>
               {currentStartMonthDays.map((day) => (
                 <option key={day} value={day}>
                   {day}
@@ -139,6 +142,9 @@ const GenerateFlightsModal = ({addAlert}) => {
               value={formData.start_hour}
               onChange={handleChange}
             >
+              <option selected disabled>
+                Hour
+              </option>
               {hoursOfDay.map((hour) => (
                 <option key={hour} value={hour}>
                   {hour}
@@ -159,6 +165,9 @@ const GenerateFlightsModal = ({addAlert}) => {
               value={formData.end_month}
               onChange={handleChange}
             >
+              <option selected disabled>
+                Month
+              </option>
               {months.map((month) => (
                 <option key={month.value} value={month.value}>
                   {month.label}
@@ -177,6 +186,9 @@ const GenerateFlightsModal = ({addAlert}) => {
               value={formData.end_day}
               onChange={handleChange}
             >
+              <option selected disabled>
+                Day
+              </option>
               {currentEndMonthDays.map((day) => (
                 <option key={day} value={day}>
                   {day}
@@ -195,6 +207,9 @@ const GenerateFlightsModal = ({addAlert}) => {
               value={formData.end_hour}
               onChange={handleChange}
             >
+              <option selected disabled>
+                Hour
+              </option>
               {hoursOfDay.map((hour) => (
                 <option key={hour} value={hour}>
                   {hour}
@@ -215,6 +230,9 @@ const GenerateFlightsModal = ({addAlert}) => {
               value={formData.aircraft_id}
               onChange={handleChange}
             >
+              <option selected disabled>
+                Select Aircraft
+              </option>
               {aircrafts?.map((aircraft) => (
                 <option key={aircraft?.id} value={aircraft?.id}>
                   {aircraft?.family} {aircraft?.model} |{" "}
@@ -227,37 +245,46 @@ const GenerateFlightsModal = ({addAlert}) => {
           </label>
         </div>
 
-        <div className="flex justify-center">        
+        <div className="flex justify-center">
           <label>
             <div className="label">
               <span className="label-text text-white">Choose Route</span>
             </div>
             <select
-                className="text-black select select-bordered w-full text-center"
-                name="end_month"
-                value={formData.route_id}
-                onChange={(e) => {
-                  const selectedRouteId = e.target.value;
-                  const selectedRouteNumber = parseInt(selectedRouteId, 10);
-                  const nextOddRouteId = selectedRouteNumber % 2 === 1 ? selectedRouteNumber + 1 : null;
+              className="text-black select select-bordered w-full text-center"
+              name="end_month"
+              value={formData.route_id}
+              onChange={(e) => {
+                const selectedRouteId = e.target.value;
+                const selectedRouteNumber = parseInt(selectedRouteId, 10);
+                const nextOddRouteId =
+                  selectedRouteNumber % 2 === 1
+                    ? selectedRouteNumber + 1
+                    : null;
 
-                  setFormData({
-                    ...formData,
-                    route_id: selectedRouteId,
-                    return_route_id: nextOddRouteId ? nextOddRouteId.toString() : null,
-                  });
-                }}
-                >
-                {routeOptions
-                  .filter(route => route.id % 2 !== 0)
-                  .map((route) => (
-                    <option key={route.id} value={route.id}>
-                      {route.origin_location} - {route.destination_location} |  {route.destination_location} - {route.origin_location}
-                    </option>
+                setFormData({
+                  ...formData,
+                  route_id: selectedRouteId,
+                  return_route_id: nextOddRouteId
+                    ? nextOddRouteId.toString()
+                    : null,
+                });
+              }}
+            >
+              <option selected disabled>
+                Choose Route
+              </option>
+              {routeOptions
+                .filter((route) => route.id % 2 !== 0)
+                .map((route) => (
+                  <option key={route.id} value={route.id}>
+                    {route.origin_location} - {route.destination_location} |{" "}
+                    {route.destination_location} - {route.origin_location}
+                  </option>
                 ))}
-              </select>
+            </select>
           </label>
-        </div> 
+        </div>
 
         <div className="flex gap-5 ">
           <label className="form-control w-full max-w-xs text-center">
@@ -265,16 +292,18 @@ const GenerateFlightsModal = ({addAlert}) => {
               <span className="label-text text-white">Duration</span>
               <span className="label-text text-white">Minutes</span>
             </div>
-            <input 
-            type="number" 
-            placeholder="Duration in Minutes (MM)" 
-            className="input input-bordered w-full max-w-xs text-black" 
-            name="duration"
-            value={formData.duration}
-            onChange={handleChange}
+            <input
+              type="number"
+              placeholder="Duration in Minutes (MM)"
+              className="input input-bordered w-full max-w-xs text-black"
+              name="duration"
+              value={formData.duration}
+              onChange={handleChange}
             />
             <div className="label">
-              <span className="label-text-alt text-white">70  = 1 hour 10 min</span>
+              <span className="label-text-alt text-white">
+                70 = 1 hour 10 min
+              </span>
               <span className="label-text-alt text-white">Required</span>
             </div>
           </label>
@@ -284,16 +313,18 @@ const GenerateFlightsModal = ({addAlert}) => {
               <span className="label-text text-white">Adjustment Time</span>
               <span className="label-text text-whitetext-white">Minutes</span>
             </div>
-            <input 
-            type="number" 
-            placeholder="Duration in Minutes (MM)" 
-            className="input input-bordered w-full max-w-xs text-black"
-            name="adjustment_time" 
-            value={formData.adjustment_time}
-            onChange={handleChange}
+            <input
+              type="number"
+              placeholder="Duration in Minutes (MM)"
+              className="input input-bordered w-full max-w-xs text-black"
+              name="adjustment_time"
+              value={formData.adjustment_time}
+              onChange={handleChange}
             />
             <div className="label">
-              <span className="label-text-alt text-white">This is a buffer time</span>
+              <span className="label-text-alt text-white">
+                This is a buffer time
+              </span>
               <span className="label-text-alt text-white">Required</span>
             </div>
           </label>
@@ -304,16 +335,18 @@ const GenerateFlightsModal = ({addAlert}) => {
             <div className="label">
               <span className="label-text text-white">Gate</span>
             </div>
-            <input 
-            type="text" 
-            placeholder="TBA" 
-            className="input input-bordered w-full max-w-xs text-black" 
-            name="gate" 
-            value={formData.gate}
-            onChange={handleChange}
+            <input
+              type="text"
+              placeholder="TBA"
+              className="input input-bordered w-full max-w-xs text-black"
+              name="gate"
+              value={formData.gate}
+              onChange={handleChange}
             />
             <div className="label">
-              <span className="label-text-alt text-white">This is subject to change</span>
+              <span className="label-text-alt text-white">
+                This is subject to change
+              </span>
               <span className="label-text-alt text-white">Required</span>
             </div>
           </label>
@@ -323,16 +356,18 @@ const GenerateFlightsModal = ({addAlert}) => {
               <span className="label-text text-white">Terminal</span>
               <span className="label-text text-white"></span>
             </div>
-            <input 
-            type="text" 
-            placeholder="TBA" 
-            className="input input-bordered w-full max-w-xs text-black" 
-            name="terminal" 
-            value={formData.terminal}
-            onChange={handleChange}
+            <input
+              type="text"
+              placeholder="TBA"
+              className="input input-bordered w-full max-w-xs text-black"
+              name="terminal"
+              value={formData.terminal}
+              onChange={handleChange}
             />
             <div className="label">
-              <span className="label-text-alt text-white">This is subject to change</span>
+              <span className="label-text-alt text-white">
+                This is subject to change
+              </span>
               <span className="label-text-alt text-white">Required</span>
             </div>
           </label>

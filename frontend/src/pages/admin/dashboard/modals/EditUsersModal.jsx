@@ -33,8 +33,6 @@ const EditUsersModal = ({addAlert, selectedUserId, isEditModalOpen, setIsEditMod
       setGender(response.gender || '');
       setRole(response.role || '');
       setConfirmed(response.confirmed_at || '');
-      console.log("User Data:", response);
-      console.log("ID Check", selectedUserId);
     } catch (error) {
       console.error('Error fetching user data:', error);
     }
@@ -57,9 +55,8 @@ const EditUsersModal = ({addAlert, selectedUserId, isEditModalOpen, setIsEditMod
     };
 
       try {
-        const response = await adminUpdateUserApi(selectedUserId, userData);
+        await adminUpdateUserApi(selectedUserId, userData);
         addAlert('success', 'User updated successfully!');
-        console.log('User updated successfully:', response);
         document.getElementById('EditUsers').close();
         setIsEditModalOpen(false);
     } catch (error) {
@@ -71,10 +68,9 @@ const EditUsersModal = ({addAlert, selectedUserId, isEditModalOpen, setIsEditMod
   const handleConfirmEmail = async (event) => {
     event.preventDefault();
       try {
-        const response = await adminConfirmEmailApi(selectedUserId);
+        await adminConfirmEmailApi(selectedUserId);
         addAlert('success', 'Email Confirmation successful');
         fetchUserData()
-        console.log('Email Confirmation successful:', response);
     } catch (error) {
       addAlert('error', error.response?.data?.errors || 'Error updating user');
       console.error('Error updating user:', error);

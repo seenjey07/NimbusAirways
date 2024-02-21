@@ -25,7 +25,6 @@ const UserDashboard = ({ addAlert }) => {
           travel_fund: user.travel_fund,
         });
       } catch (error) {
-        console.error("Error fetching user details:", error);
         addAlert("error", "Error retrieving user details. Please try again.");
       }
     };

@@ -9,8 +9,6 @@ const ShowBookingModal = ({ bookingData }) => {
     setData(bookingData);
   }, [bookingData]);
 
-  console.log("BookingData Modal", data);
-
   if (!data) {
     return <Loading />;
   }

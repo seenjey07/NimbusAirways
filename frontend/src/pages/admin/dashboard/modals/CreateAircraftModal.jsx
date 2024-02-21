@@ -19,15 +19,12 @@ const CreateAircraftModal = ({addAlert, setIsCreateModalOpen, isCreateModalOpen}
           aircraft: selectedAircraft,
         };
         try {
-          const response = await adminCreateAircraftApi(newAircraft);
+          await adminCreateAircraftApi(newAircraft);
           addAlert('success', 'Aircraft successfully!');
-          console.log('Aircraft successfully:', response);
           setIsCreateModalOpen(false);
-          console.log("Create Aircraft isCreateModalOpen", isCreateModalOpen);
           document.getElementById('CreateAircraft').close();
         } catch (error) {
           addAlert('error', error.response.data.errors);
-          console.log('error', error.response.data.errors);
         }
       };
 

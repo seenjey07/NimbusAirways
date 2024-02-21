@@ -31,7 +31,6 @@ const AdminBookings = () => {
         try {
           const response = await adminShowCurrentBookingApi(id);
           setBookingData(response)
-          console.log("Bookings Data", bookingData);
           document.getElementById('bookings').showModal()
         } catch (error) {
           console.error("Error fetching bookings:", error);

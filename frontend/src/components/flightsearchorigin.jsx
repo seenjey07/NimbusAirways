@@ -22,9 +22,6 @@ export function FlightSearchOrigin({ originOptions, onSelect }) {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
 
-  console.log("Origin Options", originOptions);
-  console.log("Value", value);
-
   return (
     <>
       <Popover open={open} onOpenChange={setOpen} className="bg-accent">
