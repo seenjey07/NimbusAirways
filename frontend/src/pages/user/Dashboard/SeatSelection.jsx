@@ -21,7 +21,6 @@ const SeatSelection = ({ onSeatSelect, modalFlag }) => {
     const fetchData = async () => {
       try {
         const flightsData = await showCurrentFlightApi(flight_id);
-        console.log("Flights data", flightsData.aircraft);
         setAircraft(flightsData.aircraft);
       } catch (error) {
         console.error("Error fetching initial flight information:", error);

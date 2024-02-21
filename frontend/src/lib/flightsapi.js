@@ -4,10 +4,7 @@ import axios from "axios";
 export const indexFlightsApi = async () => {
   try {
     const response = await axios.get(`${backendBaseUrl}/api/flights#index`);
-    console.log("indexFlightsApi response:", response.data);
-
     const flights = response.data.flights;
-    console.log("flights:", flights);
     return flights;
   } catch (error) {
     console.log("indexFlightsApi error:", error);
@@ -38,7 +35,6 @@ export const flightsApi = async ({
       destination_location,
       departure_date,
     });
-    console.log("flightsApi response:", response.data.flights);
     return response.data.flights;
   } catch (error) {
     console.log("flightsApi error:", error);

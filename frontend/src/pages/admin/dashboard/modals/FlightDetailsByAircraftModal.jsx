@@ -31,8 +31,6 @@ const FlightDetailsByAircraftModal = ({aircraftId}) => {
               aircraft: response.aircraft
             }));
             setIsLoading(false);
-            console.log("hi flights modal", response);
-            console.log("hi flights modal routes", response.current_route);
           } catch (error) {
             setIsLoading(false);
             console.error("Error fetching flights:", error);
@@ -66,7 +64,6 @@ const FlightDetailsByAircraftModal = ({aircraftId}) => {
     const currentFlights = filteredFlights.slice(indexOfFirstFlight, indexOfLastFlight);
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-    console.log('Flight data set by array', flightData)
     return (
         <>
             {isLoading ? (

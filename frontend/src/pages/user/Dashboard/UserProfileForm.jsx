@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react";
 import "../../../App.css";
 import {
@@ -6,7 +7,7 @@ import {
 } from "../../../lib/usersapi";
 import ConfirmProfileUpdateModal from "../../../pages/admin/dashboard/modals/ConfirmProfileUpdateModal";
 import { id } from "date-fns/locale";
-// eslint-disable-next-line react/prop-types
+
 
 const UserProfileForm = ({
   addAlert,
@@ -115,7 +116,6 @@ const UserProfileForm = ({
     if (await validateForm()) {
       try {
         const response = await updateCurrentUserApi(id, userData);
-        console.log("Response:", userData);
         setFormValues((prevValues) => ({
           ...prevValues,
           ...response,
@@ -124,11 +124,9 @@ const UserProfileForm = ({
         // document.getElementById("ConfirmProfileUpdateModal").close();
         // setIsConfirmUpdateModalOpen(false);
       } catch (error) {
-        console.error("Error updating user details:", error);
         addAlert("error", "Error updating user details");
       }
     } else {
-      console.log("Form validation failed");
       addAlert("error", "Form validation failed");
     }
   };
@@ -249,6 +247,7 @@ const UserProfileForm = ({
                   className="input input-bordered m-0 p-1 text-sm h-fit w-fit bg-blue-100 max-w-xs"
                   value={formValues.email}
                   onChange={handleChange}
+                  readOnly
                 />
               </div>
             </label>

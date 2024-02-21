@@ -30,7 +30,7 @@ const ResetPasswordForm = ({ addAlert }) => {
       },
     };
     try {
-      const response = await axios.post(
+      await axios.post(
         `${backendBaseUrl}/password/reset`,
         {
           token,
@@ -38,16 +38,13 @@ const ResetPasswordForm = ({ addAlert }) => {
         },
         axiosConfig
       );
-      console.log(response.data);
       navigate("/login");
       addAlert("success", "Password reset successfully!");
     } catch (error) {
-      console.error(error.response.data);
       addAlert("error", "Password reset failed. Please try again.");
     }
   };
 
-  console.log("token", token);
   return (
     <>
       <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">

@@ -30,8 +30,6 @@ const AircraftDetailsModal = ({aircraftId}) => {
             }));
             setIsLoading(false);
             setAircraft(response.aircraft)
-            console.log("hi flights modal", response);
-            console.log("hi flights modal routes", response.current_route);
           } catch (error) {
             setIsLoading(false);
             console.error("Error fetching flights:", error);
@@ -54,10 +52,7 @@ const AircraftDetailsModal = ({aircraftId}) => {
 
           const getCurrentFlightNumber = (allFlights) => {
             const currentDate = new Date();
-            const currentFlights = allFlights.filter(flight => new Date(flight.departure_date) <= currentDate);
-          
-            console.log("Current Flights:", currentFlights);
-          
+            const currentFlights = allFlights.filter(flight => new Date(flight.departure_date) <= currentDate);  
             return { currentFlightNumber: currentFlights.length };
           };
           

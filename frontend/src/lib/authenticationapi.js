@@ -7,7 +7,6 @@ export const signUpApi = async (event) => {
   event.preventDefault();
 
   const formData = new FormData(event.target);
-  console.log("Form Data:", formData);
   const password = formData.get("password");
   const confirmPassword = formData.get("confirmPassword");
 

@@ -1,9 +1,8 @@
+/* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "../../../../components/ui/avatar";
 import Loading from "../../../../components/Loading";
 
-
-// eslint-disable-next-line react/prop-types
 const RecentUsers = ({users}) => {
     const [loading, setLoading] = useState(true);
 

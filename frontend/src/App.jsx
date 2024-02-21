@@ -1,6 +1,6 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./pages/home/Home";
+import Home from "./pages/home/home";
 import Login from "./Login";
 import Registration from "./Registration";
 import AdminDashboardRoutes from "./layouts/router/AdminDashboardRoutes";
@@ -47,7 +47,6 @@ function App() {
           <Route
             path="password/edit/*"
             element={<ResetPasswordForm addAlert={addAlert} />}
-            
           />
         </Routes>
       </BrowserRouter>

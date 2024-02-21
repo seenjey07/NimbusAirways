@@ -29,9 +29,8 @@ const AdminUsers = ({addAlert}) => {
 
       const handleDeleteUser = async (id, first, last) => {
         try {
-          const res = await adminDeleteeUserApi({id});
+          await adminDeleteeUserApi({id});
           addAlert('success', `User ${first} ${last} with ID: ${id} deleted successfully!`);
-          console.log('User deleted successfully:', res);
           fetchUserData()
         } catch (error) {
           addAlert('error', error.response.data.errors);
@@ -41,8 +40,6 @@ const AdminUsers = ({addAlert}) => {
        const handleEditClick = (id) => {
         setSelectedUserId(id);
         setIsEditModalOpen(true)
-        console.log("isEditModalOpen from AdminUsers", isEditModalOpen);
-        console.log("Selected User ID:", selectedUserId);
         document.getElementById('EditUsers').showModal();
       };
 

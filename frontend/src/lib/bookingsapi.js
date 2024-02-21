@@ -16,7 +16,6 @@ export const indexBookingsApi = async () => {
 export const createBookingApi = async () => {
   try {
     const response = await axios.post(`${backendBaseUrl}/api/bookings/create`);
-    console.log("createBookingApi response:", response);
     return response;
   } catch (error) {
     console.log("createBookingApi error:", error);
@@ -40,7 +39,6 @@ export const updateBookingApi = async (id, bookingData) => {
       `${backendBaseUrl}/api/bookings/${id}`,
       bookingData
     );
-    console.log("updateBookingApi response:", response);
     return response.data;
   } catch (error) {
     console.log("updateBookingApi error:", error);
@@ -51,7 +49,6 @@ export const updateBookingApi = async (id, bookingData) => {
 export const deleteBookingApi = async (id) => {
   try {
     const response = await axios.delete(`${backendBaseUrl}/api/bookings/${id}`);
-    console.log("deleteBookingApi response:", response);
     return response.data;
   } catch (error) {
     console.log("deleteBookingApi error:", error);

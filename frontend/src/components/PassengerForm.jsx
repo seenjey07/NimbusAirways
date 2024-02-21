@@ -73,10 +73,6 @@ const PassengerForm = ({ formFields, addAlert, handleSeatSelect, onInputChange, 
           <SeatSelection
                 addAlert={addAlert}
                 onSeatSelect={(seatData) => {
-        
-                  console.log('Seat Data Passenger Form:', seatData);
-                  console.log('Seat Data PassengerNumber:', passengerNumber);
-
                   handleSeatSelect(passengerNumber, seatData);
                 }}
               />
