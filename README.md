@@ -14,11 +14,11 @@ We'd love to receive stars if you love the project.
     - [Users Feature](#users-feature)
     - [Admins Feature](#admins-feature)
   - [Requirements](#requirements)
-    - [Ruby (run ``bundle install`` on the backend)](#ruby-run-bundle-install-on-the-backend)
-    - [React (run ``npm install`` on the frontend)](#react-run-npm-install-on-the-frontend)
+    - [Ruby](#ruby)
+    - [React](#react)
       - [Development](#development)
-        - [Ruby](#ruby)
-        - [React](#react)
+        - [Ruby development](#ruby-development)
+        - [React development](#react-development)
   - [Installation](#installation)
   - [Configuration](#configuration)
   - [Usage](#usage)
@@ -34,29 +34,44 @@ We'd love to receive stars if you love the project.
 
 ### Users Feature
 
-- **Website navigation/sections**: Users can navigate through the website’s Homepage, About Page, and Contact Us Page to learn more about NimbusAirways.
+- **Website navigation/sections**
+  - Users can navigate through the website's Homepage, About page and Contact Us page
 
-- **Email Confirmation**: With the developers using Action Mailer Configuration for Gmail, users will be receiving transaction confirmation emails to their registered email address like account registrations (for confirming) and booking confirmations. Users may also request for password resets if they forget their password.
+- **SMTP Mailer using Gmail**
+  - Users will receive confirmation email after registration.
+  - Users will receive booking confirmation on their email with their specific flight details and informations.
+  - Users can request for forgot password and an email reset link will be sent. User will be directed to the password path and may change the password accordingly.
 
-- **Registration/Login**: Users can register for accounts with email address and phone numbers only used once. After registration, users will need to confirm their registration via the email they received and then they can login using their email address and password.
+- **Registration/Login**
+  - Users can register for accounts with unique email address and phone numbers.
+  - After registration, users will need to confirm their registration via the email they received and then they can login using their email address and password.
 
-- **User Dashboard**: Registered users have access to their dashboard upon login, allowing them to view their registered information as well as edit some of their details. There is also a tab for bookings so users can see their existing bookings.
+- **User Dashboard**
+  - Registered users have access to their dashboard upon login, allowing them to view their registered information as well as edit some of their details.
+  - Users can also see their existing bookings.
 
-- **Flight Booking**: Registered users can search, view, and book flights based on their preferences of the available flights. Guests can search and flights but would be redirected to the login/registration page to continue booking.
+- **Flight Booking**
+  - Registered users can search, view, and book pre-existing or generated flights based on their preferences of the available flights.
+  - Guests can search flights but would be redirected to the login/registration page to continue booking.
+  - Flight bookings also has an integrated seat selection dependent on the aircraft and dynamic passenger forms.
 
 ### Admins Feature
 
-- **Users**: Admins can view all current user, update their information, and delete selected user. Admins may also over ride email confirmation of other users.
+- **Users**
+  - Admins can view all current user, update their information, and delete selected user.
+  - Admins may also override email confirmation of other users.
 
-- **Admin Dashboard**: Admins can view the general state of the airline and system. User, flight, booking and revenue (based on quantity to price) datas are all available in the dashboard.
+- **Admin Dashboard**
+  - Admins can view the general state of the airline and system. User, flight, booking and revenue (based on quantity to price) datas are all available in the dashboard.
 
 - **Flights**
-  - Generate single or range of flights from a daily, weekly or monthly basis
+  - Generate single or range of flights from a daily, weekly or monthly basis.
   - View all concurrent flights in a calendar form with complete flight details.
 
 - **Routes**
   - Create routes based on a preexisting airport data of the Philippines. Locations listed are places with runways.
-  -Automatic assignment of routes on an aircraft based on their routes.
+  - Routes are also dynamic on displaying images on flight search.
+  - Automatic assignment of routes on an aircraft based on their routes.
 
 - **Aircrafts**
   - Admins can create aircraft based on a preexisting data.
@@ -69,7 +84,7 @@ We'd love to receive stars if you love the project.
 
 ## Requirements
 
-### Ruby (run ``bundle install`` on the backend)
+### Ruby
 
 - [Ruby](https://www.ruby-lang.org/en/) (version 3.2.2)
 - [Rails](https://rubyonrails.org/) (version 7.1.3)
@@ -77,7 +92,7 @@ We'd love to receive stars if you love the project.
 - [devise-jwt](https://rubygems.org/gems/devise-jwt)
 - [omniauth](https://rubygems.org/gems/omniauth) *(Including [github-oauth](https://rubygems.org/gems/github-oauth) and [googleauth](https://rubygems.org/gems/googleauth))*
 
-### React (run ``npm install`` on the frontend)
+### React
 
 - [Node.js](https://nodejs.org/) (version 20.11.0)
 - [ReactJS](https://reactjs.org/) (version 18.2.0)
@@ -89,12 +104,12 @@ We'd love to receive stars if you love the project.
 
 #### Development
 
-##### Ruby
+##### Ruby development
 
 - [faker](https://rubygems.org/gems/faker) *For generating user seeds, you may refer on our seeds.db for generation of data*
 - [dotenv](https://rubygems.org/gems/dotenv)
 
-##### React
+##### React development
 
 - [concurrently](https://www.npmjs.com/package/concurrently)
 
@@ -109,10 +124,10 @@ We'd love to receive stars if you love the project.
 2. Install dependencies:
 
    ```bash
-   # Install Ruby gems on *backend*
+   # Install Ruby gems on backend
    bundle install
 
-   # Install npm packages on *frontend*
+   # Install npm packages on frontend
    npm install
    ```
 
@@ -125,7 +140,7 @@ We'd love to receive stars if you love the project.
    rails db:create
    rails db:migrate
 
-   # Optional, if you will utilized seeds on the seeds.rb
+   # Optional: if you will utilized seeds on the seeds.rb. You may uncomment the seed generation
    rails db:seed
    ```
 
