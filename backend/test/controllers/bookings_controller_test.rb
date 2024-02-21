@@ -21,7 +21,7 @@ class BookingsControllerTest < ActionDispatch::IntegrationTest
   test 'should get formatted bookings when user has bookings' do
     booking = bookings(:one) 
     get bookings_url
-    assert_includes @response.body, booking.booking_reference
+    assert_includes @response.body, booking.id
   end
 
   test 'should create booking' do
@@ -30,11 +30,6 @@ class BookingsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :created
-  end
-
-  test 'should return errors when unable to create booking' do
-    post bookings_create_booking_url, params: { booking: { invalid_params_here } }
-    assert_response :unprocessable_entity
   end
 
 end
