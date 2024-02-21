@@ -2,7 +2,7 @@
 
 NimbusAirways is a airline system booking app developed with Ruby on Rails (backend) and ReactJS (frontend) compiled using VITE. The project utilizes Tailwind CSS, DaisyUI and ShadCN for a clean user interface and employs Devise and Devise-JWT for authentication. This project was deployed using Render (for Rails) and Vercel (for ReactJS/Vite).
 
-Here's the live link: [NimbusAirways](nimbusairways.vercel.app)
+Here's the live link: [NimbusAirways](https://nimbusairways.vercel.app/)
 
 We'd love to receive stars if you love the project.
 
@@ -51,21 +51,21 @@ We'd love to receive stars if you love the project.
 - **Admin Dashboard**: Admins can view the general state of the airline and system. User, flight, booking and revenue (based on quantity to price) datas are all available in the dashboard.
 
 - **Flights**
-...Generate single or range of flights from a daily, weekly or monthly basis
-...View all concurrent flights in a calendar form with complete flight details.
+  - Generate single or range of flights from a daily, weekly or monthly basis
+  - View all concurrent flights in a calendar form with complete flight details.
 
 - **Routes**
-...Create routes based on a preexisting airport data of the Philippines. Locations listed are places with runways.
-...Automatic assignment of routes on an aircraft based on their routes.
+  - Create routes based on a preexisting airport data of the Philippines. Locations listed are places with runways.
+  -Automatic assignment of routes on an aircraft based on their routes.
 
 - **Aircrafts**
-...Admins can create aircraft based on a preexisting data.
-...Admins can track aircrafts whether they are landing, taking-off, inactive, on-air or boarding. This is based on a backend logic.
-...Admin can see current and upcoming flights of an aircraft. Admins can also see the current age of the aircraft based on when it was created. Number of flights are also displayed.
-...Aircraft details also shows the current seat capacity and availability.
+  - Admins can create aircraft based on a preexisting data.
+  - Admins can track aircrafts whether they are landing, taking-off, inactive, on-air or boarding. This is based on a backend logic.
+  - Admin can see current and upcoming flights of an aircraft. Admins can also see the current age of the aircraft based on when it was created. Number of flights are also displayed.
+  - Aircraft details also shows the current seat capacity and availability.
 
 - **Bookings**
-...Admins can see all the bookings made by the users including passenger, route and aircraft information.
+  - Admins can see all the bookings made by the users including passenger, route and aircraft information.
 
 ## Requirements
 
