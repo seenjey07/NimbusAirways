@@ -1,6 +1,7 @@
 # NimbusAirways
 
 Project Duration: 3 weeks
+
 NimbusAirways is a airline system booking app developed with Ruby on Rails (backend) and ReactJS (frontend) compiled using VITE. The project utilizes Tailwind CSS, DaisyUI and ShadCN for a clean user interface and employs Devise and Devise-JWT for authentication. This project was deployed using Render (for Rails) and Vercel (for ReactJS/Vite).
 
 Here's the live link: [NimbusAirways](https://nimbusairways.vercel.app/)
