@@ -21,6 +21,7 @@ We'd love to receive stars if you love the project.
       - [Development](#development)
         - [Ruby development](#ruby-development)
         - [React development](#react-development)
+  - [Current Schema Tables](#schema)
   - [Installation](#installation)
   - [Configuration](#configuration)
   - [Usage](#usage)
@@ -114,6 +115,9 @@ We'd love to receive stars if you love the project.
 ##### React development
 
 - [concurrently](https://www.npmjs.com/package/concurrently)
+
+## Schema
+![Schema Table](https://i.ibb.co/THd8Gzg/SCHEMA.png)
 
 ## Installation
 
