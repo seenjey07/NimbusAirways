@@ -25,6 +25,7 @@ We'd love to receive stars if you love the project.
   - [Installation](#installation)
   - [Configuration](#configuration)
   - [Usage](#usage)
+  - [Project Snippets](#snippets)
   - [Contributing](#contributing)
   - [License](#license)
 
@@ -188,6 +189,11 @@ We have created custom scripts where you can run your server on the frontend usi
    ```
 
 Visit [http://localhost:3000](http://localhost:3000) to run rails and [http://localhost:5173](http://localhost:5173) in your browser to access the NimbusAirways app.
+
+### Snippets
+
+![Project Snippets](https://i.ibb.co/Jz457bW/Project-GIF.gif)
+
 
 ## Contributing
 
